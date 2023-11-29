@@ -21,8 +21,6 @@ public class Paciente extends Persona {
         this.genero = gene;
         this.altura = altura;
         this.peso = peso;
-        this.antededentes = antededentes;
-        
     }
     
 }

@@ -1,15 +1,12 @@
 package interfaces;
 
 import controladores.ControladorLogin;
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author Usuario
  */
 public class FrmInicioSesion extends javax.swing.JFrame {
-    
-    ControladorLogin c = new ControladorLogin();
     
     /**
      * Creates new form FrmInicioSesion
@@ -107,7 +104,6 @@ public class FrmInicioSesion extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogin)
-                .addGap(48, 48, 48))
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
         );
@@ -137,11 +133,7 @@ public class FrmInicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_tfContraseñaActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        if (c.compararUsuario(tfUsuario.getText()) && c.compararContraseña(tfContraseña.getText())) {
-            JOptionPane.showMessageDialog(null, "Inicio de sesion exitoso.");
-        } else {
-            JOptionPane.showMessageDialog(null, "Datos erroneos, intentelo de nuevo.");
-        }
+        new ControladorLogin().validarLogin(tfUsuario.getText(), tfContraseña.getText());
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
