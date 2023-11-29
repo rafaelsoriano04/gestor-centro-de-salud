@@ -1,4 +1,4 @@
-package controles;
+package utilidades;
 
 public class Controles {
 
@@ -19,4 +19,5 @@ public class Controles {
             return false;
         }
     }
+    
 }
