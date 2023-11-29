@@ -12,7 +12,7 @@ import java.sql.SQLException;
  */
 public class MetodosSQL {
 
-    public Usuario getUsuario(String nombreUsuario) {
+     public Usuario getUsuario(String nombreUsuario) {
         Connection conn = null;
         PreparedStatement ps = null;
         Usuario usuario = null;

@@ -1,18 +1,24 @@
 package interfaces;
 
 import controladores.ControladorLogin;
+import java.awt.event.KeyEvent;
 
 /**
  *
  * @author Usuario
  */
 public class FrmInicioSesion extends javax.swing.JFrame {
-    
+
+    ControladorLogin c = new ControladorLogin();
+
     /**
      * Creates new form FrmInicioSesion
      */
     public FrmInicioSesion() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        
     }
 
     /**
@@ -34,6 +40,17 @@ public class FrmInicioSesion extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                formKeyTyped(evt);
+            }
+        });
+
+        jPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jPanel1KeyReleased(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Usuario");
@@ -44,6 +61,11 @@ public class FrmInicioSesion extends javax.swing.JFrame {
         tfUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfUsuarioActionPerformed(evt);
+            }
+        });
+        tfUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfUsuarioKeyTyped(evt);
             }
         });
 
@@ -82,13 +104,13 @@ public class FrmInicioSesion extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(jLabel1))
                         .addGap(40, 40, 40)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                            .addComponent(tfContraseña)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(148, 148, 148)
                         .addComponent(btnLogin)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -104,6 +126,7 @@ public class FrmInicioSesion extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogin)
+                .addGap(48, 48, 48))
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
         );
@@ -133,8 +156,27 @@ public class FrmInicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_tfContraseñaActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        new ControladorLogin().validarLogin(tfUsuario.getText(), tfContraseña.getText());
+        if (new ControladorLogin().validarLogin(tfUsuario.getText(), tfContraseña.getText())) {
+            // Aqui debe ir el menu principal
+        }
+
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void jPanel1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel1KeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER && btnLogin.hasFocus()) {
+            btnLogin.doClick();
+        }
+    }//GEN-LAST:event_jPanel1KeyReleased
+
+    private void tfUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfUsuarioKeyTyped
+        if (this.tfUsuario.getText().length() >= 25) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tfUsuarioKeyTyped
+
+    private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyTyped
 
     /**
      * @param args the command line arguments
