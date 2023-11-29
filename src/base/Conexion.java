@@ -3,33 +3,32 @@ package base;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Conexion {
-    protected final String jdbcUrl = "jdbc:sqlserver://nano-server.database.windows.net:1433;database=Centro_de_Salud;user=CloudSAb6453eac@nano-server;password=Molly2023;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
-    protected static Connection connection = null;
 
-    public Conexion() {
+    private static final String url = "jdbc:sqlserver://nano-server.database.windows.net:1433;database=CentroSalud;user=CloudSAb6453eac@nano-server;password=Molly2023;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+    private static final String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private static Connection connection = null;
+
+    public static Connection getConnection() {
         try {
-            // Cargar el controlador JDBC
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Error al cargar el controlador JDBC: " + e.getMessage());
-        }
-    }
-
-    public boolean getConnection() {
-        if (connection == null) {
-            try {
-                connection = DriverManager.getConnection(jdbcUrl);
-                System.out.println("Conectado");
-                return true;
-            } catch (SQLException ex) {
-                Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+            if (connection == null || connection.isClosed()) {
+                Class.forName(driver);
+                connection = DriverManager.getConnection(url);
             }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
         }
-        return false;
+        return connection;
     }
 
+    public static void cerrarConexion() {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
