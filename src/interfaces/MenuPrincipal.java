@@ -4,6 +4,12 @@
  */
 package interfaces;
 
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import javax.swing.JFrame;
+
 /**
  *
  * @author usuario
@@ -15,6 +21,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     public MenuPrincipal() {
         initComponents();
+       // setBackground(new Color(0,0,0,0));
+        opcionesMen1.initMoving(MenuPrincipal.this);
     }
 
     /**
@@ -26,17 +34,108 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panelMovin = new interfaces.PanelBorder();
+        opcionesMen1 = new interfaces.OpcionesMen();
+        panelMoving = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        panelMovin.setBackground(new java.awt.Color(255, 255, 255));
+
+        panelMoving.setOpaque(false);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("CENTRO DE SALUD");
+
+        javax.swing.GroupLayout panelMovingLayout = new javax.swing.GroupLayout(panelMoving);
+        panelMoving.setLayout(panelMovingLayout);
+        panelMovingLayout.setHorizontalGroup(
+            panelMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelMovingLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel2)
+                .addContainerGap(55, Short.MAX_VALUE))
+        );
+        panelMovingLayout.setVerticalGroup(
+            panelMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelMovingLayout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(jLabel2)
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+
+        jButton1.setBackground(new java.awt.Color(204, 204, 204));
+        jButton1.setText("Usuarios");
+
+        jButton6.setBackground(new java.awt.Color(204, 204, 204));
+        jButton6.setText("Citas Medicas");
+
+        jButton7.setBackground(new java.awt.Color(204, 204, 204));
+        jButton7.setText("Pacientes");
+
+        jButton8.setBackground(new java.awt.Color(204, 204, 204));
+        jButton8.setText("Inventario");
+
+        jButton9.setBackground(new java.awt.Color(204, 204, 204));
+        jButton9.setText("Reportes");
+
+        javax.swing.GroupLayout opcionesMen1Layout = new javax.swing.GroupLayout(opcionesMen1);
+        opcionesMen1.setLayout(opcionesMen1Layout);
+        opcionesMen1Layout.setHorizontalGroup(
+            opcionesMen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelMoving, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButton8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButton9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        opcionesMen1Layout.setVerticalGroup(
+            opcionesMen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(opcionesMen1Layout.createSequentialGroup()
+                .addComponent(panelMoving, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(82, 82, 82)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 182, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout panelMovinLayout = new javax.swing.GroupLayout(panelMovin);
+        panelMovin.setLayout(panelMovinLayout);
+        panelMovinLayout.setHorizontalGroup(
+            panelMovinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelMovinLayout.createSequentialGroup()
+                .addComponent(opcionesMen1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 887, Short.MAX_VALUE))
+        );
+        panelMovinLayout.setVerticalGroup(
+            panelMovinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(opcionesMen1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1119, Short.MAX_VALUE)
+            .addComponent(panelMovin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 558, Short.MAX_VALUE)
+            .addComponent(panelMovin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -77,7 +176,17 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
+    private javax.swing.JLabel jLabel2;
+    private interfaces.OpcionesMen opcionesMen1;
+    private interfaces.PanelBorder panelMovin;
+    private javax.swing.JPanel panelMoving;
     // End of variables declaration//GEN-END:variables
 }
