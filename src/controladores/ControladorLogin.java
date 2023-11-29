@@ -1,15 +1,31 @@
 package controladores;
 
+import base.MetodosSQL;
+import clases.Usuario;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import utilidades.Encriptacion;
+
 // Clase con los metodos del login
 public class ControladorLogin {
 
-    public boolean compararUsuario(String usuario) {
-        // Compara el string ingresado con la base de datos
-        return usuario.equals("Nano");
+    public boolean validarLogin(String usuario, String contraseña) {
+        Usuario tempUser = new MetodosSQL().getUsuario(usuario);
+        if (tempUser == null) {
+            JOptionPane.showMessageDialog(null, "El usuario no existe, inténtelo de nuevo.");
+            return false;
+        }
+        try {
+            if (new Encriptacion().desencriptar(tempUser.contraseña).equals(contraseña)) {
+                JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso.");
+                return true;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ControladorLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        JOptionPane.showMessageDialog(null,"La contraseña es incorrecta");
+        return false;
     }
 
-    public boolean compararContraseña(String contraseña) {
-        // Compara el string ingresado con la base de datos
-        return contraseña.equals("1234");
-    }
 }

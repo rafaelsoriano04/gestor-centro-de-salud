@@ -1,15 +1,12 @@
 package interfaces;
 
 import controladores.ControladorLogin;
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author Usuario
  */
 public class FrmInicioSesion extends javax.swing.JFrame {
-    
-    ControladorLogin c = new ControladorLogin();
     
     /**
      * Creates new form FrmInicioSesion
@@ -89,7 +86,7 @@ public class FrmInicioSesion extends javax.swing.JFrame {
                             .addComponent(tfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(148, 148, 148)
+                        .addGap(149, 149, 149)
                         .addComponent(btnLogin)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -105,9 +102,9 @@ public class FrmInicioSesion extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(50, 50, 50)
                 .addComponent(btnLogin)
-                .addGap(48, 48, 48))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
         );
@@ -137,11 +134,7 @@ public class FrmInicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_tfContraseñaActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        if (c.compararUsuario(tfUsuario.getText()) && c.compararContraseña(tfContraseña.getText())) {
-            JOptionPane.showMessageDialog(null, "Inicio de sesion exitoso.");
-        } else {
-            JOptionPane.showMessageDialog(null, "Datos erroneos, intentelo de nuevo.");
-        }
+        new ControladorLogin().validarLogin(tfUsuario.getText(), tfContraseña.getText());
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
