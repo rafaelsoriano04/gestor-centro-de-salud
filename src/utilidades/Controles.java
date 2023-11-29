@@ -1,4 +1,4 @@
-package controles;
+package utilidades;
 
 public class Controles {
 
