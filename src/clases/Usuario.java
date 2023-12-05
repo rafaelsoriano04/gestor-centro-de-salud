@@ -1,8 +1,8 @@
 package clases;
 
 public class Usuario {
-    String usuario, contraseña;
-    Persona persona;
+    public String usuario, contraseña;
+    String ci;
     int rol;
     
     /* Los roles son:
@@ -12,10 +12,9 @@ public class Usuario {
     3 = Enfermero
     */
 
-    public Usuario(String usuario, String contraseña, Persona persona, int rol) {
+    public Usuario(String usuario, String contraseña, int rol) {
         this.usuario = usuario;
         this.contraseña = contraseña;
-        this.persona = persona;
         this.rol = rol;
     }
 }
