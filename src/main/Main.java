@@ -1,11 +1,18 @@
 package main;
 
 import interfaces.FrmInicioSesion;
+import utilidades.Encriptacion;
 
 public class Main {
 
-    public static void main(String[] args) {
-        FrmInicioSesion frmInicioSesion = new FrmInicioSesion();
-        frmInicioSesion.setVisible(true);
+    public static void main(String[] args) throws Exception {
+        
+        System.out.println(new Encriptacion().encriptar("Molly"));
+        System.out.println(new Encriptacion().encriptar("Ambato"));
+        System.out.println(new Encriptacion().encriptar("Genesis"));
+        System.out.println(new Encriptacion().encriptar("Nano"));
+        
+        
+        
     }
 }

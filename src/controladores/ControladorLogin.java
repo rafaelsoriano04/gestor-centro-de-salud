@@ -24,8 +24,17 @@ public class ControladorLogin {
         } catch (Exception ex) {
             Logger.getLogger(ControladorLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
-        JOptionPane.showMessageDialog(null,"La contraseña es incorrecta");
+        JOptionPane.showMessageDialog(null, "La contraseña es incorrecta");
         return false;
+    }
+
+    public boolean validarUsuario(String usuario) {
+        Usuario tempUser = new MetodosSQL().getUsuario(usuario);
+        if (tempUser == null) {
+            JOptionPane.showMessageDialog(null, "El usuario no existe, inténtelo de nuevo.");
+            return false;
+        }
+        return true;
     }
 
 }
