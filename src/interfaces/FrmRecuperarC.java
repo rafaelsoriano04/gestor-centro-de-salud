@@ -163,19 +163,19 @@ public class FrmRecuperarC extends javax.swing.JFrame {
 
     private void btnRecuperarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecuperarActionPerformed
         int temp1 = this.cbPregunta1.getSelectedIndex();
-        System.out.println(temp1);
         int temp2 = this.cbPregunta2.getSelectedIndex();
         if (temp1 == temp2) {
             JOptionPane.showMessageDialog(null, "Debe responder preguntas diferentes.");
         } else {
-            if (!this.txtRespuesta1.getText().equals("") && !this.txtRespuesta2.getText().equals("")) {
-                if (this.usuario.respuestas.get(temp1).equals(this.txtRespuesta1)
-                        && this.usuario.respuestas.get(temp2).equals(this.txtRespuesta2)) {
-                    FrmNuevaContra frmN = new FrmNuevaContra();
-                    frmN.setVisible(true);
-                    frmN.usuario = this.usuario;
-                    this.dispose();
-                }
+            if (this.usuario.respuestas.get(temp1).equals(this.txtRespuesta1.getText())
+                    && this.usuario.respuestas.get(temp2).equals(this.txtRespuesta2.getText())) {
+                FrmNuevaContra frmN = new FrmNuevaContra();
+                frmN.setVisible(true);
+                frmN.usuario = this.usuario;
+                frmN.nombreUsuario(this.usuario.usuario);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Respuesta incorrecta.");
             }
         }
     }//GEN-LAST:event_btnRecuperarActionPerformed
