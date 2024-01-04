@@ -180,5 +180,20 @@ public class MetodosSQL {
 
         return paciente;
     }
+    
+    
+    public boolean eliminarPacientePorCedula(String cedula) {
+    String sql = "DELETE FROM paciente WHERE cedula = ?";
+    Connection con = null;
+    con = Conexion.getConnection();
+    try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+        pstmt.setString(1, cedula);
+        int affectedRows = pstmt.executeUpdate();
+        return affectedRows > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
 
 }

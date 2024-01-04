@@ -34,6 +34,7 @@ public class FrmLogin extends javax.swing.JFrame {
         tfContraseña = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
         txtRecuperar = new javax.swing.JLabel();
+        img1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,6 +83,9 @@ public class FrmLogin extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtRecuperar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 420, -1, -1));
+
+        img1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/interfaces/buscar.png"))); // NOI18N
+        jPanel1.add(img1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 140, 130));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -162,6 +166,7 @@ public class FrmLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
+    private javax.swing.JLabel img1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField tfContraseña;
