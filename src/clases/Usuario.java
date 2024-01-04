@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Usuario {
     public String usuario, contraseña;
-    // String ci;
+    String ci;
     /* 
     Los roles son:
     0 = Administrador

@@ -16,6 +16,12 @@ public class Persona {
         this.cedula = cedula;
         this.fechaNaci = fechaNaci;
     }
+    
+    public Persona(String nombre, String apellido, String cedula) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.cedula = cedula;
+    }
 
     // LocalDate.of(1990, 5, 15)
     public int edad() {
