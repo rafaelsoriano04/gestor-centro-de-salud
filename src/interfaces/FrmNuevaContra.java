@@ -113,7 +113,7 @@ public class FrmNuevaContra extends javax.swing.JFrame {
             try {
                 if (new MetodosSQL().updateContraseña(this.usuario.usuario, new Encriptacion().encriptar(this.txtContra.getText()))) {
                     JOptionPane.showMessageDialog(null, "Contraseña actualizada, volviendo al login...");
-                    new FrmInicioSesion().setVisible(true);
+                    new FrmLogin().setVisible(true);
                     this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Hubo un error al actualizar la base. Lo sentimos");

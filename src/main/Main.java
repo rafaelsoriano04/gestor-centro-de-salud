@@ -9,5 +9,5 @@ public class Main {
         System.out.println(new Encriptacion().encriptar("Ambato"));
         System.out.println(new Encriptacion().encriptar("Genesis"));
         System.out.println(new Encriptacion().encriptar("Nano"));
-    }
+    } 
 }
