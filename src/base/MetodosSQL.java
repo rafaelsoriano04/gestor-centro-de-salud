@@ -26,7 +26,6 @@ public class MetodosSQL {
 
         try {
             conn = Conexion.getConnection();
-
             String query = "SELECT usuario, contraseña, rol, pregunta1, pregunta2, pregunta3, pregunta4 FROM Usuarios WHERE usuario = ?";
             ps = conn.prepareStatement(query);
             ps.setString(1, nombreUsuario);
@@ -68,7 +67,6 @@ public class MetodosSQL {
 
         try {
             conn = Conexion.getConnection();
-
             String query = "UPDATE Usuarios SET contraseña = ? WHERE usuario = ?";
             ps = conn.prepareStatement(query);
             ps.setString(1, nuevaContraseña);
