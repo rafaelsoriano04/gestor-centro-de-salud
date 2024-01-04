@@ -1,24 +1,48 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package interfaces;
 
+import base.MetodosSQL;
 import clases.Paciente;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author fredd
  */
-public class FrmCrearPaciente extends javax.swing.JPanel {
+public class FrmModificarPaciente extends javax.swing.JFrame {
 
     /**
-     * Creates new form FrmCrearPaciente
+     * Creates new form FrmCrearPacientes
      */
-    public FrmCrearPaciente() {
+    private String cedula = "";
+    public FrmModificarPaciente(Paciente pac) {
         initComponents();
+        txtaltura.setText(pac.altura);
+        txtantece.setText(pac.antededentes);
+        txtape.setText(pac.apellido);
+        txtcedu.setText(pac.cedula);
+        txtnaci.setText(pac.fechaNaci.toString());
+        txtnom.setText(pac.nombre);
+        txtpeso.setText(pac.peso);
+        this.cedula = pac.cedula;
+        
+    }
+
+    public boolean fechValida(String fecha) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        try {
+            LocalDate.parse(fecha, formatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
+    public static boolean contieneSoloNumeros(String cadena) {
+        return cadena.matches("\\d+");
     }
 
     /**
@@ -30,14 +54,12 @@ public class FrmCrearPaciente extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        btncrearpaciente = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        slipeso = new javax.swing.JSlider();
+        txtaltura = new javax.swing.JLabel();
+        txtpeso = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtantece = new javax.swing.JTextArea();
         jLabel10 = new javax.swing.JLabel();
         txtnom = new javax.swing.JTextField();
         txtcedu = new javax.swing.JTextField();
@@ -48,72 +70,19 @@ public class FrmCrearPaciente extends javax.swing.JPanel {
         cbsangre = new javax.swing.JComboBox<>();
         cbgene = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        btncrearpaciente = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         slialtura = new javax.swing.JSlider();
-        slipeso = new javax.swing.JSlider();
-        txtaltura = new javax.swing.JLabel();
-        txtpeso = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtantece = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
 
-        jLabel1.setBackground(new java.awt.Color(51, 153, 255));
-        jLabel1.setForeground(new java.awt.Color(51, 153, 255));
-        jLabel1.setOpaque(true);
-
-        jLabel2.setBackground(new java.awt.Color(51, 153, 255));
-        jLabel2.setForeground(new java.awt.Color(51, 153, 255));
-        jLabel2.setOpaque(true);
-
-        btncrearpaciente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btncrearpaciente.setText("Crear Paciente");
-        btncrearpaciente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btncrearpacienteActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel4.setText("Crear un Nuevo Paciente");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setText("Apellidos:");
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel6.setText("Fecha de Nacimiento:");
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel7.setText("Nombres:");
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel8.setText("Identificacion:");
-
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel10.setText("Tipo de Sangre:");
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel11.setText("Genero:");
-
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/icon.png"))); // NOI18N
-
-        cbsangre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A+", "A-", "O+", "O-", "B+", "B-", "AB+", "AB-" }));
-
-        cbgene.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Femenino", "Masculino" }));
-
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel12.setText("Altura:");
-
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel13.setText("Peso:");
-
-        slialtura.setMajorTickSpacing(200);
-        slialtura.setMaximum(200);
-        slialtura.setMinorTickSpacing(20);
-        slialtura.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                slialturaStateChanged(evt);
-            }
-        });
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         slipeso.setMaximum(200);
         slipeso.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -136,8 +105,66 @@ public class FrmCrearPaciente extends javax.swing.JPanel {
         txtantece.setAutoscrolls(false);
         jScrollPane1.setViewportView(txtantece);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel10.setText("Tipo de Sangre:");
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel11.setText("Genero:");
+
+        cbsangre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A+", "A-", "O+", "O-", "B+", "B-", "AB+", "AB-" }));
+
+        cbgene.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Femenino", "Masculino" }));
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel12.setText("Altura:");
+
+        jLabel1.setBackground(new java.awt.Color(51, 153, 255));
+        jLabel1.setForeground(new java.awt.Color(51, 153, 255));
+        jLabel1.setOpaque(true);
+
+        jLabel2.setBackground(new java.awt.Color(51, 153, 255));
+        jLabel2.setForeground(new java.awt.Color(51, 153, 255));
+        jLabel2.setOpaque(true);
+
+        btncrearpaciente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btncrearpaciente.setText("Modificar Paciente");
+        btncrearpaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btncrearpacienteActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel4.setText("Modificar Paciente");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel5.setText("Apellidos:");
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel6.setText("Fecha de Nacimiento:");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel7.setText("Nombres:");
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel8.setText("Identificacion:");
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel13.setText("Peso:");
+
+        slialtura.setMajorTickSpacing(200);
+        slialtura.setMaximum(200);
+        slialtura.setMinorTickSpacing(20);
+        slialtura.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                slialturaStateChanged(evt);
+            }
+        });
+
+        jLabel3.setText("yyyy-MM-dd");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -164,8 +191,7 @@ public class FrmCrearPaciente extends javax.swing.JPanel {
                             .addComponent(cbgene, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(slialtura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(slipeso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(62, 62, 62)
-                        .addComponent(btncrearpaciente))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -183,21 +209,27 @@ public class FrmCrearPaciente extends javax.swing.JPanel {
                                             .addComponent(txtape, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(txtcedu, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(76, 76, 76)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel14)
-                                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel14))
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtnaci, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(cbsangre, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(46, 46, 46)
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(26, 26, 26))))
+                                            .addComponent(cbsangre, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(txtnaci, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(3, 3, 3)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(6, 6, 6)
+                                                .addComponent(btncrearpaciente))
+                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addGap(324, 324, 324)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                                .addGap(298, 298, 298)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
@@ -224,7 +256,8 @@ public class FrmCrearPaciente extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtnaci, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel3))
                         .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cbsangre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -251,27 +284,78 @@ public class FrmCrearPaciente extends javax.swing.JPanel {
                     .addComponent(slipeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtpeso)
                     .addComponent(btncrearpaciente))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btncrearpacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncrearpacienteActionPerformed
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        Paciente pac = new Paciente(txtnom.getText(), txtape.getText(), txtcedu.getText() ,LocalDate.parse(txtnaci.getText(),formatter),
-                (String)cbsangre.getSelectedItem(),(String)cbgene.getSelectedItem(), txtaltura.getText(),txtpeso.getText(),txtantece.getText());
-        //Insertar un paciente
-        new controladores.ControladorPaciente().insertarpaciente(pac);
-    }//GEN-LAST:event_btncrearpacienteActionPerformed
-
-    private void slialturaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_slialturaStateChanged
-        txtaltura.setText(String.valueOf(slialtura.getValue()));
-        
-    }//GEN-LAST:event_slialturaStateChanged
 
     private void slipesoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_slipesoStateChanged
         txtpeso.setText(String.valueOf(slipeso.getValue()));
     }//GEN-LAST:event_slipesoStateChanged
 
+    private void btncrearpacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncrearpacienteActionPerformed
+        
+        if (this.fechValida(txtnaci.getText())) {
+           
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                Paciente pac = new Paciente(txtnom.getText(), txtape.getText(), cedula , LocalDate.parse(txtnaci.getText(), formatter),
+                       (String) cbsangre.getSelectedItem(), (String) cbgene.getSelectedItem(), txtaltura.getText(), txtpeso.getText(), txtantece.getText());
+                //Insertar un paciente
+                if (new MetodosSQL().modificarPaciente(pac)) {
+                   
+                    JOptionPane.showMessageDialog(null, "Paciente modificado con exito");
+                    this.dispose();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Verifique los datos y vuelva a intentarlo");
+                }
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese una fecha de nacimiento valida de acuerdo al formato");
+            }
+        
+    }//GEN-LAST:event_btncrearpacienteActionPerformed
+
+    private void slialturaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_slialturaStateChanged
+        txtaltura.setText(String.valueOf(slialtura.getValue()));
+    }//GEN-LAST:event_slialturaStateChanged
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(FrmModificarPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(FrmModificarPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(FrmModificarPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FrmModificarPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new FrmModificarPaciente(null).setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btncrearpaciente;
@@ -284,6 +368,7 @@ public class FrmCrearPaciente extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

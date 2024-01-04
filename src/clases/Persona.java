@@ -5,10 +5,10 @@ import java.time.Period;
 
 public class Persona {
 
-    String nombre;
-    String apellido;
-    String cedula;
-    LocalDate fechaNaci;
+    public String nombre;
+    public String apellido;
+    public String cedula;
+    public LocalDate fechaNaci;
 
     public Persona(String nombre, String apellido, String cedula, LocalDate fechaNaci) {
         this.nombre = nombre;

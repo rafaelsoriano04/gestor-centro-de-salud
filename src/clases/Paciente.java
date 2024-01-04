@@ -7,11 +7,11 @@ import java.time.LocalDate;
  * @author Usuario
  */
 public class Paciente extends Persona {
-    String tipoSagre;
-    String genero;
-    String antededentes;
-    String altura;
-    String peso;
+    public String tipoSagre;
+    public String genero;
+    public String antededentes;
+    public String altura;
+    public String peso;
     
     
     public Paciente(String nombre, String apellido, String cedula, LocalDate fechaNaci, String tipo, String gene,String altura,
@@ -21,6 +21,7 @@ public class Paciente extends Persona {
         this.genero = gene;
         this.altura = altura;
         this.peso = peso;
+        this.antededentes =antecedentes;
     }
     
 }
