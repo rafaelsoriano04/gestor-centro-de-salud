@@ -88,6 +88,7 @@ public class FrmMenP extends javax.swing.JFrame {
         btn_pacientes.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btn_pacientes.setText("PACIENTES");
         btn_pacientes.setBorderPainted(false);
+        btn_pacientes.setContentAreaFilled(false);
         btn_pacientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_pacientesActionPerformed(evt);
@@ -138,7 +139,9 @@ public class FrmMenP extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_citasActionPerformed
 
     private void btn_usuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_usuariosActionPerformed
-        // TODO add your handling code here:
+        FrmGestionUsuarios menuUs=new FrmGestionUsuarios();
+        menuUs.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn_usuariosActionPerformed
 
     private void btn_pacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pacientesActionPerformed
