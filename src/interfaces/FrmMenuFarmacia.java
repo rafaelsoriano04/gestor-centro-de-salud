@@ -53,6 +53,11 @@ public class FrmMenuFarmacia extends javax.swing.JFrame {
         btn_medic.setText("       MEDICAMENTO");
         btn_medic.setBorderPainted(false);
         btn_medic.setContentAreaFilled(false);
+        btn_medic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_medicActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_medic, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 282, 270, 70));
 
         btn_recetaM.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -94,6 +99,12 @@ public class FrmMenuFarmacia extends javax.swing.JFrame {
         menRM.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_recetaMActionPerformed
+
+    private void btn_medicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_medicActionPerformed
+        FrmMenuMedicamento menumedic= new FrmMenuMedicamento();
+        menumedic.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_medicActionPerformed
 
     /**
      * @param args the command line arguments
