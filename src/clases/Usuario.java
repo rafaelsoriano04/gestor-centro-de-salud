@@ -12,7 +12,7 @@ public class Usuario {
     2 = Medico
     3 = Enfermero
     */
-    int rol;
+    public int rol;
     /*
     Preguntas de seguridad:
     1. Primera mascota
