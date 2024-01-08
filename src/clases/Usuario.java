@@ -22,11 +22,15 @@ public class Usuario {
     */
     public ArrayList<String> respuestas;
 
-    public Usuario(String usuario, String contraseña, int rol, ArrayList<String> respuestas) {
+    public Usuario(String usuario, String contraseña, int rol, ArrayList<String> respuestas, String ci,
+            String nombre, String apellido) {
         this.usuario = usuario;
         this.contraseña = contraseña;
         this.rol = rol;
         this.respuestas = respuestas;
+        this.ci = ci;
+        this.nombre = nombre;
+        this.apellido = apellido;
     }
 
     public Usuario(String usuario, String ci, String nombre, String apellido, int rol) {
@@ -35,7 +39,15 @@ public class Usuario {
         this.nombre = nombre;
         this.apellido = apellido;
         this.rol = rol;
+        this.respuestas = new ArrayList<>();
+    }
+
+    public Usuario() {
+        this.respuestas = new ArrayList<>();
     }
     
+    public void setRespuestas(ArrayList<String> respuestas) {
+        this.respuestas = respuestas;
+    }
     
 }

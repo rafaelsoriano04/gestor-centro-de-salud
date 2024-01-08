@@ -5,7 +5,6 @@ import clases.Usuario;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import utilidades.Encriptacion;
 
 // Clase con los metodos del login
 public class ControladorLogin {
@@ -17,7 +16,7 @@ public class ControladorLogin {
             return false;
         }
         try {
-            if (new Encriptacion().desencriptar(tempUser.contraseña).equals(contraseña)) {
+            if (tempUser.contraseña.equals(contraseña)) {
                 JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso.");
                 return true;
             }

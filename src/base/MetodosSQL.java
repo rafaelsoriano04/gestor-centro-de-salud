@@ -14,10 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import utilidades.Encriptacion;
 
-/**
- *
- * @author Usuario
- */
 public class MetodosSQL {
 
     public Usuario getUsuario(String nombreUsuario) {
@@ -27,26 +23,29 @@ public class MetodosSQL {
 
         try {
             conn = Conexion.getConnection();
-            String query = "SELECT usuario, contraseña, rol, pregunta1, pregunta2, pregunta3, pregunta4 FROM Usuarios WHERE usuario = ?";
+            String query = "SELECT usuario, ci, contraseña, rol, pregunta1, pregunta2, pregunta3, pregunta4, nombre, apellido FROM Usuarios WHERE usuario = ?";
             ps = conn.prepareStatement(query);
             ps.setString(1, nombreUsuario);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 String usuarioDB = rs.getString("usuario");
-                String contraseñaDB = rs.getString("contraseña");
+                String ci = rs.getString("ci");
+                String contraseñaDB = new Encriptacion().desencriptar(rs.getString("contraseña"));
                 int rolDB = rs.getInt("rol");
                 String pregunta1 = rs.getString("pregunta1");
                 String pregunta2 = rs.getString("pregunta2");
                 String pregunta3 = rs.getString("pregunta3");
                 String pregunta4 = rs.getString("pregunta4");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
                 ArrayList<String> respuestas = new ArrayList<>();
                 respuestas.add(new Encriptacion().desencriptar(pregunta1));
                 respuestas.add(new Encriptacion().desencriptar(pregunta2));
                 respuestas.add(new Encriptacion().desencriptar(pregunta3));
                 respuestas.add(new Encriptacion().desencriptar(pregunta4));
 
-                usuario = new Usuario(usuarioDB, contraseñaDB, rolDB, respuestas);
+                usuario = new Usuario(usuarioDB, contraseñaDB, rolDB, respuestas, ci, nombre, apellido);
             }
             rs.close();
         } catch (SQLException e) {
@@ -90,7 +89,47 @@ public class MetodosSQL {
         }
         return false;
     }
+    
+    public boolean updateUsuario(String usuario, String nuevoUsuario, String nombre, String apellido) {
+        Connection conn = null;
+        PreparedStatement ps = null;
 
+        try {
+            conn = Conexion.getConnection();
+            String query = "UPDATE Usuarios SET usuario = ?, nombre = ?, apellido = ? WHERE usuario = ?";
+
+            ps = conn.prepareStatement(query);
+            ps.setString(1, nuevoUsuario);
+            ps.setString(2, nombre);
+            ps.setString(3, apellido);
+            ps.setString(4, usuario);
+
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (conn != null) {
+                Conexion.cerrarConexion();
+            }
+        }
+        return false;
+    }
+    
+    public boolean eliminarUsuario(String usuario) {
+        String sql = "DELETE FROM Usuarios WHERE usuario = ?";
+        Connection con = null;
+        con = Conexion.getConnection();
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, usuario);
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
     public ArrayList<Usuario> traerUsuarios() {
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
         String sql = "SELECT * FROM Usuarios";
@@ -115,15 +154,14 @@ public class MetodosSQL {
 
     public ArrayList<Usuario> traerUsuariosSimilares(String patron) {
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
-        String sql = "SELECT * FROM Usuarios WHERE ci LIKE ?"; // Reemplaza 'tu_columna' con el nombre real de tu columna
+        String sql = "SELECT * FROM Usuarios WHERE ci LIKE ? || '%'";
 
         try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, "%" + patron + "%"); // Configura el patrón de búsqueda
+            ps.setString(1, patron);
 
             try (ResultSet resultSet = ps.executeQuery()) {
                 while (resultSet.next()) {
-                    // Suponiendo que tu clase Usuario tiene un constructor adecuado
                     int rol = resultSet.getInt("rol");
                     String ci = resultSet.getString("ci");
                     String usuario = resultSet.getString("usuario");
@@ -138,6 +176,32 @@ public class MetodosSQL {
             e.printStackTrace();
         }
         return listaUsuarios;
+    }
+
+    public boolean crearUsuario(Usuario u) {
+        Connection con = null;
+        try {
+            con = Conexion.getConnection();
+            String sql = "INSERT INTO Usuarios (usuario, ci, contraseña, rol, pregunta1, pregunta2, pregunta3, pregunta4, nombre, apellido)"
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, u.usuario);
+            ps.setString(2, u.ci);
+            ps.setString(3, new Encriptacion().encriptar(u.contraseña));
+            ps.setInt(4, u.rol);
+            ps.setString(5, new Encriptacion().encriptar(u.respuestas.get(0)));
+            ps.setString(6, new Encriptacion().encriptar(u.respuestas.get(1)));
+            ps.setString(7, new Encriptacion().encriptar(u.respuestas.get(2)));
+            ps.setString(8, new Encriptacion().encriptar(u.respuestas.get(3)));
+            ps.setString(9, u.nombre);
+            ps.setString(10, u.apellido);
+            ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     //Crear Paciente

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaces;
 
 import base.MetodosSQL;
@@ -19,9 +15,6 @@ public class FrmNuevaContraseña extends javax.swing.JFrame {
 
     public Usuario usuario;
 
-    /**
-     * Creates new form FrmNuevaContra
-     */
     public FrmNuevaContraseña() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -86,7 +79,7 @@ public class FrmNuevaContraseña extends javax.swing.JFrame {
                 btnOkActionPerformed(evt);
             }
         });
-        jPanel1.add(btnOk, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 150, -1, -1));
+        jPanel1.add(btnOk, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 150, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
