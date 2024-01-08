@@ -105,7 +105,7 @@ public class FrmMenuCitaMedica extends javax.swing.JFrame {
         if (p == null) {
             JOptionPane.showMessageDialog(null, "El paciente no existe");
         }else{
-            new FrmEliminarPaciente(p).setVisible(true);
+            new FrmEliminarCita(cedula).setVisible(true);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 

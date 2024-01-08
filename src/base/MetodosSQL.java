@@ -291,7 +291,7 @@ public class MetodosSQL {
                     + "JOIN PersonalMedico ON CitasMedicas.doctor = PersonalMedico.cedula \n"
                     + "WHERE CitasMedicas.paciente = ";
             sql = sql + cedula;
-            System.out.println(sql);
+            
             PreparedStatement pstmt = con.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
 
@@ -319,5 +319,22 @@ public class MetodosSQL {
             }
         }
         return nombres;
+    }
+    
+    
+    public boolean eliminarCita(String id){
+         String sql = "DELETE FROM CitasMedicas WHERE id = ?";
+        Connection con = null;
+        con = Conexion.getConnection();
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, id);
+            int affectedRows = pstmt.executeUpdate();
+            Conexion.cerrarConexion();
+            return affectedRows > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
