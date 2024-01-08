@@ -151,6 +151,7 @@ public class FrmAgendaCita extends javax.swing.JFrame {
             
             if (new MetodosSQL().crearCita(Integer.valueOf(txtpaciente.getText()), idMedico, fecha)) {
                 JOptionPane.showMessageDialog(null, "Cita Creada Con Exito");
+                this.dispose();
             }else{
                 JOptionPane.showMessageDialog(null, "Se supero el numero de citas para ese dia");
             }

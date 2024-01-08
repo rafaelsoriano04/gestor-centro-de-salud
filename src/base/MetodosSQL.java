@@ -1,5 +1,6 @@
 package base;
 
+import clases.Cita;
 import clases.Paciente;
 import clases.PersonalMedico;
 import clases.Usuario;
@@ -155,7 +156,7 @@ public class MetodosSQL {
         Paciente paciente = null;
         String sql = "SELECT * FROM paciente WHERE cedula = ?";
         con = Conexion.getConnection();
-        
+
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, cedula);
             ResultSet rs = pstmt.executeQuery();
@@ -225,7 +226,7 @@ public class MetodosSQL {
 
     public int contarCitasFecha(int doctor, LocalDate fecha) {
         int contadorCitas = 0;
-        
+
         String sql = "SELECT COUNT(*) FROM CitasMedicas WHERE doctor = ? AND CAST(fecha_hora AS DATE) = ?";
         Connection con = null;
         con = Conexion.getConnection();
@@ -245,13 +246,13 @@ public class MetodosSQL {
         Conexion.cerrarConexion();
         return contadorCitas;
     }
-    
+
     public ArrayList<PersonalMedico> llenarMedicos() {
         ArrayList<PersonalMedico> nombres = new ArrayList<>();
         Connection con = null;
         try {
             con = Conexion.getConnection();
-            String sql = "SELECT nombre, apellido, cedula FROM PersonalMedico"; 
+            String sql = "SELECT nombre, apellido, cedula FROM PersonalMedico";
             PreparedStatement pstmt = con.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
 
@@ -261,6 +262,47 @@ public class MetodosSQL {
                 int cedula = rs.getInt("cedula");
                 PersonalMedico p = new PersonalMedico(nombreMedico, apellido, String.valueOf(cedula), LocalDate.now());
                 nombres.add(p);
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return nombres;
+    }
+
+    public ArrayList<Cita> llenarCitas(String cedula) {
+        ArrayList<Cita> nombres = new ArrayList<>();
+        Connection con = null;
+        try {
+            con = Conexion.getConnection();
+            String sql = "SELECT CitasMedicas.id, PersonalMedico.nombre AS nombreme, PersonalMedico.apellido AS apeme, CitasMedicas.fecha_hora,"
+                    + " CitasMedicas.estado \n"
+                    + "FROM CitasMedicas \n"
+                    + "JOIN PersonalMedico ON CitasMedicas.doctor = PersonalMedico.cedula \n"
+                    + "WHERE CitasMedicas.paciente = ";
+            sql = sql + cedula;
+            System.out.println(sql);
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String doctor ="Dr/a. "+ rs.getString("nombreme");
+                doctor = doctor + " " + rs.getString("apeme");
+                String estado = rs.getString("estado");
+                LocalDate fecha = rs.getDate("fecha_hora").toLocalDate();
+                Cita c = new Cita(id, cedula, doctor, fecha, estado);
+                nombres.add(c);
             }
 
             rs.close();
