@@ -1,6 +1,7 @@
 package base;
 
 import clases.Cita;
+import clases.Consulta;
 import clases.Paciente;
 import clases.PersonalMedico;
 import clases.Usuario;
@@ -291,13 +292,13 @@ public class MetodosSQL {
                     + "JOIN PersonalMedico ON CitasMedicas.doctor = PersonalMedico.cedula \n"
                     + "WHERE CitasMedicas.paciente = ";
             sql = sql + cedula;
-            
+
             PreparedStatement pstmt = con.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String doctor ="Dr/a. "+ rs.getString("nombreme");
+                String doctor = "Dr/a. " + rs.getString("nombreme");
                 doctor = doctor + " " + rs.getString("apeme");
                 String estado = rs.getString("estado");
                 LocalDate fecha = rs.getDate("fecha_hora").toLocalDate();
@@ -320,10 +321,9 @@ public class MetodosSQL {
         }
         return nombres;
     }
-    
-    
-    public boolean eliminarCita(String id){
-         String sql = "DELETE FROM CitasMedicas WHERE id = ?";
+
+    public boolean eliminarCita(String id) {
+        String sql = "DELETE FROM CitasMedicas WHERE id = ?";
         Connection con = null;
         con = Conexion.getConnection();
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -334,6 +334,34 @@ public class MetodosSQL {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean crearConsulta(Consulta consulta) {
+        String sql = "INSERT INTO Consulta ( paciente, doctor, fecha_hora, tipo, sintomas, diagnostico, tratamiento, observaciones) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
+        LocalDate localDate = LocalDate.now();
+
+        java.sql.Date sqlDate = java.sql.Date.valueOf(localDate);
+        
+        
+        try (Connection con = Conexion.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+            pstmt.setInt(1, consulta.paciente);
+            pstmt.setInt(2, consulta.doctor);
+            pstmt.setDate(3, sqlDate);
+            pstmt.setString(4, consulta.tipo);
+            pstmt.setString(5, consulta.signos);
+            pstmt.setString(6, consulta.diagnostico);
+            pstmt.setString(7, consulta.tratamiento);
+            pstmt.setString(8, consulta.observacion);
+            System.out.println(sql);
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Podrías lanzar una excepción personalizada o manejarlo según tu lógica de negocio
             return false;
         }
     }
