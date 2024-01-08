@@ -402,4 +402,20 @@ public class MetodosSQL {
         }
         return nombres;
     }
+    
+    public boolean eliminarConsulta(int id) {
+        String sql = "DELETE FROM Consulta WHERE id = ?";
+        Connection con = null;
+        con = Conexion.getConnection();
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            int affectedRows = pstmt.executeUpdate();
+            Conexion.cerrarConexion();
+            return affectedRows > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
