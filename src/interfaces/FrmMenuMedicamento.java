@@ -49,6 +49,11 @@ public class FrmMenuMedicamento extends javax.swing.JFrame {
         btnagregarmedic1.setText("AGREGAR");
         btnagregarmedic1.setBorderPainted(false);
         btnagregarmedic1.setContentAreaFilled(false);
+        btnagregarmedic1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnagregarmedic1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnagregarmedic1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 290, 150, 50));
 
         btnabuscarmedic1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
@@ -70,12 +75,22 @@ public class FrmMenuMedicamento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregresarActionPerformed
-        // TODO add your handling code here:
+        FrmMenuFarmacia menufar= new FrmMenuFarmacia();
+        menufar.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnregresarActionPerformed
 
     private void btnabuscarmedic1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnabuscarmedic1ActionPerformed
-        // TODO add your handling code here:
+        FrmBuscarMedicamento buscarmedi= new FrmBuscarMedicamento();
+        buscarmedi.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnabuscarmedic1ActionPerformed
+
+    private void btnagregarmedic1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarmedic1ActionPerformed
+        FrmCrearMedicamento crearmedic= new FrmCrearMedicamento();
+        crearmedic.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnagregarmedic1ActionPerformed
 
     /**
      * @param args the command line arguments
