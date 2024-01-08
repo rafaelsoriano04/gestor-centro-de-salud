@@ -365,4 +365,41 @@ public class MetodosSQL {
             return false;
         }
     }
+    
+    public ArrayList<Consulta> llenarCOnsultas(int paciente, int doctor) {
+        ArrayList<Consulta> nombres = new ArrayList<>();
+        Connection con = null;
+        try {
+            con = Conexion.getConnection();
+            String sql = "SELECT * FROM Consulta WHERE paciente = ? AND doctor = ?";
+            
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            
+            pstmt.setInt(1, paciente); // idPaciente es una variable que contiene el ID del paciente
+            pstmt.setInt(2, doctor);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                Consulta c = new Consulta(rs.getInt("id"), rs.getInt("paciente"), rs.getInt("doctor"), 
+                        rs.getDate("fecha_hora").toLocalDate(), rs.getString("tipo"), rs.getString("sintomas"), 
+                        rs.getString("diagnostico"), rs.getString("tratamiento"), rs.getString("observaciones"));
+                
+                nombres.add(c);
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return nombres;
+    }
 }

@@ -132,10 +132,11 @@ public class FrmMenuConsultaMedica extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         String cedula = JOptionPane.showInputDialog("Ingrese su número de cédula");
         Paciente p = new MetodosSQL().obtenerPacientePorCedula(cedula);
+        int doctor = 1234;
         if (p == null) {
             JOptionPane.showMessageDialog(null, "El paciente no existe");
         }else{
-            new FrmBuscarCita(cedula).setVisible(true);
+            new FrmMostrarConsultas(doctor, p).setVisible(true);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
