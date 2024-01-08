@@ -135,6 +135,7 @@ public class FrmLogin extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         if (new ControladorLogin().validarLogin(this.tfUsuario.getText(), this.tfContraseña.getText())) {
             // Aqui debe ir el menu principal
+            new FrmMenuProvisional().setVisible(true);
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 

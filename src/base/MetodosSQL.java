@@ -2,6 +2,7 @@ package base;
 
 import clases.Paciente;
 import clases.Usuario;
+import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -90,6 +91,37 @@ public class MetodosSQL {
         return false;
     }
 
+//    public ArrayList<Usuario> traerUsuarios() {
+//        ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+//        Connection conn = null;
+//        PreparedStatement ps = null;
+//        try {
+//            // Establecer conexión con la base de datos
+//            conn = Conexion.getConnection();
+//            Statement st = conn.createStatement();
+//            // Ejecutar consulta SQL
+//            String sql = "SELECT * FROM Usuarios";
+//            ResultSet resultSet = statement.executeQuery(sql);
+//
+//            while (resultSet.next()) {
+//                String ci, nombre, apellido, usuario;
+//                int rol = resultSet.getInt("rol");
+//                ci = resultSet.getString("rol");
+//                String nombre = resultSet.getString("nombre");
+//
+//            }
+//
+//            // Cerrar conexiones
+//            resultSet.close();
+//            statement.close();
+//            conn.close();
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return listaUsuarios;
+//    }
+
     //Crear Paciente
     public boolean crearPaciente(Paciente pac) {
         Connection con = null;
@@ -122,14 +154,14 @@ public class MetodosSQL {
     public boolean modificarPaciente(Paciente pac) {
         Connection con = null;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String fechaComoCadena = pac.fechaNaci.format(formatter);
-            con = Conexion.getConnection();
+        String fechaComoCadena = pac.fechaNaci.format(formatter);
+        con = Conexion.getConnection();
         String sql = "UPDATE paciente SET nombre = ?, apellido = ?, fechaNacimiento = ?, tipoSangre = ?, genero = ?, "
                 + "altura = ?, peso = ?, antecedente = ? WHERE cedula = ?";
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, pac.nombre);
             pstmt.setString(2, pac.apellido);
-            pstmt.setString(3, fechaComoCadena); 
+            pstmt.setString(3, fechaComoCadena);
             pstmt.setString(4, pac.tipoSagre);
             pstmt.setString(5, pac.genero);
             pstmt.setInt(6, Integer.valueOf(pac.altura));
@@ -160,7 +192,6 @@ public class MetodosSQL {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
                 paciente = new Paciente(
-                        
                         rs.getString("nombre"),
                         rs.getString("apellido"),
                         String.valueOf(rs.getInt("cedula")),
@@ -178,20 +209,19 @@ public class MetodosSQL {
 
         return paciente;
     }
-    
-    
+
     public boolean eliminarPacientePorCedula(String cedula) {
-    String sql = "DELETE FROM paciente WHERE cedula = ?";
-    Connection con = null;
-    con = Conexion.getConnection();
-    try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-        pstmt.setString(1, cedula);
-        int affectedRows = pstmt.executeUpdate();
-        return affectedRows > 0;
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return false;
+        String sql = "DELETE FROM paciente WHERE cedula = ?";
+        Connection con = null;
+        con = Conexion.getConnection();
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, cedula);
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
-}
 
 }
