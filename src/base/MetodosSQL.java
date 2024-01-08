@@ -1,5 +1,6 @@
 package base;
 
+import clases.Medicamento;
 import clases.Paciente;
 import clases.Usuario;
 import java.sql.Connection;
@@ -124,14 +125,14 @@ public class MetodosSQL {
     public boolean modificarPaciente(Paciente pac) {
         Connection con = null;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String fechaComoCadena = pac.fechaNaci.format(formatter);
-            con = Conexion.getConnection();
+        String fechaComoCadena = pac.fechaNaci.format(formatter);
+        con = Conexion.getConnection();
         String sql = "UPDATE paciente SET nombre = ?, apellido = ?, fechaNacimiento = ?, tipoSangre = ?, genero = ?, "
                 + "altura = ?, peso = ?, antecedente = ? WHERE cedula = ?";
-        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+        try ( PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, pac.nombre);
             pstmt.setString(2, pac.apellido);
-            pstmt.setString(3, fechaComoCadena); 
+            pstmt.setString(3, fechaComoCadena);
             pstmt.setString(4, pac.tipoSagre);
             pstmt.setString(5, pac.genero);
             pstmt.setInt(6, Integer.valueOf(pac.altura));
@@ -147,13 +148,46 @@ public class MetodosSQL {
         }
 
     }
+    public Medicamento buscarMedicamentoId(String id){
+      Connection con = null;
+        Medicamento medicamento;
+        String sql = "SELECT * FROM medicamentos WHERE id = ?";
+        con = Conexion.getConnection();  
+        try ( PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1,id );
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Asume que tienes un constructor adecuado en tu clase Paciente
+                
+
+                medicamento = new Medicamento(
+                        String.valueOf(rs.getString("id")),
+                        rs.getString("nombre"),
+                        rs.getString("especificaciones"),
+                        rs.getString("RegistroSanitario"),
+                        String.valueOf(rs.getDouble("precio")),
+                        String.valueOf(rs.getInt("cantidad")),
+                        
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return medicamento;
+        
+    }
+    public Medicamento buscarMedicamentoName(String name){
+        
+    }
 
     public Paciente obtenerPacientePorCedula(String cedula) {
         Connection con = null;
         Paciente paciente = null;
         String sql = "SELECT * FROM paciente WHERE cedula = ?";
         con = Conexion.getConnection();
-        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+        try ( PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, cedula);
             ResultSet rs = pstmt.executeQuery();
 
@@ -162,7 +196,6 @@ public class MetodosSQL {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
                 paciente = new Paciente(
-                        
                         rs.getString("nombre"),
                         rs.getString("apellido"),
                         String.valueOf(rs.getInt("cedula")),
@@ -180,22 +213,69 @@ public class MetodosSQL {
 
         return paciente;
     }
-    
-    
+
     public boolean eliminarPacientePorCedula(String cedula) {
-    String sql = "DELETE FROM paciente WHERE cedula = ?";
-    Connection con = null;
-    con = Conexion.getConnection();
-    try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-        pstmt.setString(1, cedula);
-        int affectedRows = pstmt.executeUpdate();
-        return affectedRows > 0;
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return false;
+        String sql = "DELETE FROM paciente WHERE cedula = ?";
+        Connection con = null;
+        con = Conexion.getConnection();
+        try ( PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, cedula);
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
-    
-    
-}
+    /* public String codFac() {
+         Connection con = null;
+        
+        String sql = "SELECT numFac FROM facturaVenta WHERE numFac <> 'FC000' ORDER BY numFac DESC LIMIT 1";
+        con = Conexion.getConnection();
+        int cod;
+        String autcod = "";
+         try ( PreparedStatement pstmt = con.prepareStatement(sql)) {
+           
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Asume que tienes un constructor adecuado en tu clase Paciente
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+                paciente = new Paciente(
+                        rs.getString("nombre"),
+                        rs.getString("apellido"),
+                        String.valueOf(rs.getInt("cedula")),
+                        LocalDate.parse(rs.getString("fechaNacimiento"), formatter),
+                        rs.getString("tipoSangre"),
+                        rs.getString("genero"),
+                        String.valueOf(rs.getInt("altura")),
+                        String.valueOf(rs.getInt("peso")),
+                        rs.getString("antecedente")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            ps = db.conectar().prepareStatement("SELECT numFac FROM facturaVenta WHERE numFac <> 'FC000' ORDER BY numFac DESC LIMIT 1");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                autcod = rs.getString("numFac");
+                cod = 1 + Integer.parseInt(autcod.substring(2, 5));
+                //System.out.println(cod);
+                //txtcodigo.setText("P" + String.format("%03d", codi));
+                autcod = ("FC" + String.format("%03d", cod));
+            }
+            ps.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        if (autcod.isEmpty()) {
+            autcod = "FC001";
+        }
+        return autcod;
+    }*/
 
 }
