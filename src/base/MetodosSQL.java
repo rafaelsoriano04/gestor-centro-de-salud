@@ -12,6 +12,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import utilidades.Encriptacion;
 
 /**
@@ -148,27 +150,32 @@ public class MetodosSQL {
         }
 
     }
-    public Medicamento buscarMedicamentoId(String id){
-      Connection con = null;
-        Medicamento medicamento;
-        String sql = "SELECT * FROM medicamentos WHERE id = ?";
-        con = Conexion.getConnection();  
+
+    public Medicamento buscarMedicamento(String idNombre, JComboBox<Medicamento> comboBox) {
+        Connection con = null;
+        Medicamento medicamento = null;
+        String sql;
+
+        sql = "SELECT * FROM Medicamento WHERE id = ?";
+
+        con = Conexion.getConnection();
         try ( PreparedStatement pstmt = con.prepareStatement(sql)) {
-            pstmt.setString(1,id );
+            if (sql.contains("?")) {
+                pstmt.setString(1, idNombre);
+            }
+
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                // Asume que tienes un constructor adecuado en tu clase Paciente
-                
+                // Asume que tienes un constructor adecuado en tu clase Medicamento
 
                 medicamento = new Medicamento(
-                        String.valueOf(rs.getString("id")),
+                        rs.getInt("id"),
                         rs.getString("nombre"),
                         rs.getString("especificaciones"),
                         rs.getString("RegistroSanitario"),
-                        String.valueOf(rs.getDouble("precio")),
-                        String.valueOf(rs.getInt("cantidad")),
-                        
+                        rs.getDouble("precio"),
+                        rs.getInt("cantidad")
                 );
             }
         } catch (SQLException e) {
@@ -176,12 +183,41 @@ public class MetodosSQL {
         }
 
         return medicamento;
-        
-    }
-    public Medicamento buscarMedicamentoName(String name){
-        
     }
 
+    public void llenarComboRM(JComboBox<Medicamento> medicamentos, String name) {
+        Connection con = null;
+
+        String sql = "SELECT * FROM Medicamento WHERE nombre LIKE ?";
+
+        try {
+            con = Conexion.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, "%" + name + "%");
+            ResultSet rs = pstmt.executeQuery();
+
+            // Limpia el JComboBox antes de llenarlo
+            medicamentos.removeAllItems();
+
+            boolean encontrado = false; // Variable para verificar si se encontraron resultados
+
+            while (rs.next()) {
+                Medicamento medicamento = new Medicamento(rs.getInt("id"), rs.getString("nombre"));
+                medicamentos.addItem(medicamento);
+                encontrado = true; // Se encontraron resultados
+            }
+
+            if (!encontrado) {
+                JOptionPane.showMessageDialog(null, "No se encontraron medicamentos con el nombre proporcionado");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*  public Medicamento buscarMedicamentoName(String name){
+        
+    }*/
     public Paciente obtenerPacientePorCedula(String cedula) {
         Connection con = null;
         Paciente paciente = null;
