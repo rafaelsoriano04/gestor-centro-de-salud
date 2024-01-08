@@ -53,7 +53,7 @@ public class FrmMenP extends javax.swing.JFrame {
         jPanel1.add(btn_reportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 520, 270, 60));
 
         btn_consulta.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btn_consulta.setText("CONSULTA MÉDICA");
+        btn_consulta.setText("     CONSULTA MÉDICA");
         btn_consulta.setBorderPainted(false);
         btn_consulta.setContentAreaFilled(false);
         btn_consulta.addActionListener(new java.awt.event.ActionListener() {
@@ -151,7 +151,9 @@ public class FrmMenP extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_pacientesActionPerformed
 
     private void btn_farmaciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_farmaciaActionPerformed
-        // TODO add your handling code here:
+        FrmMenuFarmacia menFar= new FrmMenuFarmacia();
+        menFar.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn_farmaciaActionPerformed
 
     /**

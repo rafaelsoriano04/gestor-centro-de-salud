@@ -12,6 +12,8 @@ public class Paciente extends Persona {
     public String antededentes;
     public String altura;
     public String peso;
+
+    
     
     
     public Paciente(String nombre, String apellido, String cedula, LocalDate fechaNaci, String tipo, String gene,String altura,
