@@ -91,36 +91,54 @@ public class MetodosSQL {
         return false;
     }
 
-//    public ArrayList<Usuario> traerUsuarios() {
-//        ArrayList<Usuario> listaUsuarios = new ArrayList<>();
-//        Connection conn = null;
-//        PreparedStatement ps = null;
-//        try {
-//            // Establecer conexión con la base de datos
-//            conn = Conexion.getConnection();
-//            Statement st = conn.createStatement();
-//            // Ejecutar consulta SQL
-//            String sql = "SELECT * FROM Usuarios";
-//            ResultSet resultSet = statement.executeQuery(sql);
-//
-//            while (resultSet.next()) {
-//                String ci, nombre, apellido, usuario;
-//                int rol = resultSet.getInt("rol");
-//                ci = resultSet.getString("rol");
-//                String nombre = resultSet.getString("nombre");
-//
-//            }
-//
-//            // Cerrar conexiones
-//            resultSet.close();
-//            statement.close();
-//            conn.close();
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return listaUsuarios;
-//    }
+    public ArrayList<Usuario> traerUsuarios() {
+        ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+        String sql = "SELECT * FROM Usuarios";
+
+        try (Connection conn = Conexion.getConnection(); Statement st = conn.createStatement(); ResultSet resultSet = st.executeQuery(sql)) {
+            while (resultSet.next()) {
+                int rol = resultSet.getInt("rol");
+                String ci = resultSet.getString("ci");
+                String usuario = resultSet.getString("usuario");
+                String nombre = resultSet.getString("nombre");
+                String apellido = resultSet.getString("apellido");
+                Usuario u = new Usuario(usuario, ci, nombre, apellido, rol);
+                listaUsuarios.add(u);
+                // Aquí debes crear un nuevo objeto Usuario y añadirlo a listaUsuarios
+                // Por ejemplo: listaUsuarios.add(new Usuario(ci, nombre, apellido, usuario, rol));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listaUsuarios;
+    }
+
+    public ArrayList<Usuario> traerUsuariosSimilares(String patron) {
+        ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+        String sql = "SELECT * FROM Usuarios WHERE ci LIKE ?"; // Reemplaza 'tu_columna' con el nombre real de tu columna
+
+        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, "%" + patron + "%"); // Configura el patrón de búsqueda
+
+            try (ResultSet resultSet = ps.executeQuery()) {
+                while (resultSet.next()) {
+                    // Suponiendo que tu clase Usuario tiene un constructor adecuado
+                    int rol = resultSet.getInt("rol");
+                    String ci = resultSet.getString("ci");
+                    String usuario = resultSet.getString("usuario");
+                    String nombre = resultSet.getString("nombre");
+                    String apellido = resultSet.getString("apellido");
+
+                    Usuario u = new Usuario(usuario, ci, nombre, apellido, rol);
+                    listaUsuarios.add(u);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listaUsuarios;
+    }
 
     //Crear Paciente
     public boolean crearPaciente(Paciente pac) {

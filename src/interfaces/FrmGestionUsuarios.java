@@ -4,11 +4,19 @@
  */
 package interfaces;
 
+import base.MetodosSQL;
+import clases.Usuario;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Usuario
  */
 public class FrmGestionUsuarios extends javax.swing.JFrame {
+
+    private ArrayList<Usuario> lUsuarios;
+    private DefaultTableModel modelo;
 
     /**
      * Creates new form FrmGestionUsers
@@ -16,10 +24,79 @@ public class FrmGestionUsuarios extends javax.swing.JFrame {
     public FrmGestionUsuarios() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.generarTabla();
+        this.cargarUsuarios();
     }
-    
+
+    private void generarTabla() {
+        this.modelo = (DefaultTableModel) this.tabla.getModel();
+        this.tabla.setModel(this.modelo);
+    }
+
+    private String getRol(int rol) {
+        /* 
+        Los roles son:
+        0 = Administrador
+        1 = Secretario
+        2 = Medico
+        3 = Enfermero
+         */
+        switch (rol) {
+            case 0:
+                return "Administrador";
+            case 1:
+                return "Secretario";
+            case 2:
+                return "Médico";
+            case 3:
+                return "Enfermero";
+            default:
+                return "";
+        }
+    }
+
     private void cargarUsuarios() {
-        
+        this.modelo.setRowCount(0);
+        this.lUsuarios = new MetodosSQL().traerUsuarios();
+        for (int i = 0; i < this.lUsuarios.size(); i++) {
+            String ci, usuario, nombre, apellido;
+            int rol;
+            ci = this.lUsuarios.get(i).ci;
+            usuario = this.lUsuarios.get(i).usuario;
+            nombre = this.lUsuarios.get(i).nombre;
+            apellido = this.lUsuarios.get(i).apellido;
+            rol = this.lUsuarios.get(i).rol;
+            nombre = nombre + " " + apellido;
+            String[] lista = new String[4];
+            lista[0] = ci;
+            lista[1] = usuario;
+            lista[2] = nombre;
+            lista[3] = this.getRol(rol);
+            this.modelo.addRow(lista);
+        }
+    }
+
+    private void cargarBusqueda() {
+        this.modelo.setRowCount(0);
+        System.out.println(this.lUsuarios.size());
+        this.lUsuarios = new MetodosSQL().traerUsuariosSimilares(this.txtCi.getText());
+        System.out.println(this.lUsuarios.size());
+        for (int i = 0; i < this.lUsuarios.size(); i++) {
+            String ci, usuario, nombre, apellido;
+            int rol;
+            ci = this.lUsuarios.get(i).ci;
+            usuario = this.lUsuarios.get(i).usuario;
+            nombre = this.lUsuarios.get(i).nombre;
+            apellido = this.lUsuarios.get(i).apellido;
+            rol = this.lUsuarios.get(i).rol;
+            nombre = nombre + " " + apellido;
+            String[] lista = new String[4];
+            lista[0] = ci;
+            lista[1] = usuario;
+            lista[2] = nombre;
+            lista[3] = this.getRol(rol);
+            this.modelo.addRow(lista);
+        }
     }
 
     /**
@@ -112,6 +189,11 @@ public class FrmGestionUsuarios extends javax.swing.JFrame {
         btnRefrescar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnRefrescar.setForeground(new java.awt.Color(0, 0, 0));
         btnRefrescar.setText("Refrescar");
+        btnRefrescar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefrescarActionPerformed(evt);
+            }
+        });
         jPanel3.add(btnRefrescar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 400, 110, 37));
 
         btnModificar.setBackground(new java.awt.Color(153, 153, 153));
@@ -135,6 +217,11 @@ public class FrmGestionUsuarios extends javax.swing.JFrame {
         btnBuscar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
         jPanel3.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 110, 37));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconoUsuario.png"))); // NOI18N
@@ -177,6 +264,18 @@ public class FrmGestionUsuarios extends javax.swing.JFrame {
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCrearActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        if (!this.txtCi.getText().equals("")) {
+            this.cargarBusqueda();
+            this.txtCi.setText("");
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarActionPerformed
+        this.cargarUsuarios();
+        this.txtCi.setText("");
+    }//GEN-LAST:event_btnRefrescarActionPerformed
 
     /**
      * @param args the command line arguments
