@@ -5,10 +5,10 @@ package clases;
  * @author Usuario
  */
 public class Medicamento {
-    int id;
-    String nombre, especificaciones, regisSani;
-    double precio;
-    int cantidad;
+    public int id;
+    public String nombre, especificaciones, regisSani;
+    public double precio;
+    public int cantidad;
 
     public Medicamento(int id, String nombre, String especificaciones, String regisSani, double precio, int cantidad) {
         this.id = id;

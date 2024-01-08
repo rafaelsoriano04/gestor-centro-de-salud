@@ -1,5 +1,6 @@
 package base;
 
+import clases.Medicamento;
 import clases.Paciente;
 import clases.Usuario;
 import java.sql.Connection;
@@ -197,5 +198,26 @@ public class MetodosSQL {
     
     
 }
+    //metodos para medicamento
+    
+    public boolean crearMedicamento(Medicamento me){
+        Connection con=null;
+        try {
+            con=Conexion.getConnection();
+            String sql= "INSERT INTO Medicamento (id, nombre, especificaciones, RegistroSanitario, precio, cantidad "
+                    + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, me.id);
+            ps.setString(2, me.nombre);
+            ps.setString(3, me.especificaciones);
+            ps.setString(4, me.regisSani);
+            ps.setDouble(5, me.precio);
+            ps.setInt(6, me.cantidad);
+            ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+        }
+        return false;
+    }
 
 }
