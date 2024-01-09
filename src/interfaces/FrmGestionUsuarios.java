@@ -4,17 +4,115 @@
  */
 package interfaces;
 
+import base.MetodosSQL;
+import clases.Usuario;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Usuario
  */
 public class FrmGestionUsuarios extends javax.swing.JFrame {
 
+    private ArrayList<Usuario> lUsuarios;
+    private DefaultTableModel modelo;
+
     /**
      * Creates new form FrmGestionUsers
      */
     public FrmGestionUsuarios() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.generarTabla();
+        this.cargarUsuarios();
+        this.txtNoHay.setVisible(false);
+        this.txtCampV.setVisible(false);
+    }
+
+    private void generarTabla() {
+        this.modelo = (DefaultTableModel) this.tabla.getModel();
+        this.tabla.setModel(this.modelo);
+    }
+
+    private String getRol(int rol) {
+        /*
+        Los roles son:
+        0 = Administrador
+        1 = Secretario
+        2 = Medico
+        3 = Enfermero
+         */
+        return switch (rol) {
+            case 0 ->
+                "Administrador";
+            case 1 ->
+                "Secretario";
+            case 2 ->
+                "Médico";
+            case 3 ->
+                "Enfermero";
+            default ->
+                null;
+        };
+    }
+
+    private void cargarUsuarios() {
+        this.modelo.setRowCount(0);
+        this.txtNoHay.setVisible(false);
+        this.txtCampV.setVisible(false);
+        this.lUsuarios = new MetodosSQL().traerUsuarios();
+        if (!this.lUsuarios.isEmpty()) {
+            for (int i = 0; i < this.lUsuarios.size(); i++) {
+                String ci, usuario, nombre, apellido;
+                int rol;
+                ci = this.lUsuarios.get(i).ci;
+                usuario = this.lUsuarios.get(i).usuario;
+                nombre = this.lUsuarios.get(i).nombre;
+                apellido = this.lUsuarios.get(i).apellido;
+                rol = this.lUsuarios.get(i).rol;
+                nombre = nombre + " " + apellido;
+                String[] lista = new String[4];
+                lista[0] = ci;
+                lista[1] = usuario;
+                lista[2] = nombre;
+                lista[3] = this.getRol(rol);
+                this.modelo.addRow(lista);
+            }
+        } else {
+            this.txtNoHay.setVisible(false);
+        }
+
+    }
+
+    private void cargarBusqueda() {
+        this.txtNoHay.setVisible(false);
+        this.modelo.setRowCount(0);
+        System.out.println(this.lUsuarios.size());
+        this.lUsuarios = new MetodosSQL().traerUsuariosSimilares(this.txtCi.getText());
+        System.out.println(this.lUsuarios.size());
+        if (!this.lUsuarios.isEmpty()) {
+            for (int i = 0; i < this.lUsuarios.size(); i++) {
+                String ci, usuario, nombre, apellido;
+                int rol;
+                ci = this.lUsuarios.get(i).ci;
+                usuario = this.lUsuarios.get(i).usuario;
+                nombre = this.lUsuarios.get(i).nombre;
+                apellido = this.lUsuarios.get(i).apellido;
+                rol = this.lUsuarios.get(i).rol;
+                nombre = nombre + " " + apellido;
+                String[] lista = new String[4];
+                lista[0] = ci;
+                lista[1] = usuario;
+                lista[2] = nombre;
+                lista[3] = this.getRol(rol);
+                this.modelo.addRow(lista);
+            }
+        } else {
+            this.txtNoHay.setVisible(true);
+        }
+
     }
 
     /**
@@ -29,54 +127,61 @@ public class FrmGestionUsuarios extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        Eliminar = new javax.swing.JButton();
+        tabla = new javax.swing.JTable();
+        BtnEliminar = new javax.swing.JButton();
         txtCi = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnRefrescar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnCrear = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtNoHay = new javax.swing.JLabel();
+        txtCampV = new javax.swing.JLabel();
+        BtnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Gestión de Usuarios");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 280, 60));
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 270, 60));
 
-        jTable1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabla.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Cedula", "Nombre", "Rol"
+                "Cédula", "Usuario", "Nombre", "Rol"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        tabla.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tabla);
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 630, 240));
 
-        Eliminar.setBackground(new java.awt.Color(255, 0, 51));
-        Eliminar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        Eliminar.setForeground(new java.awt.Color(0, 0, 0));
-        Eliminar.setText("Eliminar");
-        Eliminar.addActionListener(new java.awt.event.ActionListener() {
+        BtnEliminar.setBackground(new java.awt.Color(153, 153, 153));
+        BtnEliminar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        BtnEliminar.setForeground(new java.awt.Color(0, 0, 0));
+        BtnEliminar.setText("Eliminar");
+        BtnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EliminarActionPerformed(evt);
+                BtnEliminarActionPerformed(evt);
             }
         });
-        jPanel3.add(Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 400, 97, 37));
+        jPanel3.add(BtnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 400, 97, 37));
 
         txtCi.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         txtCi.addActionListener(new java.awt.event.ActionListener() {
@@ -95,32 +200,77 @@ public class FrmGestionUsuarios extends javax.swing.JFrame {
         jPanel3.add(txtCi, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 140, 31));
 
         jLabel3.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jLabel3.setText("Cedula:");
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("Cédula:");
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 60, 30));
 
-        jButton2.setBackground(new java.awt.Color(102, 204, 0));
-        jButton2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(0, 0, 0));
-        jButton2.setText("Refrescar");
-        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 400, 110, 37));
+        btnRefrescar.setBackground(new java.awt.Color(153, 153, 153));
+        btnRefrescar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btnRefrescar.setForeground(new java.awt.Color(0, 0, 0));
+        btnRefrescar.setText("Refrescar");
+        btnRefrescar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefrescarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnRefrescar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 400, 110, 37));
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 102));
-        jButton3.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(0, 0, 0));
-        jButton3.setText("Modificar");
-        jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 400, 110, 37));
+        btnModificar.setBackground(new java.awt.Color(153, 153, 153));
+        btnModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btnModificar.setForeground(new java.awt.Color(0, 0, 0));
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 400, 110, 37));
 
-        jButton1.setBackground(new java.awt.Color(204, 204, 204));
-        jButton1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
-        jButton1.setText("Crear Usuario");
-        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 80, -1, 37));
+        btnCrear.setBackground(new java.awt.Color(153, 153, 153));
+        btnCrear.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btnCrear.setForeground(new java.awt.Color(0, 0, 0));
+        btnCrear.setText("Crear usuario");
+        btnCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 80, -1, 37));
 
-        jButton4.setBackground(new java.awt.Color(153, 153, 153));
-        jButton4.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(0, 0, 0));
-        jButton4.setText("Buscar");
-        jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 110, 37));
+        btnBuscar.setBackground(new java.awt.Color(153, 153, 153));
+        btnBuscar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 110, 37));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconoUsuario.png"))); // NOI18N
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+
+        txtNoHay.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        txtNoHay.setForeground(new java.awt.Color(255, 51, 51));
+        txtNoHay.setText("No hay coincidencias");
+        jPanel3.add(txtNoHay, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, -1, -1));
+
+        txtCampV.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        txtCampV.setForeground(new java.awt.Color(255, 51, 51));
+        txtCampV.setText("Campos vacios");
+        jPanel3.add(txtCampV, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, -1, -1));
+
+        BtnVolver.setBackground(new java.awt.Color(153, 153, 153));
+        BtnVolver.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        BtnVolver.setForeground(new java.awt.Color(0, 0, 0));
+        BtnVolver.setText("Volver");
+        BtnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnVolverActionPerformed(evt);
+            }
+        });
+        jPanel3.add(BtnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 400, 97, 37));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,9 +288,18 @@ public class FrmGestionUsuarios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EliminarActionPerformed
+    private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
+        int fila = this.tabla.getSelectedRow();
+        if (fila >= 0) {
+           String usuario = this.tabla.getValueAt(fila, 1).toString();
+            if (new MetodosSQL().eliminarUsuario(usuario)) {
+                JOptionPane.showMessageDialog(null, "Usuario eliminado.");
+                this.cargarUsuarios();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un usuario.");
+        }
+    }//GEN-LAST:event_BtnEliminarActionPerformed
 
     private void txtCiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCiActionPerformed
 
@@ -154,7 +313,46 @@ public class FrmGestionUsuarios extends javax.swing.JFrame {
         if (!Character.isDigit(c) || txtCi.getText().length() >= 10) {
             evt.consume();  // Si no es un dígito o si la longitud es de 10 o más, consume el evento
         }
+
     }//GEN-LAST:event_txtCiKeyTyped
+
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        new FrmCrearUsuario().setVisible(true);
+    }//GEN-LAST:event_btnCrearActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        if (!this.txtCi.getText().equals("")) {
+            this.txtCampV.setVisible(false);
+            this.cargarBusqueda();
+            this.txtCi.setText("");
+        } else {
+            this.txtCampV.setVisible(true);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarActionPerformed
+        this.cargarUsuarios();
+        this.txtCi.setText("");
+    }//GEN-LAST:event_btnRefrescarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        int fila = this.tabla.getSelectedRow();
+        if (fila >= 0) {
+           String usuario = this.tabla.getValueAt(fila, 1).toString();
+           Usuario u = new MetodosSQL().getUsuario(usuario);
+           new FrmModificarUsuario(u).setVisible(true);
+           this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un usuario.");
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void BtnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnVolverActionPerformed
+        this.dispose();
+        // Se debe abrir el menu principal
+    }//GEN-LAST:event_BtnVolverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,16 +393,20 @@ public class FrmGestionUsuarios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Eliminar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton BtnEliminar;
+    private javax.swing.JButton BtnVolver;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCrear;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnRefrescar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tabla;
+    private javax.swing.JLabel txtCampV;
     private javax.swing.JTextField txtCi;
+    private javax.swing.JLabel txtNoHay;
     // End of variables declaration//GEN-END:variables
 }

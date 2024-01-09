@@ -1,21 +1,40 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaces;
 
-/**
- *
- * @author Usuario
- */
-public class FrmCrearUsuario extends javax.swing.JFrame {
+import clases.Usuario;
 
+public class FrmCrearUsuario extends javax.swing.JFrame {
+    private Usuario usuario;
+    
     /**
      * Creates new form FrmCrearUs
      */
     public FrmCrearUsuario() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.usuario = new Usuario();
+    }
+    
+    private int definirRol() {
+        if (this.cbAdmin.isSelected()) {
+            return 0;
+        } else if (this.cbSecre.isSelected()) {
+            return 1;
+        } else if (this.cbMed.isSelected()) {
+            return 2;
+        } else if (this.cbEnf.isSelected()) {
+            return 3;
+        } else {
+            return 4;
+        }
+    }
+    
+    private void definirUsuario() {
+        this.usuario.usuario = this.txtUsuario.getText();
+        this.usuario.ci = this.txtCi.getText();
+        this.usuario.nombre = this.txtNombre.getText();
+        this.usuario.apellido = this.txtApellido.getText();
+        this.usuario.rol = this.definirRol();
+        this.usuario.contraseña = this.txtContra.getText();
     }
 
     /**
@@ -31,15 +50,21 @@ public class FrmCrearUsuario extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtApellido = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
         rol = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtCi = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        Administrador = new javax.swing.JCheckBox();
-        Administrador1 = new javax.swing.JCheckBox();
-        Administrador2 = new javax.swing.JCheckBox();
-        Administrador3 = new javax.swing.JCheckBox();
+        cbMed = new javax.swing.JCheckBox();
+        cbAdmin = new javax.swing.JCheckBox();
+        cbEnf = new javax.swing.JCheckBox();
+        cbSecre = new javax.swing.JCheckBox();
+        btnCrear = new javax.swing.JButton();
+        btnVolver = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        txtUsuario = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtContra = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,60 +75,109 @@ public class FrmCrearUsuario extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Registro");
-        jPanel7.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, -1, -1));
+        jPanel7.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Apellido:");
-        jPanel7.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+        jPanel7.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Nombre:");
-        jPanel7.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
-        jPanel7.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 190, -1));
-        jPanel7.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 190, -1));
+        jPanel7.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
+
+        txtApellido.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jPanel7.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, 190, -1));
+
+        txtNombre.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jPanel7.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 130, 190, -1));
 
         rol.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         rol.setForeground(new java.awt.Color(0, 0, 0));
         rol.setText("Rol:");
-        jPanel7.add(rol, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
-        jPanel7.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 190, -1));
+        jPanel7.add(rol, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, -1, -1));
+
+        txtCi.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jPanel7.add(txtCi, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 190, -1));
 
         jLabel5.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Cedula:");
-        jPanel7.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, -1, -1));
+        jLabel5.setText("Cédula:");
+        jPanel7.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, -1, -1));
 
-        Administrador.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        Administrador.setForeground(new java.awt.Color(0, 0, 0));
-        Administrador.setText("Medico");
-        Administrador.addActionListener(new java.awt.event.ActionListener() {
+        cbMed.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        cbMed.setForeground(new java.awt.Color(0, 0, 0));
+        cbMed.setText("Medico");
+        cbMed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AdministradorActionPerformed(evt);
+                cbMedActionPerformed(evt);
             }
         });
-        jPanel7.add(Administrador, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 220, -1, -1));
+        jPanel7.add(cbMed, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, -1, -1));
 
-        Administrador1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        Administrador1.setForeground(new java.awt.Color(0, 0, 0));
-        Administrador1.setText("Admin");
-        Administrador1.addActionListener(new java.awt.event.ActionListener() {
+        cbAdmin.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        cbAdmin.setForeground(new java.awt.Color(0, 0, 0));
+        cbAdmin.setText("Admin");
+        cbAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Administrador1ActionPerformed(evt);
+                cbAdminActionPerformed(evt);
             }
         });
-        jPanel7.add(Administrador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, -1));
+        jPanel7.add(cbAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, -1, -1));
 
-        Administrador2.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        Administrador2.setForeground(new java.awt.Color(0, 0, 0));
-        Administrador2.setText("Enfermero");
-        jPanel7.add(Administrador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 250, -1, -1));
+        cbEnf.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        cbEnf.setForeground(new java.awt.Color(0, 0, 0));
+        cbEnf.setText("Enfermero");
+        cbEnf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbEnfActionPerformed(evt);
+            }
+        });
+        jPanel7.add(cbEnf, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 320, -1, -1));
 
-        Administrador3.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        Administrador3.setForeground(new java.awt.Color(0, 0, 0));
-        Administrador3.setText("Secretari@");
-        jPanel7.add(Administrador3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, -1));
+        cbSecre.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        cbSecre.setForeground(new java.awt.Color(0, 0, 0));
+        cbSecre.setText("Secretari@");
+        cbSecre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbSecreActionPerformed(evt);
+            }
+        });
+        jPanel7.add(cbSecre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 320, -1, -1));
+
+        btnCrear.setBackground(new java.awt.Color(153, 153, 153));
+        btnCrear.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btnCrear.setForeground(new java.awt.Color(0, 0, 0));
+        btnCrear.setText("Crear");
+        btnCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearActionPerformed(evt);
+            }
+        });
+        jPanel7.add(btnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 360, 110, 37));
+
+        btnVolver.setBackground(new java.awt.Color(153, 153, 153));
+        btnVolver.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btnVolver.setForeground(new java.awt.Color(0, 0, 0));
+        btnVolver.setText("Cancelar");
+        jPanel7.add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 110, 37));
+
+        jLabel6.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("Usuario:");
+        jPanel7.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
+
+        txtUsuario.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jPanel7.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 190, -1));
+
+        jLabel7.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel7.setText("Contraseña:");
+        jPanel7.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
+
+        txtContra.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jPanel7.add(txtContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, 190, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -113,19 +187,58 @@ public class FrmCrearUsuario extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void Administrador1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Administrador1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Administrador1ActionPerformed
+    private void cbAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAdminActionPerformed
+        if (this.cbAdmin.isSelected()) {
+            this.cbEnf.setSelected(false);
+            this.cbMed.setSelected(false);
+            this.cbSecre.setSelected(false);
+        }
+    }//GEN-LAST:event_cbAdminActionPerformed
 
-    private void AdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdministradorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AdministradorActionPerformed
+    private void cbMedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMedActionPerformed
+        if (this.cbMed.isSelected()) {
+            this.cbEnf.setSelected(false);
+            this.cbAdmin.setSelected(false);
+            this.cbSecre.setSelected(false);
+        }
+    }//GEN-LAST:event_cbMedActionPerformed
+
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
+        if (!this.txtUsuario.getText().replaceAll(" ", "").equals("") 
+                && !this.txtCi.getText().replaceAll(" ", "").equals("") 
+                && !this.txtNombre.getText().replaceAll(" ", "").equals("") 
+                && !this.txtApellido.getText().replaceAll(" ", "").equals("")
+                && !this.txtContra.getText().replaceAll(" ", "").equals("")
+                && this.definirRol() != 4) {
+            this.definirUsuario();
+            new FrmRegistrarPreguntas(this.usuario).setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnCrearActionPerformed
+
+    private void cbSecreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSecreActionPerformed
+        if (this.cbSecre.isSelected()) {
+            this.cbEnf.setSelected(false);
+            this.cbMed.setSelected(false);
+            this.cbAdmin.setSelected(false);
+        }
+    }//GEN-LAST:event_cbSecreActionPerformed
+
+    private void cbEnfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEnfActionPerformed
+        if (this.cbEnf.isSelected()) {
+            this.cbAdmin.setSelected(false);
+            this.cbMed.setSelected(false);
+            this.cbSecre.setSelected(false);
+        }
+    }//GEN-LAST:event_cbEnfActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,18 +279,24 @@ public class FrmCrearUsuario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox Administrador;
-    private javax.swing.JCheckBox Administrador1;
-    private javax.swing.JCheckBox Administrador2;
-    private javax.swing.JCheckBox Administrador3;
+    private javax.swing.JButton btnCrear;
+    private javax.swing.JButton btnVolver;
+    private javax.swing.JCheckBox cbAdmin;
+    private javax.swing.JCheckBox cbEnf;
+    private javax.swing.JCheckBox cbMed;
+    private javax.swing.JCheckBox cbSecre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel rol;
+    private javax.swing.JTextField txtApellido;
+    private javax.swing.JTextField txtCi;
+    private javax.swing.JTextField txtContra;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
