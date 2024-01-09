@@ -3,8 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/usuario/Documents/TercerSemestre/modelamiento/proyecCentroS/proyectoCentroDeSalud/nbproject/private/private.xml</file>
+            <file>file:/C:/Users/usuario/Documents/TercerSemestre/modelamiento/proyecCentroS/proyectoCentroDeSalud/src/interfaces/hol.java</file>
+            <file>file:/C:/Users/usuario/Documents/TercerSemestre/modelamiento/proyecCentroS/proyectoCentroDeSalud/src/interfaces/FrmCrearPacientes.java</file>
+            <file>file:/C:/Users/usuario/Documents/TercerSemestre/modelamiento/proyecCentroS/proyectoCentroDeSalud/src/interfaces/FrmBuscarMedicamento.java</file>
             <file>file:/C:/Users/usuario/Documents/TercerSemestre/modelamiento/proyecCentroS/proyectoCentroDeSalud/src/clases/Medicamento.java</file>
             <file>file:/C:/Users/usuario/Documents/TercerSemestre/modelamiento/proyecCentroS/proyectoCentroDeSalud/src/base/MetodosSQL.java</file>
+            <file>file:/C:/Users/usuario/Documents/TercerSemestre/modelamiento/proyecCentroS/proyectoCentroDeSalud/src/interfaces/FrmBuscarRM.java</file>
+            <file>file:/C:/Users/usuario/Documents/TercerSemestre/modelamiento/proyecCentroS/proyectoCentroDeSalud/src/clases/RecetaMedica.java</file>
             <file>file:/C:/Users/usuario/Documents/TercerSemestre/modelamiento/proyecCentroS/proyectoCentroDeSalud/src/interfaces/FrmCrearRM.java</file>
         </group>
     </open-files>
