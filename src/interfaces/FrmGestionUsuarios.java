@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaces;
 
 import base.MetodosSQL;
@@ -18,17 +14,20 @@ public class FrmGestionUsuarios extends javax.swing.JFrame {
 
     private ArrayList<Usuario> lUsuarios;
     private DefaultTableModel modelo;
+    private Usuario uActivo;
 
     /**
      * Creates new form FrmGestionUsers
      */
-    public FrmGestionUsuarios() {
+    
+    public FrmGestionUsuarios(Usuario u) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.generarTabla();
         this.cargarUsuarios();
         this.txtNoHay.setVisible(false);
         this.txtCampV.setVisible(false);
+        this.uActivo = u;
     }
 
     private void generarTabla() {
@@ -140,7 +139,7 @@ public class FrmGestionUsuarios extends javax.swing.JFrame {
         txtCampV = new javax.swing.JLabel();
         BtnVolver = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -292,9 +291,11 @@ public class FrmGestionUsuarios extends javax.swing.JFrame {
         int fila = this.tabla.getSelectedRow();
         if (fila >= 0) {
            String usuario = this.tabla.getValueAt(fila, 1).toString();
-            if (new MetodosSQL().eliminarUsuario(usuario)) {
+            if (!usuario.equals(this.uActivo.usuario) && new MetodosSQL().eliminarUsuario(usuario)) {
                 JOptionPane.showMessageDialog(null, "Usuario eliminado.");
                 this.cargarUsuarios();
+            } else {
+                JOptionPane.showMessageDialog(null, "No se puede eliminar el usuario activo");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un usuario.");
@@ -387,7 +388,7 @@ public class FrmGestionUsuarios extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmGestionUsuarios().setVisible(true);
+                new FrmGestionUsuarios(null).setVisible(true);
             }
         });
     }

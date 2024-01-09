@@ -6,7 +6,6 @@ import interfaces.FrmMenP;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import utilidades.Encriptacion;
 
 // Clase con los metodos del login
 public class ControladorLogin {
@@ -18,8 +17,7 @@ public class ControladorLogin {
             return false;
         }
         try {
-            if (new Encriptacion().desencriptar(tempUser.contraseña).equals(contraseña)) {
-                JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso.");
+            if (tempUser.contraseña.equals(contraseña)) {
                 this.ocultarBoton(tempUser);
                 return true;
             }
@@ -31,14 +29,20 @@ public class ControladorLogin {
     }
 
     public void ocultarBoton(Usuario tempUser) {
-        FrmMenP menP = new FrmMenP();
+        FrmMenP menP = new FrmMenP(tempUser);
         menP.setVisible(true);
         menP.btn_pacientes.setEnabled(true);
-        menP.btn_usuarios.setEnabled(tempUser.rol == 0 || tempUser.rol == 1);
-        menP.btn_citas.setEnabled(tempUser.rol == 0 || tempUser.rol == 1 || tempUser.rol == 2);
-        menP.btn_consulta.setEnabled(tempUser.rol == 0 || tempUser.rol == 1 || tempUser.rol == 2 || tempUser.rol == 3);
+        menP.btn_usuarios.setEnabled(tempUser.rol == 0);
+        menP.btn_citas.setEnabled(tempUser.rol == 0 || tempUser.rol == 1 || tempUser.rol == 3);
+        menP.btn_consulta.setEnabled(tempUser.rol == 3);
         menP.btn_farmacia.setEnabled(tempUser.rol == 0 || tempUser.rol == 1 || tempUser.rol == 2);
         menP.btn_reportes.setEnabled(tempUser.rol == 0 || tempUser.rol == 1 || tempUser.rol == 3);
-
     }
+    /*
+        Los roles son:
+        0 = Administrador
+        1 = Secretario
+        2 = Medico
+        3 = Enfermero
+    */
 }

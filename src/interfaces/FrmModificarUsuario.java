@@ -131,7 +131,7 @@ public class FrmModificarUsuario extends javax.swing.JFrame {
             if (new MetodosSQL().updateUsuario(usuario.usuario, txtUsuario.getText(), this.txtNombre.getText(),
                     this.txtApellido.getText())) {
                 JOptionPane.showMessageDialog(null, "Usuario modificado correctamente.");
-                new FrmGestionUsuarios().setVisible(true);
+                new FrmGestionUsuarios(this.usuario).setVisible(true);
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "El nombre de usuario ya existe.");

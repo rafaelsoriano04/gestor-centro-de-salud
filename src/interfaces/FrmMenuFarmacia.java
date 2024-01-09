@@ -4,19 +4,24 @@
  */
 package interfaces;
 
+import clases.Usuario;
+
 /**
  *
  * @author usuario
  */
 public class FrmMenuFarmacia extends javax.swing.JFrame {
 
+    private Usuario usuario;
+
     /**
      * Creates new form FrmMenuRM
      */
-    public FrmMenuFarmacia() {
+    public FrmMenuFarmacia(Usuario u) {
         initComponents();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
+        this.usuario = u;
     }
 
     /**
@@ -89,19 +94,19 @@ public class FrmMenuFarmacia extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_regresarMPrinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regresarMPrinActionPerformed
-        FrmMenP menP= new FrmMenP();
+        FrmMenP menP = new FrmMenP(this.usuario);
         menP.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_regresarMPrinActionPerformed
 
     private void btn_recetaMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_recetaMActionPerformed
-        FrmMenuRM menRM= new FrmMenuRM();
+        FrmMenuRM menRM = new FrmMenuRM(this.usuario);
         menRM.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_recetaMActionPerformed
 
     private void btn_medicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_medicActionPerformed
-        FrmMenuMedicamento menumedic= new FrmMenuMedicamento();
+        FrmMenuMedicamento menumedic = new FrmMenuMedicamento(this.usuario);
         menumedic.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_medicActionPerformed
@@ -137,7 +142,7 @@ public class FrmMenuFarmacia extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmMenuFarmacia().setVisible(true);
+                new FrmMenuFarmacia(null).setVisible(true);
             }
         });
     }

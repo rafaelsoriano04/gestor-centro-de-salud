@@ -1,4 +1,3 @@
-
 package interfaces;
 
 import clases.Usuario;
@@ -10,6 +9,7 @@ import clases.Usuario;
 public class FrmMenP extends javax.swing.JFrame {
 
     private Usuario usuario;
+
     public FrmMenP(Usuario usuario) {
         initComponents();
         this.usuario = usuario;
@@ -111,25 +111,25 @@ public class FrmMenP extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_reportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reportesActionPerformed
-        
+
     }//GEN-LAST:event_btn_reportesActionPerformed
 
     private void btn_consultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consultaActionPerformed
-        new FrmMenuConsultaMedica( usuario).setVisible(true);
+        new FrmMenuConsultaMedica(usuario).setVisible(true);
     }//GEN-LAST:event_btn_consultaActionPerformed
 
     private void btn_citasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_citasActionPerformed
@@ -137,21 +137,21 @@ public class FrmMenP extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_citasActionPerformed
 
     private void btn_usuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_usuariosActionPerformed
-        FrmGestionUsuarios menuUs=new FrmGestionUsuarios();
+        FrmGestionUsuarios menuUs = new FrmGestionUsuarios(this.usuario);
         menuUs.setVisible(true);
-        
+
     }//GEN-LAST:event_btn_usuariosActionPerformed
 
     private void btn_pacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pacientesActionPerformed
-        FrmMenuPaciente menuPacientes=new FrmMenuPaciente();
+        FrmMenuPaciente menuPacientes = new FrmMenuPaciente();
         menuPacientes.setVisible(true);
-        
+
     }//GEN-LAST:event_btn_pacientesActionPerformed
 
     private void btn_farmaciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_farmaciaActionPerformed
-        FrmMenuFarmacia menFar= new FrmMenuFarmacia();
+        FrmMenuFarmacia menFar = new FrmMenuFarmacia(this.usuario);
         menFar.setVisible(true);
-        
+
     }//GEN-LAST:event_btn_farmaciaActionPerformed
 
     /**
