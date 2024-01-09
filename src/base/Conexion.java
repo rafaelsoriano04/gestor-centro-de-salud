@@ -15,9 +15,10 @@ public class Conexion {
             if (connection == null || connection.isClosed()) {
                 Class.forName(driver);
                 connection = DriverManager.getConnection(url);
+                System.out.println("Se conecto");
             }
         } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error" + e.getMessage());
         }
         return connection;
     }

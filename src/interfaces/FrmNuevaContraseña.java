@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaces;
 
 import base.MetodosSQL;
@@ -15,14 +11,11 @@ import utilidades.Encriptacion;
  *
  * @author Usuario
  */
-public class FrmNuevaContra extends javax.swing.JFrame {
+public class FrmNuevaContraseña extends javax.swing.JFrame {
 
     public Usuario usuario;
 
-    /**
-     * Creates new form FrmNuevaContra
-     */
-    public FrmNuevaContra() {
+    public FrmNuevaContraseña() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -40,65 +33,78 @@ public class FrmNuevaContra extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtUsuario = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtContra = new javax.swing.JTextField();
+        txtUsuario = new javax.swing.JLabel();
         btnOk = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Usuario:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
 
+        jLabel3.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Nueva contraseña:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
 
+        txtContra.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtContra.setForeground(new java.awt.Color(0, 0, 0));
         txtContra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtContraActionPerformed(evt);
             }
         });
+        jPanel1.add(txtContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 210, -1));
 
+        txtUsuario.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtUsuario.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 190, 16));
+
+        btnOk.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btnOk.setForeground(new java.awt.Color(0, 0, 0));
         btnOk.setText("OK");
         btnOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOkActionPerformed(evt);
             }
         });
+        jPanel1.add(btnOk, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 150, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Validación exitosa, a continuacion crea una nueva contraseña...");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, 30));
+
+        btnCancelar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(0, 0, 0));
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtContra, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(btnOk)))
-                .addContainerGap(59, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnOk)
-                .addContainerGap(24, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -120,10 +126,15 @@ public class FrmNuevaContra extends javax.swing.JFrame {
                     this.dispose();
                 }
             } catch (Exception ex) {
-                Logger.getLogger(FrmNuevaContra.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrmNuevaContraseña.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnOkActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+        new FrmLogin().setVisible(true);
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -142,29 +153,34 @@ public class FrmNuevaContra extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmNuevaContra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmNuevaContraseña.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmNuevaContra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmNuevaContraseña.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmNuevaContra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmNuevaContraseña.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmNuevaContra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmNuevaContraseña.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmNuevaContra().setVisible(true);
+                new FrmNuevaContraseña().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnOk;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtContra;
     private javax.swing.JLabel txtUsuario;
     // End of variables declaration//GEN-END:variables

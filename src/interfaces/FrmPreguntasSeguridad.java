@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
  *
  * @author Usuario
  */
-public class FrmRecuperarC extends javax.swing.JFrame {
+public class FrmPreguntasSeguridad extends javax.swing.JFrame {
 
     /*
     Preguntas de seguridad:
@@ -25,13 +25,13 @@ public class FrmRecuperarC extends javax.swing.JFrame {
     private final String pregunta1 = "¿Cuál es el nombre de tu primera mascota?";
     private final String pregunta2 = "¿Cuál es el nombre de la ciudad en la que naciste?";
     private final String pregunta3 = "¿Cuál es el nombre de la primera escuela a la que asististe?";
-    private final String pregunta4 = "¿Cuál era el apodo de tun infancia?";
+    private final String pregunta4 = "¿Cuál era el apodo de tu infancia?";
     public Usuario usuario;
 
     /**
      * Creates new form FrmRecuperarC
      */
-    public FrmRecuperarC() {
+    public FrmPreguntasSeguridad() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.generarArray();
@@ -66,17 +66,19 @@ public class FrmRecuperarC extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        cbPregunta1 = new javax.swing.JComboBox<>();
-        txtRespuesta1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        cbPregunta1 = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        txtRespuesta2 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        txtRespuesta1 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         cbPregunta2 = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        txtRespuesta2 = new javax.swing.JTextField();
         btnRecuperar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -87,59 +89,106 @@ public class FrmRecuperarC extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel1.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Recuperar contraseña");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, -1, -1));
 
+        jLabel2.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel2.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Seleccione y responda las preguntas de seguridad:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 290, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 310, -1));
 
+        jLabel3.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel3.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("Pregunta 1:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 70, -1));
+
+        cbPregunta1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         cbPregunta1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbPregunta1ActionPerformed(evt);
             }
         });
-        getContentPane().add(cbPregunta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(129, 84, 350, -1));
+        jPanel1.add(cbPregunta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 400, -1));
 
+        jLabel4.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel4.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Respuesta 1:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 80, -1));
+
+        txtRespuesta1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         txtRespuesta1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtRespuesta1ActionPerformed(evt);
             }
         });
-        getContentPane().add(txtRespuesta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(129, 122, 350, -1));
-
-        jLabel3.setText("Pregunta 1:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 89, 69, -1));
-
-        jLabel4.setText("Respuesta 1:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 127, 70, -1));
-
-        txtRespuesta2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtRespuesta2ActionPerformed(evt);
+        txtRespuesta1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRespuesta1KeyTyped(evt);
             }
         });
-        getContentPane().add(txtRespuesta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(129, 215, 350, -1));
+        jPanel1.add(txtRespuesta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 400, -1));
 
-        jLabel5.setText("Respuesta 2:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 69, -1));
-
+        jLabel6.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel6.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Pregunta 2:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 182, 69, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 70, -1));
 
+        cbPregunta2.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         cbPregunta2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbPregunta2ActionPerformed(evt);
             }
         });
-        getContentPane().add(cbPregunta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(129, 177, 350, -1));
+        jPanel1.add(cbPregunta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 400, -1));
 
+        jLabel5.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel5.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Respuesta 2:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 80, -1));
+
+        txtRespuesta2.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        txtRespuesta2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRespuesta2ActionPerformed(evt);
+            }
+        });
+        txtRespuesta2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRespuesta2KeyTyped(evt);
+            }
+        });
+        jPanel1.add(txtRespuesta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 400, -1));
+
+        btnRecuperar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnRecuperar.setText("Recuperar");
         btnRecuperar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRecuperarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRecuperar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 260, 110, -1));
+        jPanel1.add(btnRecuperar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 250, 110, -1));
+
+        btnCancelar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, -1, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 300));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -168,7 +217,7 @@ public class FrmRecuperarC extends javax.swing.JFrame {
         } else {
             if (this.usuario.respuestas.get(temp1).equals(this.txtRespuesta1.getText())
                     && this.usuario.respuestas.get(temp2).equals(this.txtRespuesta2.getText())) {
-                FrmNuevaContra frmN = new FrmNuevaContra();
+                FrmNuevaContraseña frmN = new FrmNuevaContraseña();
                 frmN.setVisible(true);
                 frmN.usuario = this.usuario;
                 frmN.nombreUsuario(this.usuario.usuario);
@@ -182,6 +231,23 @@ public class FrmRecuperarC extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.txtRespuesta1.requestFocus();
     }//GEN-LAST:event_formWindowOpened
+
+    private void txtRespuesta1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRespuesta1KeyTyped
+        if (this.txtRespuesta1.getText().length() >= 35) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtRespuesta1KeyTyped
+
+    private void txtRespuesta2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRespuesta2KeyTyped
+        if (this.txtRespuesta1.getText().length() >= 35) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtRespuesta2KeyTyped
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+        new FrmLogin().setVisible(true);
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,26 +266,29 @@ public class FrmRecuperarC extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmRecuperarC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmPreguntasSeguridad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmRecuperarC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmPreguntasSeguridad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmRecuperarC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmPreguntasSeguridad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmRecuperarC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmPreguntasSeguridad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmRecuperarC().setVisible(true);
+                new FrmPreguntasSeguridad().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnRecuperar;
     private javax.swing.JComboBox<String> cbPregunta1;
     private javax.swing.JComboBox<String> cbPregunta2;
@@ -229,6 +298,7 @@ public class FrmRecuperarC extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtRespuesta1;
     private javax.swing.JTextField txtRespuesta2;
     // End of variables declaration//GEN-END:variables

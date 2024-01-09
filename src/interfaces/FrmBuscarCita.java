@@ -6,27 +6,24 @@ import clases.Paciente;
 import clases.PersonalMedico;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author fredd
  */
-public class FrmEliminarCita extends javax.swing.JFrame {
+public class FrmBuscarCita extends javax.swing.JFrame {
 
     private String paciente;
 
-    public FrmEliminarCita(String paciente) {
+    public FrmBuscarCita(String paciente) {
         initComponents();
         this.paciente = paciente;
-
         llenarCitas();
 
     }
 
     public void llenarCitas() {
-
         for (Cita cita : new MetodosSQL().llenarCitas(paciente)) {
             cbcita.addItem(cita);
         }
@@ -64,9 +61,9 @@ public class FrmEliminarCita extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI Emoji", 1, 48)); // NOI18N
         jLabel2.setText("Citas Medicas");
 
-        jButton1.setBackground(new java.awt.Color(255, 51, 51));
+        jButton1.setBackground(new java.awt.Color(0, 204, 0));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setText("Eliminar!");
+        jButton1.setText("Regresar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -160,31 +157,21 @@ public class FrmEliminarCita extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       this.dispose();
+       
 
-        if (txtcedula2.getText().equals("No hay datos")) {
-            JOptionPane.showMessageDialog(null, "No hay Citas que Eliminar");
-            this.dispose();
-        } else {
-            Cita cit = (Cita) cbcita.getSelectedItem();
-            new MetodosSQL().eliminarCita(String.valueOf(cit.numeroCita));
-            JOptionPane.showMessageDialog(null, "Se elimino la cita correctamente");
-            cbcita.removeAllItems();
-            llenarCitas();
-        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void cbcitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbcitaActionPerformed
-        if (cbcita.getItemCount() > 0) {
-            Cita cit = (Cita) cbcita.getSelectedItem();
-            txtcedula2.setText(cit.paciente);
-            txtmedico.setText(cit.medico);
-            LocalDate fecha = cit.fecha;
+        Cita cit = (Cita) cbcita.getSelectedItem();
+        txtcedula2.setText(cit.paciente);
+        txtmedico.setText(cit.medico);
+        LocalDate fecha = cit.fecha;
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            String fechaFormateada = fecha.format(formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String fechaFormateada = fecha.format(formatter);
 
-            txtfecha.setText(fechaFormateada);
-        }
+        txtfecha.setText(fechaFormateada);
     }//GEN-LAST:event_cbcitaActionPerformed
 
     /**
@@ -204,23 +191,21 @@ public class FrmEliminarCita extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmEliminarCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmBuscarCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmEliminarCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmBuscarCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmEliminarCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmBuscarCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmEliminarCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmBuscarCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmEliminarCita("").setVisible(true);
+                new FrmBuscarCita("").setVisible(true);
             }
         });
     }

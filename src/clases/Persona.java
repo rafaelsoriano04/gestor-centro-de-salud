@@ -26,7 +26,7 @@ public class Persona {
 
     @Override
     public String toString() {
-        return "Nombre y apellido: " + nombreApell() + "\nEdad: " + edad();
+        return nombreApell() ;
     }
 
     public String nombreApell() {

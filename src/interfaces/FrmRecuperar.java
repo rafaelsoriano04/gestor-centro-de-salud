@@ -31,53 +31,60 @@ public class FrmRecuperar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
+        btnCancelar = new javax.swing.JButton();
         btnSiguiente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Ingrese el usuario:");
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jLabel1.setText("Ingrese el usuario:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
+
+        txtUsuario.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         txtUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtUsuarioActionPerformed(evt);
             }
         });
+        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyTyped(evt);
+            }
+        });
+        jPanel1.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 175, -1));
 
+        btnCancelar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, -1, -1));
+
+        btnSiguiente.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnSiguiente.setText("Siguiente");
         btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSiguienteActionPerformed(evt);
             }
         });
+        jPanel1.add(btnSiguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(jLabel1)
-                        .addGap(26, 26, 26)
-                        .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
-                        .addComponent(btnSiguiente)))
-                .addContainerGap(41, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(btnSiguiente)
-                .addContainerGap(22, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -87,18 +94,28 @@ public class FrmRecuperar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+        new FrmLogin().setVisible(true);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         Usuario usuario = new MetodosSQL().getUsuario(this.txtUsuario.getText());
         if (usuario != null) {
-            FrmRecuperarC frmRecuperarC = new FrmRecuperarC();
+            FrmPreguntasSeguridad frmRecuperarC = new FrmPreguntasSeguridad();
             frmRecuperarC.setVisible(true);
             frmRecuperarC.usuario = usuario;
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "El usuario no existe.");
         }
-
     }//GEN-LAST:event_btnSiguienteActionPerformed
+
+    private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
+        if (this.txtUsuario.getText().length() >= 17) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtUsuarioKeyTyped
 
     /**
      * @param args the command line arguments
@@ -137,8 +154,10 @@ public class FrmRecuperar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnSiguiente;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
