@@ -1,8 +1,11 @@
 package base;
 
+import clases.Cita;
+import clases.Consulta;
 import clases.Paciente;
+import clases.PersonalMedico;
 import clases.Usuario;
-import java.sql.Statement;
+import java.awt.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +16,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import utilidades.Encriptacion;
+
 
 public class MetodosSQL {
 
@@ -299,11 +303,255 @@ public class MetodosSQL {
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, cedula);
             int affectedRows = pstmt.executeUpdate();
+            Conexion.cerrarConexion();
             return affectedRows > 0;
+
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
 
+    public boolean crearCita(int paciente, int doctor, LocalDate fechaHora) {
+        if (contarCitasFecha(doctor, fechaHora) < 5) {
+            Connection con = null;
+            con = Conexion.getConnection();
+            String sql = "INSERT INTO CitasMedicas (doctor, paciente, fecha_hora, estado) VALUES (?, ?, ?,?)";
+            try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+                pstmt.setInt(1, doctor);
+                pstmt.setInt(2, paciente);
+                pstmt.setDate(3, java.sql.Date.valueOf(fechaHora));
+                pstmt.setString(4, "Pendiente");
+                int affectedRows = pstmt.executeUpdate();
+                Conexion.cerrarConexion();
+                if (affectedRows > 0) {
+                    return true; // La cita fue creada exitosamente
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public int contarCitasFecha(int doctor, LocalDate fecha) {
+        int contadorCitas = 0;
+
+        String sql = "SELECT COUNT(*) FROM CitasMedicas WHERE doctor = ? AND CAST(fecha_hora AS DATE) = ?";
+        Connection con = null;
+        con = Conexion.getConnection();
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setInt(1, doctor);
+            pstmt.setDate(2, java.sql.Date.valueOf(fecha));
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    contadorCitas = rs.getInt(1);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        Conexion.cerrarConexion();
+        return contadorCitas;
+    }
+
+    public ArrayList<PersonalMedico> llenarMedicos() {
+        ArrayList<PersonalMedico> nombres = new ArrayList<>();
+        Connection con = null;
+        try {
+            con = Conexion.getConnection();
+            String sql = "SELECT nombre, apellido, cedula FROM PersonalMedico";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String nombreMedico = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                int cedula = rs.getInt("cedula");
+                PersonalMedico p = new PersonalMedico(nombreMedico, apellido, String.valueOf(cedula), LocalDate.now());
+                nombres.add(p);
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return nombres;
+    }
+
+    public ArrayList<Cita> llenarCitas(String cedula) {
+        ArrayList<Cita> nombres = new ArrayList<>();
+        Connection con = null;
+        try {
+            con = Conexion.getConnection();
+            String sql = "SELECT CitasMedicas.id, PersonalMedico.nombre AS nombreme, PersonalMedico.apellido AS apeme, CitasMedicas.fecha_hora,"
+                    + " CitasMedicas.estado \n"
+                    + "FROM CitasMedicas \n"
+                    + "JOIN PersonalMedico ON CitasMedicas.doctor = PersonalMedico.cedula \n"
+                    + "WHERE CitasMedicas.paciente = ";
+            sql = sql + cedula;
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String doctor = "Dr/a. " + rs.getString("nombreme");
+                doctor = doctor + " " + rs.getString("apeme");
+                String estado = rs.getString("estado");
+                LocalDate fecha = rs.getDate("fecha_hora").toLocalDate();
+                Cita c = new Cita(id, cedula, doctor, fecha, estado);
+                nombres.add(c);
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return nombres;
+    }
+
+    public boolean eliminarCita(String id) {
+        String sql = "DELETE FROM CitasMedicas WHERE id = ?";
+        Connection con = null;
+        con = Conexion.getConnection();
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, id);
+            int affectedRows = pstmt.executeUpdate();
+            Conexion.cerrarConexion();
+            return affectedRows > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean crearConsulta(Consulta consulta) {
+        String sql = "INSERT INTO Consulta ( paciente, doctor, fecha_hora, tipo, sintomas, diagnostico, tratamiento, observaciones) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
+        LocalDate localDate = LocalDate.now();
+
+        java.sql.Date sqlDate = java.sql.Date.valueOf(localDate);
+        
+        
+        try (Connection con = Conexion.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+            pstmt.setInt(1, consulta.paciente);
+            pstmt.setInt(2, consulta.doctor);
+            pstmt.setDate(3, sqlDate);
+            pstmt.setString(4, consulta.tipo);
+            pstmt.setString(5, consulta.signos);
+            pstmt.setString(6, consulta.diagnostico);
+            pstmt.setString(7, consulta.tratamiento);
+            pstmt.setString(8, consulta.observacion);
+            System.out.println(sql);
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Podrías lanzar una excepción personalizada o manejarlo según tu lógica de negocio
+            return false;
+        }
+    }
+    
+    public ArrayList<Consulta> llenarCOnsultas(int paciente, int doctor) {
+        ArrayList<Consulta> nombres = new ArrayList<>();
+        Connection con = null;
+        try {
+            con = Conexion.getConnection();
+            String sql = "SELECT * FROM Consulta WHERE paciente = ? AND doctor = ?";
+            
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            
+            pstmt.setInt(1, paciente); // idPaciente es una variable que contiene el ID del paciente
+            pstmt.setInt(2, doctor);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                Consulta c = new Consulta(rs.getInt("id"), rs.getInt("paciente"), rs.getInt("doctor"), 
+                        rs.getDate("fecha_hora").toLocalDate(), rs.getString("tipo"), rs.getString("sintomas"), 
+                        rs.getString("diagnostico"), rs.getString("tratamiento"), rs.getString("observaciones"));
+                
+                nombres.add(c);
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return nombres;
+    }
+    
+    public boolean eliminarConsulta(int id) {
+        String sql = "DELETE FROM Consulta WHERE id = ?";
+        Connection con = null;
+        con = Conexion.getConnection();
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            int affectedRows = pstmt.executeUpdate();
+            Conexion.cerrarConexion();
+            return affectedRows > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean modificarConsulta(Consulta consulta) {
+        Connection con = null;
+        
+        con = Conexion.getConnection();
+        String sql = "UPDATE Consulta SET tipo = ?, sintomas = ?, diagnostico = ?, tratamiento = ?, observaciones = ? WHERE id = ?";
+        
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, consulta.tipo);
+            pstmt.setString(2, consulta.signos);
+            pstmt.setString(3, consulta.diagnostico);
+            pstmt.setString(4, consulta.tratamiento);
+            pstmt.setString(5, consulta.observacion);
+            pstmt.setInt(6, consulta.numconsulta);
+            
+
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    
+       }
 }
