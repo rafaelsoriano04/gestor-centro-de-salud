@@ -17,6 +17,7 @@ public class FrmEliminarPaciente extends javax.swing.JFrame {
     private String cedula = "";
     public FrmEliminarPaciente(Paciente pac) {
         initComponents();
+        this.setLocationRelativeTo(null);
         txtaltura.setText(pac.altura);
         txtantece.setText(pac.antededentes);
         txtape.setText(pac.apellido);
@@ -61,7 +62,7 @@ public class FrmEliminarPaciente extends javax.swing.JFrame {
         txtsangres = new javax.swing.JTextField();
         txtnaci = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         btncrearpaciente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btncrearpaciente.setText("Eliminar!");

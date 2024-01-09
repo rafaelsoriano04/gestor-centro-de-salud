@@ -16,6 +16,7 @@ public class FrmMenuCitaMedica extends javax.swing.JFrame {
      */
     public FrmMenuCitaMedica() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -32,7 +33,7 @@ public class FrmMenuCitaMedica extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel4.setText("Menu de Citas Medicas");

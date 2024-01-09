@@ -23,6 +23,7 @@ public class FrmCrearConsulta extends javax.swing.JFrame {
     
     public FrmCrearConsulta(int doctor, Paciente pac) {
         initComponents();
+        this.setLocationRelativeTo(null);
         txtnom.setText(pac.nombre);
         txtape.setText(pac.apellido);
         txtaltura.setText(pac.altura);
@@ -92,7 +93,7 @@ public class FrmCrearConsulta extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel4.setText("Nueva Consulta Medica");

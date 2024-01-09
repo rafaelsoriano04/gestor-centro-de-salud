@@ -14,6 +14,7 @@ public class FrmBuscarPaciente extends javax.swing.JFrame {
      */
     public FrmBuscarPaciente(Paciente pac) {
         initComponents();
+        this.setLocationRelativeTo(null);
         txtaltura.setText(pac.altura);
         txtantece.setText(pac.antededentes);
         txtape.setText(pac.apellido);
@@ -58,7 +59,7 @@ public class FrmBuscarPaciente extends javax.swing.JFrame {
         txtnaci = new javax.swing.JTextField();
         txtgenero = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel11.setText("Genero:");

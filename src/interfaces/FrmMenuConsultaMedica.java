@@ -3,6 +3,7 @@ package interfaces;
 
 import base.MetodosSQL;
 import clases.Paciente;
+import clases.Usuario;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,8 +13,11 @@ import javax.swing.JOptionPane;
 public class FrmMenuConsultaMedica extends javax.swing.JFrame {
 
     private int doctor;
-    public FrmMenuConsultaMedica() {
+    public FrmMenuConsultaMedica(Usuario usuario) {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.doctor = Integer.valueOf(usuario.ci);
+        this.setUndecorated(true);
     }
 
     /**
@@ -31,7 +35,7 @@ public class FrmMenuConsultaMedica extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel4.setText("Menu de Consulta Medica");
@@ -108,7 +112,7 @@ public class FrmMenuConsultaMedica extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String cedula = JOptionPane.showInputDialog("Ingrese su número de cédula");
         Paciente p = new MetodosSQL().obtenerPacientePorCedula(cedula);
-        int doctor = 1234;
+      
         if (p == null) {
             JOptionPane.showMessageDialog(null, "El paciente no existe");
         }else{
@@ -120,7 +124,7 @@ public class FrmMenuConsultaMedica extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         String cedula = JOptionPane.showInputDialog("Ingrese su número de cédula");
         Paciente p = new MetodosSQL().obtenerPacientePorCedula(cedula);
-        int doctor = 1234;
+      
         if (p == null) {
             JOptionPane.showMessageDialog(null, "El paciente no existe");
         }else{
@@ -131,7 +135,7 @@ public class FrmMenuConsultaMedica extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         String cedula = JOptionPane.showInputDialog("Ingrese su número de cédula");
         Paciente p = new MetodosSQL().obtenerPacientePorCedula(cedula);
-        int doctor = 1234;
+       
         if (p == null) {
             JOptionPane.showMessageDialog(null, "El paciente no existe");
         }else{
@@ -142,7 +146,7 @@ public class FrmMenuConsultaMedica extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         String cedula = JOptionPane.showInputDialog("Ingrese su número de cédula");
         Paciente p = new MetodosSQL().obtenerPacientePorCedula(cedula);
-        int doctor = 1234;
+        
         if (p == null) {
             JOptionPane.showMessageDialog(null, "El paciente no existe");
         }else{
@@ -183,7 +187,7 @@ public class FrmMenuConsultaMedica extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmMenuConsultaMedica().setVisible(true);
+                new FrmMenuConsultaMedica(null).setVisible(true);
             }
         });
     }

@@ -20,6 +20,7 @@ public class FrmEliminarCita extends javax.swing.JFrame {
     public FrmEliminarCita(String paciente) {
         initComponents();
         this.paciente = paciente;
+        this.setLocationRelativeTo(null);
 
         llenarCitas();
 
@@ -53,7 +54,7 @@ public class FrmEliminarCita extends javax.swing.JFrame {
         txtfecha = new javax.swing.JLabel();
         txtcedula2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setText("Fecha de la cita");

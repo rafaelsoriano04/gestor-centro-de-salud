@@ -18,6 +18,7 @@ public class FrmEliminarConsulta extends javax.swing.JFrame {
     
     public FrmEliminarConsulta(int doctor, Paciente pac) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.paciente = Integer.valueOf(pac.cedula);
         this.doctor = doctor;
         txtnom.setText(pac.nombre);
@@ -87,7 +88,7 @@ public class FrmEliminarConsulta extends javax.swing.JFrame {
         txttipo = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel4.setText("Nueva Consulta Medica");

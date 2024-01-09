@@ -4,10 +4,13 @@ package base;
 
 import clases.Cita;
 import clases.Consulta;
+import clases.Medicamento;
 import clases.Paciente;
 import clases.PersonalMedico;
+import clases.RecetaMedica;
 import clases.Usuario;
-import java.awt.List;
+import static interfaces.FrmCrearRM.medicamentosList;
+import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +20,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import utilidades.Encriptacion;
 
 

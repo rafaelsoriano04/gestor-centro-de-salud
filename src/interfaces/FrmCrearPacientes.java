@@ -18,6 +18,7 @@ public class FrmCrearPacientes extends javax.swing.JFrame {
      */
     public FrmCrearPacientes() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     public boolean fechValida(String fecha) {
@@ -69,7 +70,7 @@ public class FrmCrearPacientes extends javax.swing.JFrame {
         slialtura = new javax.swing.JSlider();
         jLabel3 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         slipeso.setMaximum(200);
         slipeso.addChangeListener(new javax.swing.event.ChangeListener() {

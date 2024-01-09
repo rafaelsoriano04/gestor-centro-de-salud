@@ -16,6 +16,7 @@ public class FrmModificarConsulta extends javax.swing.JFrame {
 
     public FrmModificarConsulta(int doctor, Paciente pac) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.paciente = Integer.valueOf(pac.cedula);
         this.doctor = doctor;
         txtnom.setText(pac.nombre);
@@ -84,7 +85,7 @@ public class FrmModificarConsulta extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txttipo = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel4.setText("Nueva Consulta Medica");

@@ -23,6 +23,8 @@ public class FrmAgendaCita extends javax.swing.JFrame {
     public FrmAgendaCita() {
         initComponents();
         llenarMe();
+        this.setLocationRelativeTo(null);
+        
     }
     
     public void llenarMe(){
@@ -49,7 +51,7 @@ public class FrmAgendaCita extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         cbmedico = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setText("Fecha de la cita");
