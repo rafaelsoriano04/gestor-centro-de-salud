@@ -418,4 +418,29 @@ public class MetodosSQL {
             return false;
         }
     }
+
+    public boolean modificarConsulta(Consulta consulta) {
+        Connection con = null;
+        
+        con = Conexion.getConnection();
+        String sql = "UPDATE Consulta SET tipo = ?, sintomas = ?, diagnostico = ?, tratamiento = ?, observaciones = ? WHERE id = ?";
+        
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, consulta.tipo);
+            pstmt.setString(2, consulta.signos);
+            pstmt.setString(3, consulta.diagnostico);
+            pstmt.setString(4, consulta.tratamiento);
+            pstmt.setString(5, consulta.observacion);
+            pstmt.setInt(6, consulta.numconsulta);
+            
+
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    
+       }
 }
