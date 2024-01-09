@@ -5,7 +5,15 @@
 package interfaces;
 
 import base.MetodosSQL;
+import clases.Medicamento;
 import clases.Paciente;
+import clases.RecetaMedica;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,9 +24,26 @@ public class FrmCrearRM extends javax.swing.JFrame {
     /**
      * Creates new form FrmCrearRM
      */
-    MetodosSQL con=new MetodosSQL();
+    MetodosSQL con = new MetodosSQL();
+    public static ArrayList<Medicamento> medicamentosList = new ArrayList<>();
+    Paciente pacR;
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
     public FrmCrearRM() {
         initComponents();
+        this.setVisible(true);
+        this.setLocationRelativeTo(null);
+        LocalDate ahora = LocalDate.now();
+
+        this.txt_fecha.setText(ahora.format(formatter));
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Nombre");
+        model.addColumn("Cantidad");
+        table_medicamentos.setModel(model);
+        txt_id.setText(con.codRM());
+
+        //this.con.llenarComboRM(cbx_medicamento);
     }
 
     /**
@@ -35,100 +60,114 @@ public class FrmCrearRM extends javax.swing.JFrame {
         txt_id = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         txt_buscarP = new javax.swing.JTextField();
-        btn_buscarP = new javax.swing.JButton();
+        btn_agregarMed = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txt_NomMed = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txt_cantidad = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField4 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        txt_idNameMed = new javax.swing.JTextField();
+        btn_buscarMed = new javax.swing.JButton();
+        btn_eliminarMed = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txt_fecha = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jTextField6 = new javax.swing.JTextField();
+        table_medicamentos = new javax.swing.JTable();
+        txt_indicaciones = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        txt_NomApe = new javax.swing.JTextField();
+        txt_edad = new javax.swing.JTextField();
+        btn_buscarP = new javax.swing.JButton();
+        cbx_medicamento = new javax.swing.JComboBox<>();
+        btn_guardar = new javax.swing.JButton();
         txt_N = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel2.setText("N°");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 110, -1, -1));
 
+        txt_id.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         txt_id.setText("jLabel1");
-        jPanel1.add(txt_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 110, -1, -1));
+        jPanel1.add(txt_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 110, -1, -1));
 
         jLabel1.setText("CANTIDAD");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 310, -1, -1));
-
-        txt_buscarP.setText("jTextField1");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 380, -1, -1));
         jPanel1.add(txt_buscarP, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 220, -1));
 
-        btn_buscarP.setText("Buscar");
-        btn_buscarP.addActionListener(new java.awt.event.ActionListener() {
+        btn_agregarMed.setText("AGREGAR");
+        btn_agregarMed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_buscarPActionPerformed(evt);
+                btn_agregarMedActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_buscarP, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, -1, -1));
+        jPanel1.add(btn_agregarMed, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 400, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("DATOS DEL PACIENTE");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, -1, -1));
 
-        jTextField2.setText("jTextField2");
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 240, -1));
+        txt_NomMed.setEditable(false);
+        jPanel1.add(txt_NomMed, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, 120, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("MEDICAMENTOS");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, -1, -1));
 
-        jTextField3.setText("jTextField3");
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 240, -1, -1));
+        txt_cantidad.setEditable(false);
+        jPanel1.add(txt_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 400, 90, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setText("Ingrese ID del Paciente:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
+        jLabel5.setText("Ingrese ID/nombre:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, -1, -1));
+        jPanel1.add(txt_idNameMed, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 130, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 90, -1));
+        btn_buscarMed.setText("Buscar");
+        btn_buscarMed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarMedActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_buscarMed, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 320, -1, -1));
 
-        jTextField4.setText("jTextField4");
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 330, -1, -1));
-
-        jButton2.setText("AGREGAR");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, -1, -1));
-
-        jButton3.setText("ELIMINAR MEDICAMENTO");
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 620, -1, -1));
+        btn_eliminarMed.setText("ELIMINAR MEDICAMENTO");
+        btn_eliminarMed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_eliminarMedActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_eliminarMed, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 600, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("INDICACIONES");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 300, -1, -1));
 
-        jTextField5.setText("jTextField5");
-        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 200, -1, -1));
+        txt_fecha.setEditable(false);
+        jPanel1.add(txt_fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 200, 130, -1));
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+        table_medicamentos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(table_medicamentos);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 300, 230));
-
-        jTextField6.setText("jTextField6");
-        jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 340, 350, 260));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, 300, 150));
+        jPanel1.add(txt_indicaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 340, 350, 260));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("NOMBRES Y APELLIDOS:");
@@ -143,11 +182,50 @@ public class FrmCrearRM extends javax.swing.JFrame {
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 210, -1, -1));
 
         jLabel11.setText("NOMBRE");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, -1, -1));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel12.setText("FECHA DE PRESCRIPCIÓN:");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 170, -1, -1));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setText("Ingrese CI del Paciente:");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
+
+        txt_NomApe.setEditable(false);
+        jPanel1.add(txt_NomApe, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 240, -1));
+
+        txt_edad.setEditable(false);
+        txt_edad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_edadActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txt_edad, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 240, 90, -1));
+
+        btn_buscarP.setText("Buscar");
+        btn_buscarP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarPActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_buscarP, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, -1, -1));
+
+        cbx_medicamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbx_medicamentoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cbx_medicamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 350, 120, -1));
+
+        btn_guardar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_guardar.setText("GUARDAR");
+        btn_guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_guardarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 630, 130, -1));
 
         txt_N.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/pngCrearRM.png"))); // NOI18N
         jPanel1.add(txt_N, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -166,11 +244,150 @@ public class FrmCrearRM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_agregarMedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregarMedActionPerformed
+        if (!txt_NomMed.getText().isEmpty() && !txt_cantidad.getText().isEmpty()) {
+            Medicamento medicamento = null;
+            if (txt_idNameMed.getText().matches("\\d+")) {
+                // Búsqueda por ID
+                medicamento = con.buscarMedicamento(txt_idNameMed.getText(), cbx_medicamento);
+            } else if (!txt_idNameMed.getText().isEmpty()) {
+                // Búsqueda por nombre
+                medicamento = (Medicamento) cbx_medicamento.getSelectedItem();
+            }
+
+            if (medicamento != null) {
+                // Búsqueda exitosa, agrega el medicamento a la tabla
+                int cantidad = Integer.parseInt(txt_cantidad.getText());
+                if (cantidad >= 0) {
+                    // Agrega el medicamento a la tabla
+                    DefaultTableModel model = (DefaultTableModel) table_medicamentos.getModel();
+                    boolean medicamentoExistente = false;
+                    for (int i = 0; i < model.getRowCount(); i++) {
+                        String nombreTabla = (String) model.getValueAt(i, 0);
+                        if (nombreTabla.equals(medicamento.nombre)) {
+                            // Ya existe el medicamento en la tabla, suma la cantidad
+                            int cantidadExistente = (int) model.getValueAt(i, 1);
+                            model.setValueAt(cantidadExistente + cantidad, i, 1);
+                            medicamentoExistente = true;
+                            break;
+                        }
+                    }
+                    if (!medicamentoExistente) {
+                        // No existe en la tabla, agrega una nueva fila
+                        Object[] rowData = {medicamento.nombre, cantidad};
+                        model.addRow(rowData);
+                    }
+
+                    // Limpia los campos
+                    txt_idNameMed.setText("");
+                    txt_NomMed.setText("");
+                    txt_cantidad.setText("");
+                    cbx_medicamento.removeAllItems();
+
+                    // Agrega el medicamento a la lista y actualiza la cantidad total
+                    agregarMedicamentoALista(medicamento, cantidad);
+                } else {
+                    JOptionPane.showMessageDialog(null, "La cantidad debe ser un número positivo.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró un medicamento válido.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Uno o más campos están vacíos.");
+        }
+
+
+    }//GEN-LAST:event_btn_agregarMedActionPerformed
+
     private void btn_buscarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarPActionPerformed
-        if(con.obtenerPacientePorCedula(txt_buscarP.getText())!=null){
-            
+        Paciente paciente = con.obtenerPacientePorCedula(txt_buscarP.getText());
+        if (paciente != null) {
+
+            this.txt_NomApe.setText(paciente.nombre + " " + paciente.apellido);
+            this.txt_edad.setText(Integer.toString(paciente.edad()));
+            this.pacR = new Paciente(paciente.nombre, paciente.apellido, paciente.cedula,
+                    paciente.fechaNaci, paciente.tipoSagre, paciente.genero, paciente.altura,
+                    paciente.peso, paciente.antededentes);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "No existe un paciente registrado con este id");
         }
     }//GEN-LAST:event_btn_buscarPActionPerformed
+
+    private void txt_edadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_edadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_edadActionPerformed
+
+    private void btn_buscarMedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarMedActionPerformed
+        Medicamento medicamento = null;
+        if (txt_idNameMed.getText().matches("\\d+")) {
+            medicamento = con.buscarMedicamento(txt_idNameMed.getText(), cbx_medicamento);
+            if (medicamento != null) {
+                // Búsqueda por ID exitosa
+                this.txt_NomMed.setText(medicamento.nombre);
+                this.txt_cantidad.setEditable(true);
+                this.cbx_medicamento.removeAllItems();
+            } else {
+                // No se encontró un medicamento con el ID proporcionado
+                JOptionPane.showMessageDialog(null, "No existe un medicamento registrado con este ID");
+                this.txt_idNameMed.setText("");
+                this.txt_NomMed.setText("");
+            }
+        } else if (!txt_idNameMed.getText().isEmpty()) {
+            // Si no es un número y no está vacío, es un nombre
+            con.llenarComboRM(cbx_medicamento, txt_idNameMed.getText());
+            this.txt_cantidad.setEditable(true);
+
+        } else {
+            // Si no coincide con ID ni con nombre y está vacío
+            JOptionPane.showMessageDialog(null, "Por favor, ingrese un ID o un nombre válido");
+
+        }
+
+
+    }//GEN-LAST:event_btn_buscarMedActionPerformed
+
+    private void cbx_medicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_medicamentoActionPerformed
+        if (cbx_medicamento.getItemCount() > 0) {
+            Medicamento med = (Medicamento) cbx_medicamento.getSelectedItem();
+            this.txt_NomMed.setText(med.nombre);
+        }
+
+    }//GEN-LAST:event_cbx_medicamentoActionPerformed
+
+    private void btn_eliminarMedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarMedActionPerformed
+        // Obtén la fila seleccionada
+        int selectedRow = table_medicamentos.getSelectedRow();
+
+        // Asegúrate de que se haya seleccionado una fila
+        if (selectedRow >= 0) {
+            // Elimina la fila de la tabla
+            DefaultTableModel model = (DefaultTableModel) table_medicamentos.getModel();
+            String nombreMedicamento = (String) model.getValueAt(selectedRow, 0);
+            model.removeRow(selectedRow);
+
+            // Elimina el medicamento de la lista y actualiza la cantidad total
+            eliminarMedicamentoDeLista(nombreMedicamento);
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecciona un medicamento para eliminar.");
+        }
+
+    }//GEN-LAST:event_btn_eliminarMedActionPerformed
+
+    private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
+        if (validarCampos()) {
+            RecetaMedica receta = new RecetaMedica(txt_id.getText(), pacR, txt_indicaciones.getText(), LocalDate.parse(txt_fecha.getText(), formatter), this.obtenerCantidadTotal());
+
+            if (con.guardarRecM(receta) == true) {
+                JOptionPane.showMessageDialog(null, "Receta Guardada");
+                // Cierra el frame actual
+                this.dispose();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de continuar.");
+        }
+
+    }//GEN-LAST:event_btn_guardarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,16 +403,24 @@ public class FrmCrearRM extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmCrearRM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmCrearRM.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmCrearRM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmCrearRM.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmCrearRM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmCrearRM.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmCrearRM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmCrearRM.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -207,11 +432,73 @@ public class FrmCrearRM extends javax.swing.JFrame {
         });
     }
 
+    private void agregarMedicamentoALista(Medicamento medicamento, int cantidad) {
+        boolean medicamentoExistente = false;
+        for (Medicamento med : medicamentosList) {
+            if (med.nombre.equals(medicamento.nombre)) {
+                // Ya existe en la lista, suma la cantidad
+                med.setCantidad(med.cantidad + cantidad);
+                medicamentoExistente = true;
+                break;
+            }
+        }
+        if (!medicamentoExistente) {
+            // No existe en la lista, agrégalo
+            medicamento.setCantidad(cantidad);
+            medicamento.setNumRM(txt_id.getText());
+            medicamentosList.add(medicamento);
+        }
+    }
+
+    private void eliminarMedicamentoDeLista(String nombreMedicamento) {
+        for (int i = 0; i < medicamentosList.size(); i++) {
+            if (medicamentosList.get(i).nombre.equals(nombreMedicamento)) {
+                // Elimina el medicamento de la lista
+                medicamentosList.remove(i);
+                break;
+            }
+        }
+    }
+
+    private int obtenerCantidadTotal() {
+        int total = 0;
+        for (Medicamento medicamento : medicamentosList) {
+            total += medicamento.cantidad;
+        }
+        return total;
+    }
+
+    private boolean validarCampos() {
+        String buscarP = txt_buscarP.getText();
+        String nomApe = txt_NomApe.getText();
+        String edad = txt_edad.getText();
+        String indicaciones = txt_indicaciones.getText();
+        int rowCount = table_medicamentos.getModel().getRowCount();
+
+        return !buscarP.isEmpty() && !nomApe.isEmpty() && !edad.isEmpty() && rowCount > 0 && !indicaciones.isEmpty();
+    }
+
+    public boolean actualizarMedicamentoEnLista(Medicamento medicamento, int cantidad) {
+        boolean medicamentoArrayListExistente = false;
+        for (Medicamento med : medicamentosList) {
+            if (med.nombre.equals(medicamento.nombre)) {
+                // Ya existe en el ArrayList, suma la cantidad
+                med.setCantidad(med.cantidad + cantidad);
+                medicamentoArrayListExistente = true;
+                break;
+            }
+        }
+        return medicamentoArrayListExistente;
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_agregarMed;
+    private javax.swing.JButton btn_buscarMed;
     private javax.swing.JButton btn_buscarP;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btn_eliminarMed;
+    private javax.swing.JButton btn_guardar;
+    private javax.swing.JComboBox<Medicamento> cbx_medicamento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -221,18 +508,21 @@ public class FrmCrearRM extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTable table_medicamentos;
     private javax.swing.JLabel txt_N;
+    private javax.swing.JTextField txt_NomApe;
+    private javax.swing.JTextField txt_NomMed;
     private javax.swing.JTextField txt_buscarP;
+    private javax.swing.JTextField txt_cantidad;
+    private javax.swing.JTextField txt_edad;
+    private javax.swing.JTextField txt_fecha;
     private javax.swing.JLabel txt_id;
+    private javax.swing.JTextField txt_idNameMed;
+    private javax.swing.JTextField txt_indicaciones;
     // End of variables declaration//GEN-END:variables
 }

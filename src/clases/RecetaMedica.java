@@ -8,10 +8,21 @@ import java.util.ArrayList;
  * @author Usuario
  */
 public class RecetaMedica {
-    int id;
-    Paciente paciente;
-    ArrayList<Medicamento> listaMedicamentos;
-    String indicaciones;
-    LocalDate fecha;
+    public String id;
+    public Paciente paciente;
+    public ArrayList<Medicamento> listaMedicamentos;
+    public String indicaciones;
+    public LocalDate fecha;
+    public int cantTot;
+
+    public RecetaMedica(String id, Paciente paciente, String indicaciones, LocalDate fecha,int cantTot) {
+        this.id = id;
+        this.paciente = paciente;
+        this.cantTot = cantTot;
+        this.indicaciones = indicaciones;
+        this.fecha = fecha;
+    }
+    
+    
     
 }

@@ -2,7 +2,10 @@ package base;
 
 import clases.Medicamento;
 import clases.Paciente;
+import clases.RecetaMedica;
 import clases.Usuario;
+import interfaces.FrmCrearRM;
+import static interfaces.FrmCrearRM.medicamentosList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -193,7 +196,7 @@ public class MetodosSQL {
         try {
             con = Conexion.getConnection();
             PreparedStatement pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, "%" + name + "%");
+            pstmt.setString(1, name + "%");
             ResultSet rs = pstmt.executeQuery();
 
             // Limpia el JComboBox antes de llenarlo
@@ -264,54 +267,113 @@ public class MetodosSQL {
         }
 
     }
-    /* public String codFac() {
-         Connection con = null;
-        
-        String sql = "SELECT numFac FROM facturaVenta WHERE numFac <> 'FC000' ORDER BY numFac DESC LIMIT 1";
+
+    public String codRM() {
+        Connection con = null;
+        String siguienteId = "001"; // Valor predeterminado si no hay registros existentes
+
+        String sql = "SELECT MAX(id) AS maxId FROM receta";
         con = Conexion.getConnection();
-        int cod;
-        String autcod = "";
-         try ( PreparedStatement pstmt = con.prepareStatement(sql)) {
-           
+
+        try ( PreparedStatement pstmt = con.prepareStatement(sql)) {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                // Asume que tienes un constructor adecuado en tu clase Paciente
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-                paciente = new Paciente(
-                        rs.getString("nombre"),
-                        rs.getString("apellido"),
-                        String.valueOf(rs.getInt("cedula")),
-                        LocalDate.parse(rs.getString("fechaNacimiento"), formatter),
-                        rs.getString("tipoSangre"),
-                        rs.getString("genero"),
-                        String.valueOf(rs.getInt("altura")),
-                        String.valueOf(rs.getInt("peso")),
-                        rs.getString("antecedente")
-                );
+                String maxId = rs.getString("maxId");
+                if (maxId != null) {
+                    int numero = Integer.parseInt(maxId) + 1;
+                    siguienteId = String.format("%03d", numero);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return siguienteId;
+    }
+
+    public boolean guardarRecM(RecetaMedica receta) {
+        Connection con = null;
         try {
-            ps = db.conectar().prepareStatement("SELECT numFac FROM facturaVenta WHERE numFac <> 'FC000' ORDER BY numFac DESC LIMIT 1");
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                autcod = rs.getString("numFac");
-                cod = 1 + Integer.parseInt(autcod.substring(2, 5));
-                //System.out.println(cod);
-                //txtcodigo.setText("P" + String.format("%03d", codi));
-                autcod = ("FC" + String.format("%03d", cod));
-            }
-            ps.close();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String fechaComoCadena = receta.fecha.format(formatter);
+            con = Conexion.getConnection();
+            String sql = "INSERT INTO receta (id, ciP, indicaciones, fecha, cantTolMed) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, receta.id); // apellido es una cadena de texto
+            pstmt.setString(2, receta.paciente.cedula); // fechaNacimiento es una cadena de texto
+            pstmt.setString(3, receta.indicaciones); // tipoSangre es una cadena de texto
+            pstmt.setString(4, fechaComoCadena); // genero es una cadena de texto
+            pstmt.setInt(5, Integer.valueOf(receta.cantTot));
+            pstmt.executeUpdate();
+            this.guardarMedRM();
+            pstmt.close();
+            return true;
         } catch (Exception e) {
             System.out.println(e);
         }
-        if (autcod.isEmpty()) {
-            autcod = "FC001";
+
+        return false;
+
+    }
+
+    public boolean guardarMedRM() throws SQLException {
+        Connection con = null;
+
+        try {
+            con = Conexion.getConnection();
+            for (int i = 0; i < medicamentosList.size(); i++) {
+
+                String sql = "INSERT INTO medRM (numRM,nombre,cantidad) VALUES (?, ?, ?)";
+                PreparedStatement pstmt = con.prepareStatement(sql);
+                pstmt.setString(1, medicamentosList.get(i).numRM);
+                pstmt.setString(2, medicamentosList.get(i).nombre);
+                pstmt.setInt(3, medicamentosList.get(i).cantidad);
+
+                pstmt.executeUpdate();
+
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        return autcod;
-    }*/
+
+        return false;
+
+    }
+
+    public RecetaMedica obtenerRecetaPorId(String id) {
+        Connection con = null;
+        RecetaMedica receta = null;
+        String sql = "SELECT * FROM receta WHERE id = ?";
+        con = Conexion.getConnection();
+
+        try ( PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Asume que tienes un método obtenerPacientePorCedula en tu clase Paciente
+                Paciente paciente = obtenerPacientePorCedula(rs.getString("ciP"));
+
+                if (paciente != null) {
+                    // Asume que tienes un constructor adecuado en tu clase Receta
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+                    receta = new RecetaMedica(
+                            rs.getString("id"),
+                            paciente,
+                            rs.getString("indicaciones"),
+                            LocalDate.parse(rs.getString("fecha"), formatter),
+                            rs.getInt("cantTotMed")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return receta;
+    }
 
 }
