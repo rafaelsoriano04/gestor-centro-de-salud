@@ -7,6 +7,7 @@ import java.time.LocalDate;
  * @author Usuario
  */
 public class Cita {
+
     public int numeroCita;
     public String paciente;
     public String medico;
@@ -29,5 +30,6 @@ public class Cita {
     
 
     
+
     
 }

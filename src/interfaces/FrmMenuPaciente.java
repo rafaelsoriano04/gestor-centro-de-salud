@@ -16,6 +16,7 @@ public class FrmMenuPaciente extends javax.swing.JFrame {
      */
     public FrmMenuPaciente() {
         initComponents();
+        
     }
 
     /**

@@ -15,7 +15,6 @@ import javax.crypto.spec.SecretKeySpec;
  * @author aliso
  */
 public class Encriptacion {
-
     private final String ALGORITMO = "AES/ECB/PKCS5Padding";
     private final String CLAVE_SECRETA = "clave secreta";
     private final byte[] CLAVE_SECRETA_BYTES = Arrays.copyOf(CLAVE_SECRETA.getBytes(StandardCharsets.UTF_8), 16);
@@ -35,5 +34,4 @@ public class Encriptacion {
         byte[] textoDesencriptadoBytes = cipher.doFinal(textoEncriptadoBytes);
         return new String(textoDesencriptadoBytes, StandardCharsets.UTF_8);
     }
-
 }

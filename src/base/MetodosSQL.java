@@ -1,3 +1,5 @@
+
+
 package base;
 
 import clases.Cita;
@@ -19,7 +21,174 @@ import utilidades.Encriptacion;
 
 
 public class MetodosSQL {
+    public boolean guardarRecM(RecetaMedica receta) {
+        Connection con = null;
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String fechaComoCadena = receta.fecha.format(formatter);
+            con = Conexion.getConnection();
+            String sql = "INSERT INTO receta (id, ciP, indicaciones, fecha, cantTolMed) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, receta.id); // apellido es una cadena de texto
+            pstmt.setString(2, receta.paciente.cedula); // fechaNacimiento es una cadena de texto
+            pstmt.setString(3, receta.indicaciones); // tipoSangre es una cadena de texto
+            pstmt.setString(4, fechaComoCadena); // genero es una cadena de texto
+            pstmt.setInt(5, Integer.valueOf(receta.cantTot));
+            pstmt.executeUpdate();
+            this.guardarMedRM();
+            pstmt.close();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
+        return false;
+
+    }
+
+    public boolean guardarMedRM() throws SQLException {
+        Connection con = null;
+
+        try {
+            con = Conexion.getConnection();
+            for (int i = 0; i < medicamentosList.size(); i++) {
+
+                String sql = "INSERT INTO medRM (numRM,nombre,cantidad) VALUES (?, ?, ?)";
+                PreparedStatement pstmt = con.prepareStatement(sql);
+                pstmt.setString(1, medicamentosList.get(i).numRM);
+                pstmt.setString(2, medicamentosList.get(i).nombre);
+                pstmt.setInt(3, medicamentosList.get(i).cantidad);
+
+                pstmt.executeUpdate();
+
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return false;
+
+    }
+
+    public RecetaMedica obtenerRecetaPorId(String id) {
+        Connection con = null;
+        RecetaMedica receta = null;
+        String sql = "SELECT * FROM receta WHERE id = ?";
+        con = Conexion.getConnection();
+
+        try ( PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Asume que tienes un método obtenerPacientePorCedula en tu clase Paciente
+                Paciente paciente = obtenerPacientePorCedula(rs.getString("ciP"));
+
+                if (paciente != null) {
+                    // Asume que tienes un constructor adecuado en tu clase Receta
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+                    receta = new RecetaMedica(
+                            rs.getString("id"),
+                            paciente,
+                            rs.getString("indicaciones"),
+                            LocalDate.parse(rs.getString("fecha"), formatter),
+                            rs.getInt("cantTotMed")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return receta;
+    }
+    public String codRM() {
+        Connection con = null;
+        String siguienteId = "001"; // Valor predeterminado si no hay registros existentes
+
+        String sql = "SELECT MAX(id) AS maxId FROM receta";
+        con = Conexion.getConnection();
+
+        try ( PreparedStatement pstmt = con.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                String maxId = rs.getString("maxId");
+                if (maxId != null) {
+                    int numero = Integer.parseInt(maxId) + 1;
+                    siguienteId = String.format("%03d", numero);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return siguienteId;
+    }
+    public void llenarComboRM(JComboBox<Medicamento> medicamentos, String name) {
+        Connection con = null;
+
+        String sql = "SELECT * FROM Medicamento WHERE nombre LIKE ?";
+
+        try {
+            con = Conexion.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, name + "%");
+            ResultSet rs = pstmt.executeQuery();
+
+            // Limpia el JComboBox antes de llenarlo
+            medicamentos.removeAllItems();
+
+            boolean encontrado = false; // Variable para verificar si se encontraron resultados
+
+            while (rs.next()) {
+                Medicamento medicamento = new Medicamento(rs.getInt("id"), rs.getString("nombre"));
+                medicamentos.addItem(medicamento);
+                encontrado = true; // Se encontraron resultados
+            }
+
+            if (!encontrado) {
+                JOptionPane.showMessageDialog(null, "No se encontraron medicamentos con el nombre proporcionado");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public Medicamento buscarMedicamento(String idNombre, JComboBox<Medicamento> comboBox) {
+        Connection con = null;
+        Medicamento medicamento = null;
+        String sql;
+
+        sql = "SELECT * FROM Medicamento WHERE id = ?";
+
+        con = Conexion.getConnection();
+        try ( PreparedStatement pstmt = con.prepareStatement(sql)) {
+            if (sql.contains("?")) {
+                pstmt.setString(1, idNombre);
+            }
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Asume que tienes un constructor adecuado en tu clase Medicamento
+
+                medicamento = new Medicamento(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("especificaciones"),
+                        rs.getString("RegistroSanitario"),
+                        rs.getDouble("precio"),
+                        rs.getInt("cantidad")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return medicamento;
+    }
     public Usuario getUsuario(String nombreUsuario) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -555,3 +724,4 @@ public class MetodosSQL {
     
        }
 }
+
