@@ -23,6 +23,14 @@ public class RecetaMedica {
         this.indicaciones = indicaciones;
         this.fecha = fecha;
     }
+    public RecetaMedica(String id, Paciente paciente,  String indicaciones, LocalDate fecha, int cantTot, ArrayList<Medicamento> listaMedicamentos) {
+        this.id = id;
+        this.paciente = paciente;
+        this.listaMedicamentos = listaMedicamentos;
+        this.indicaciones = indicaciones;
+        this.fecha = fecha;
+        this.cantTot = cantTot;
+    }
     
     
     

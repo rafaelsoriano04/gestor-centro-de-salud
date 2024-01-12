@@ -4,6 +4,13 @@
  */
 package interfaces;
 
+import base.MetodosSQL;
+import clases.Paciente;
+import clases.RecetaMedica;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author usuario
@@ -13,8 +20,14 @@ public class FrmBuscarRM extends javax.swing.JFrame {
     /**
      * Creates new form FrmBuscarRM
      */
+    MetodosSQL con = new MetodosSQL();
+
     public FrmBuscarRM() {
         initComponents();
+        this.setVisible(true);
+        this.setLocationRelativeTo(null);
+        con.llenarTablaRecetas(table_recetas);
+
     }
 
     /**
@@ -26,21 +39,186 @@ public class FrmBuscarRM extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
+        btn_crearReceta = new javax.swing.JButton();
+        txt_idOrCi = new javax.swing.JTextField();
+        btn_modificar = new javax.swing.JButton();
+        btn_eliminar = new javax.swing.JButton();
+        btn_regresar = new javax.swing.JButton();
+        btn_buscar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table_recetas = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btn_crearReceta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_crearReceta.setText("CREAR RECETA");
+        btn_crearReceta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_crearRecetaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn_crearReceta, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 480, 170, 40));
+
+        txt_idOrCi.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_idOrCiKeyReleased(evt);
+            }
+        });
+        jPanel2.add(txt_idOrCi, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, 220, -1));
+
+        btn_modificar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_modificar.setText("MODIFICAR ");
+        btn_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modificarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn_modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 480, 180, 40));
+
+        btn_eliminar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_eliminar.setText("ELIMINAR");
+        btn_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_eliminarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 477, 170, 40));
+
+        btn_regresar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_regresar.setText("REGRESAR");
+        btn_regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_regresarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn_regresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 580, 160, 30));
+
+        btn_buscar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_buscar.setText("BUSCAR");
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 150, 160, -1));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setText("Ingrese el ID de la Receta o CI del Paciente:");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, -1, -1));
+
+        table_recetas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        table_recetas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table_recetasMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(table_recetas);
+
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 220, 540, 200));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/pngBuscarRM.png"))); // NOI18N
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 835, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 843, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+
+        if (!txt_idOrCi.getText().isEmpty()) {
+            ArrayList<RecetaMedica> recetasEncontradas = con.obtenerRecetasPorId(txt_idOrCi.getText());
+            ArrayList<RecetaMedica> pacientesEncontrados = con.obtenerPacientesPorCedula(txt_idOrCi.getText());
+
+            if (!recetasEncontradas.isEmpty()) {
+                // Se encontraron recetas, llenar la tabla con los resultados
+                con.llenarTablaRecetasID(table_recetas, txt_idOrCi.getText());
+            } else if (!pacientesEncontrados.isEmpty()) {
+                // No se encontraron recetas pero se encontraron pacientes, llenar la tabla con los resultados de pacientes
+                con.llenarTablaPacientesPorCedula(table_recetas, txt_idOrCi.getText());
+            } else {
+                // No se encontraron resultados de ninguna búsqueda
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados para la búsqueda.");
+            }
+        }
+
+
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
+    private void txt_idOrCiKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_idOrCiKeyReleased
+        String texto = txt_idOrCi.getText();
+        if (texto.isEmpty()) {
+            con.llenarTablaRecetas(table_recetas);
+        }
+    }//GEN-LAST:event_txt_idOrCiKeyReleased
+
+    private void btn_regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regresarActionPerformed
+        FrmMenuRM menRM = new FrmMenuRM();
+        menRM.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_regresarActionPerformed
+
+    private void btn_crearRecetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_crearRecetaActionPerformed
+        FrmCrearRM crearReceta = new FrmCrearRM(this);
+        crearReceta.setVisible(true);
+        this.setVisible(false); // Oculta el formulario actual
+    }//GEN-LAST:event_btn_crearRecetaActionPerformed
+
+    private void table_recetasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_recetasMouseClicked
+
+    }//GEN-LAST:event_table_recetasMouseClicked
+
+    private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
+        int filaSeleccionada = table_recetas.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            // Obtener el valor de la columna "ID" en la fila seleccionada
+            String idReceta = table_recetas.getValueAt(filaSeleccionada, 0).toString();
+
+            // Abrir el formulario de ModificarRM con el ID de la receta
+            FrmModificarRM modificarRM = new FrmModificarRM(idReceta);
+            modificarRM.setVisible(true);
+        }
+    }//GEN-LAST:event_btn_modificarActionPerformed
+
+    private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
+        int filaSeleccionada = table_recetas.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            // Obtener el valor de la columna "ID" en la fila seleccionada
+            String idReceta = table_recetas.getValueAt(filaSeleccionada, 0).toString();
+            if(con.eliminarRecetaConMedicamentos(idReceta)){
+               con.llenarTablaRecetas(table_recetas);
+               JOptionPane.showMessageDialog(null, "La receta se ha eliminado"); 
+            }else{
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al eliminar la receta"); 
+            }
+            
+            
+        }
+    }//GEN-LAST:event_btn_eliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -68,6 +246,7 @@ public class FrmBuscarRM extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(FrmBuscarRM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -78,5 +257,16 @@ public class FrmBuscarRM extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_buscar;
+    private javax.swing.JButton btn_crearReceta;
+    private javax.swing.JButton btn_eliminar;
+    private javax.swing.JButton btn_modificar;
+    private javax.swing.JButton btn_regresar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JTable table_recetas;
+    private javax.swing.JTextField txt_idOrCi;
     // End of variables declaration//GEN-END:variables
 }

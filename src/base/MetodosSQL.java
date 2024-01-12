@@ -22,6 +22,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import utilidades.Encriptacion;
 
 
@@ -49,16 +51,17 @@ public class MetodosSQL {
 
         return false;
 
-    }
+    } 
 
     public boolean guardarMedRM() throws SQLException {
-        Connection con = null;
+         Connection con = null;
 
         try {
             con = Conexion.getConnection();
-            for (int i = 0; i < medicamentosList.size(); i++) {
+            
 
-                String sql = "INSERT INTO medRM (numRM,nombre,cantidad) VALUES (?, ?, ?)";
+            for (int i = 0; i < medicamentosList.size(); i++) {
+                String sql = "INSERT INTO medRM (numRM, nombre, cantidad) VALUES (?, ?, ?)";
                 PreparedStatement pstmt = con.prepareStatement(sql);
                 pstmt.setString(1, medicamentosList.get(i).numRM);
                 pstmt.setString(2, medicamentosList.get(i).nombre);
@@ -66,15 +69,30 @@ public class MetodosSQL {
 
                 pstmt.executeUpdate();
 
+                // Restar la cantidad de medicamentos en la tabla 'medicamento'
+                String sqlRestarCantidad = "UPDATE medicamento SET cantidad = cantidad - ? WHERE nombre = ?";
+                PreparedStatement pstmtRestarCantidad = con.prepareStatement(sqlRestarCantidad);
+                pstmtRestarCantidad.setInt(1, medicamentosList.get(i).cantidad);
+                pstmtRestarCantidad.setString(2, medicamentosList.get(i).nombre);
+                pstmtRestarCantidad.executeUpdate();
             }
 
+            
+
+            return true;
         } catch (Exception e) {
+            con.rollback(); // Revertir la transacción en caso de error
             System.out.println(e);
+            System.out.println("Error al guardar en medRM");
+        } finally {
+            if (con != null) {
+                con.close();
+            }
         }
 
         return false;
 
-    }
+    } 
 
     public RecetaMedica obtenerRecetaPorId(String id) {
         Connection con = null;
@@ -131,7 +149,7 @@ public class MetodosSQL {
         }
 
         return siguienteId;
-    }
+    } 
     public void llenarComboRM(JComboBox<Medicamento> medicamentos, String name) {
         Connection con = null;
 
@@ -193,7 +211,7 @@ public class MetodosSQL {
         }
 
         return medicamento;
-    }
+    } 
     public Usuario getUsuario(String nombreUsuario) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -237,7 +255,7 @@ public class MetodosSQL {
         }
 
         return usuario;
-    }
+    } 
 
     public boolean updateContraseña(String nombreUsuario, String nuevaContraseña) {
         Connection conn = null;
@@ -436,7 +454,7 @@ public class MetodosSQL {
             return false;
         }
 
-    }
+    } 
 
     public Paciente obtenerPacientePorCedula(String cedula) {
         Connection con = null;
@@ -468,7 +486,7 @@ public class MetodosSQL {
         }
 
         return paciente;
-    }
+    } 
 
     public boolean eliminarPacientePorCedula(String cedula) {
         String sql = "DELETE FROM paciente WHERE cedula = ?";
@@ -484,7 +502,7 @@ public class MetodosSQL {
             e.printStackTrace();
             return false;
         }
-    }
+    } 
 
     public boolean crearCita(int paciente, int doctor, LocalDate fechaHora) {
         if (contarCitasFecha(doctor, fechaHora) < 5) {
@@ -728,5 +746,367 @@ public class MetodosSQL {
 
     
        }
+    public boolean modificarRecetaMedica(String idReceta, int cantidad, String indicaciones) {
+        Connection con = null;
+        con = Conexion.getConnection();
+        String sql = "UPDATE receta SET cantTolMed = ?, indicaciones = ? WHERE id = ?";
+        try ( PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setInt(1, cantidad);
+            pstmt.setString(2, indicaciones);
+            pstmt.setString(3, idReceta);
+
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error aqui modifi");
+            return false;
+        }
+    }
+     public boolean eliminarMedRM(String numRM) throws SQLException {
+        Connection con = null;
+        boolean resultado = false;
+
+        try {
+            con = Conexion.getConnection();
+            String sql = "DELETE FROM medRM WHERE numRM = ?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, numRM);
+
+            int filasAfectadas = pstmt.executeUpdate();
+            resultado = filasAfectadas > 0;
+
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("erro eliminar");
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    System.out.println("erro eliminar");
+                }
+            }
+        }
+
+        return resultado;
+    }
+    public void llenarTablaRecetas(JTable table_recetas) {
+        // Crear un modelo de tabla
+        DefaultTableModel model = new DefaultTableModel();
+        // Agregar las columnas que desees mostrar en la JTable
+        model.addColumn("ID");
+        model.addColumn("Cedula del Paciente");
+        model.addColumn("Indicaciones");
+        model.addColumn("Fecha");
+        model.addColumn("Cantidad Total de Medicamentos");
+
+        // Conectar a la base de datos y obtener los datos de la tabla de recetas
+        Connection con = Conexion.getConnection();
+        String sql = "SELECT * FROM receta";
+
+        try ( PreparedStatement pstmt = con.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                // Obtener los valores de cada columna en la tabla de recetas
+                String id = rs.getString("id");
+                String ciP = rs.getString("ciP");
+                String indicaciones = rs.getString("indicaciones");
+                String fecha = rs.getString("fecha");
+                int cantTotMed = rs.getInt("cantTolMed");
+
+                // Agregar una fila con estos valores al modelo de la tabla
+                model.addRow(new Object[]{id, ciP, indicaciones, fecha, cantTotMed});
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Asignar el modelo de la tabla con los datos al JTable
+        table_recetas.setModel(model);
+    }
+    public ArrayList<RecetaMedica> obtenerRecetasPorId(String id) {
+        Connection con = null;
+        ArrayList<RecetaMedica> recetas = new ArrayList<>();
+        String sql = "SELECT * FROM receta WHERE id LIKE ?";
+        con = Conexion.getConnection();
+
+        try ( PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, id + "%");
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                // Asume que tienes un método obtenerPacientePorCedula en tu clase Paciente
+                Paciente paciente = obtenerPacientePorCedula(rs.getString("ciP"));
+
+                if (paciente != null) {
+                    // Asume que tienes un constructor adecuado en tu clase Receta
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+                    RecetaMedica receta = new RecetaMedica(
+                            rs.getString("id"),
+                            paciente,
+                            rs.getString("indicaciones"),
+                            LocalDate.parse(rs.getString("fecha"), formatter),
+                            rs.getInt("cantTolMed")
+                    );
+                    recetas.add(receta);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return recetas;
+    }
+    public void llenarTablaRecetasID(JTable table_recetas, String idBusqueda) {
+        // Obtener la lista de recetas por ID
+        ArrayList<RecetaMedica> resultadosBusqueda = obtenerRecetasPorId(idBusqueda);
+
+        // Limpiar el modelo de la tabla
+        DefaultTableModel tableModel = (DefaultTableModel) table_recetas.getModel();
+        tableModel.setRowCount(0);
+
+        // Llenar el modelo con los resultados de la búsqueda
+        for (RecetaMedica receta : resultadosBusqueda) {
+            tableModel.addRow(new Object[]{
+                receta.id,
+                receta.paciente.cedula, // Obtener la cédula del paciente
+                receta.indicaciones,
+                receta.fecha,
+                receta.cantTot
+            });
+        }
+    }
+    public void llenarTablaPacientesPorCedula(JTable table_pacientes, String cedulaBusqueda) {
+        // Obtener la lista de pacientes por cédula
+        ArrayList<RecetaMedica> resultadosBusqueda = obtenerPacientesPorCedula(cedulaBusqueda);
+
+        // Limpiar el modelo de la tabla
+        DefaultTableModel tableModel = (DefaultTableModel) table_pacientes.getModel();
+        tableModel.setRowCount(0);
+
+        // Llenar el modelo con los resultados de la búsqueda
+        for (RecetaMedica receta : resultadosBusqueda) {
+            tableModel.addRow(new Object[]{
+                receta.id,
+                receta.paciente.cedula, // Obtener la cédula del paciente
+                receta.indicaciones,
+                receta.fecha,
+                receta.cantTot
+            });
+        }
+    }
+    public ArrayList<RecetaMedica> obtenerPacientesPorCedula(String cedula) {
+        Connection con = null;
+        ArrayList<RecetaMedica> recetas = new ArrayList<>();
+        String sql = "SELECT * FROM receta WHERE ciP LIKE ?";
+        con = Conexion.getConnection();
+
+        try ( PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, cedula + "%");
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                // Asume que tienes un método obtenerPacientePorCedula en tu clase Paciente
+                Paciente paciente = obtenerPacientePorCedula(rs.getString("ciP"));
+
+                if (paciente != null) {
+                    // Asume que tienes un constructor adecuado en tu clase Receta
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+                    RecetaMedica receta = new RecetaMedica(
+                            rs.getString("id"),
+                            paciente,
+                            rs.getString("indicaciones"),
+                            LocalDate.parse(rs.getString("fecha"), formatter),
+                            rs.getInt("cantTolMed")
+                    );
+                    recetas.add(receta);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return recetas;
+    }
+    public RecetaMedica obtenerRecetaId(String id) {
+        Connection con = null;
+        RecetaMedica receta = null;
+        String sql = "SELECT * FROM receta WHERE id LIKE ?";
+        con = Conexion.getConnection();
+
+        try ( PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Asume que tienes un método obtenerPacientePorCedula en tu clase Paciente
+                Paciente paciente = obtenerPacientePorCedula(rs.getString("ciP"));
+
+                if (paciente != null) {
+                    // Asume que tienes un constructor adecuado en tu clase RecetaMedica
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+                    // Obtener datos básicos de la receta
+                    String indicaciones = rs.getString("indicaciones");
+                    LocalDate fecha = LocalDate.parse(rs.getString("fecha"), formatter);
+                    int cantTotMed = rs.getInt("cantTolMed");
+
+                    // Consulta para obtener los medicamentos de la receta
+                    String sqlMedicamentos = "SELECT * FROM medRM WHERE numRM = ?";
+                    try ( PreparedStatement pstmtMed = con.prepareStatement(sqlMedicamentos)) {
+                        pstmtMed.setString(1, id);
+                        ResultSet rsMed = pstmtMed.executeQuery();
+
+                        ArrayList<Medicamento> medicamentos = new ArrayList<>();
+
+                        while (rsMed.next()) {
+                            String nombreMed = rsMed.getString("nombre");
+                            int cantidadMed = rsMed.getInt("cantidad");
+                            Medicamento medicamento = new Medicamento(nombreMed, cantidadMed);
+                            medicamentos.add(medicamento);
+                        }
+
+                        receta = new RecetaMedica(id, paciente, indicaciones, fecha, cantTotMed, medicamentos);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return receta;
+    }
+    public boolean eliminarRecetaPorId(String idReceta) {
+        String sql = "DELETE FROM receta WHERE id = ?";
+        Connection con = null;
+        con = Conexion.getConnection();
+        try ( PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, idReceta);
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean eliminarRecetaConMedicamentos(String idReceta) {
+        Connection con = null;
+
+        try {
+            con = Conexion.getConnection();
+
+            // Obtén la lista de medicamentos asociados a la receta
+            ArrayList<Medicamento> medicamentos = obtenerMedicamentosDeReceta(idReceta);
+
+            // Inicia la transacción
+          //  con.setAutoCommit(false);
+
+            // Elimina la receta
+            if (eliminarRecetaPorId(idReceta)) {
+                // Elimina los medicamentos asociados
+                if (eliminarMedRM(idReceta)) {
+                    // Incrementa la cantidad de medicamentos en la tabla 'medicamento'
+                    incrementarCantidadMedicamentos(medicamentos);
+
+                    // Confirma la transacción
+                    //con.commit();
+                    //con.setAutoCommit(true);
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            
+            e.printStackTrace();
+        } 
+
+        return false;
+    }
+     private ArrayList<Medicamento> obtenerMedicamentosDeReceta(String idReceta) {
+        Connection con = null;
+        ArrayList<Medicamento> medicamentos = new ArrayList<>();
+
+        try {
+            con = Conexion.getConnection();
+            String sql = "SELECT nombre, cantidad FROM medRM WHERE numRM = ?";
+
+            try ( PreparedStatement pstmt = con.prepareStatement(sql)) {
+                pstmt.setString(1, idReceta);
+                ResultSet rs = pstmt.executeQuery();
+
+                while (rs.next()) {
+                    String nombreMed = rs.getString("nombre");
+                    int cantidadMed = rs.getInt("cantidad");
+                    Medicamento medicamento = new Medicamento(nombreMed, cantidadMed);
+                    medicamentos.add(medicamento);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return medicamentos;
+    }
+     private void incrementarCantidadMedicamentos(ArrayList<Medicamento> medicamentos) {
+        // Itera a través de la lista de medicamentos eliminados
+        Connection con = null;
+        for (Medicamento medicamento : medicamentos) {
+            
+            try {
+                con = Conexion.getConnection();
+                // Consulta SQL para obtener la cantidad actual del medicamento
+                String sql = "SELECT cantidad FROM medicamento WHERE nombre = ?";
+                try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+                    pstmt.setString(1, medicamento.nombre);
+                    ResultSet rs = pstmt.executeQuery();
+
+                    if (rs.next()) {
+                        // Obtiene la cantidad actual del medicamento
+                        int cantidadActual = rs.getInt("cantidad");
+
+                        // Incrementa la cantidad con la cantidad del medicamento eliminado
+                        cantidadActual += medicamento.cantidad;
+
+                        // Actualiza la cantidad del medicamento en la tabla 'medicamento'
+                        actualizarCantidadMedicamento( medicamento.nombre, cantidadActual);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+    }
+     private void actualizarCantidadMedicamento( String nombreMedicamento, int nuevaCantidad) {
+        Connection con = null;
+        try {
+            con = Conexion.getConnection();
+            // Consulta SQL para actualizar la cantidad del medicamento
+            String sql = "UPDATE Medicamento SET cantidad = ? WHERE nombre = ?";
+            try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+                pstmt.setInt(1, nuevaCantidad);
+                pstmt.setString(2, nombreMedicamento);
+                pstmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    
+    
 }
 

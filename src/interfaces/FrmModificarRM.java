@@ -8,9 +8,12 @@ import base.MetodosSQL;
 import clases.Medicamento;
 import clases.Paciente;
 import clases.RecetaMedica;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -20,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author usuario
  */
-public class FrmCrearRM extends javax.swing.JFrame {
+public class FrmModificarRM extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmCrearRM
@@ -30,29 +33,27 @@ public class FrmCrearRM extends javax.swing.JFrame {
     Paciente pacR;
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private JFrame formularioAnterior;
 
-    public FrmCrearRM(JFrame formularioAnterior) {
+    private String idReceta;
+
+    public FrmModificarRM(String id) {
         initComponents();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
-        LocalDate ahora = LocalDate.now();
 
-        this.txt_fecha.setText(ahora.format(formatter));
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Nombre");
         model.addColumn("Cantidad");
         table_medicamentos.setModel(model);
-        txt_id.setText(con.codRM());
-        this.formularioAnterior = formularioAnterior;
+        this.idReceta = id;
+        cargarDatosReceta();
 
         //this.con.llenarComboRM(cbx_medicamento);
     }
 
-    public FrmCrearRM() {
+    public FrmModificarRM() {
         initComponents();
 
-        //this.con.llenarComboRM(cbx_medicamento);
     }
 
     /**
@@ -68,7 +69,7 @@ public class FrmCrearRM extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txt_id = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        txt_buscarP = new javax.swing.JTextField();
+        txt_idPaciente = new javax.swing.JTextField();
         btn_agregarMed = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txt_NomMed = new javax.swing.JTextField();
@@ -91,7 +92,6 @@ public class FrmCrearRM extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         txt_NomApe = new javax.swing.JTextField();
         txt_edad = new javax.swing.JTextField();
-        btn_buscarP = new javax.swing.JButton();
         cbx_medicamento = new javax.swing.JComboBox<>();
         btn_guardar = new javax.swing.JButton();
         btn_regresar = new javax.swing.JButton();
@@ -111,7 +111,9 @@ public class FrmCrearRM extends javax.swing.JFrame {
 
         jLabel1.setText("CANTIDAD");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 380, -1, -1));
-        jPanel1.add(txt_buscarP, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 220, -1));
+
+        txt_idPaciente.setEditable(false);
+        jPanel1.add(txt_idPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 220, -1));
 
         btn_agregarMed.setText("AGREGAR");
         btn_agregarMed.addActionListener(new java.awt.event.ActionListener() {
@@ -174,6 +176,11 @@ public class FrmCrearRM extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        table_medicamentos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table_medicamentosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table_medicamentos);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, 300, 150));
@@ -199,7 +206,7 @@ public class FrmCrearRM extends javax.swing.JFrame {
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 170, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel7.setText("Ingrese CI del Paciente:");
+        jLabel7.setText("CI del Paciente:");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
 
         txt_NomApe.setEditable(false);
@@ -212,14 +219,6 @@ public class FrmCrearRM extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txt_edad, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 240, 90, -1));
-
-        btn_buscarP.setText("Buscar");
-        btn_buscarP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_buscarPActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btn_buscarP, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, -1, -1));
 
         cbx_medicamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -246,7 +245,7 @@ public class FrmCrearRM extends javax.swing.JFrame {
         });
         jPanel1.add(btn_regresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 630, 110, 30));
 
-        txt_N.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/pngCrearRM.png"))); // NOI18N
+        txt_N.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/pngModifRM.png"))); // NOI18N
         jPanel1.add(txt_N, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -318,21 +317,6 @@ public class FrmCrearRM extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_agregarMedActionPerformed
 
-    private void btn_buscarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarPActionPerformed
-        Paciente paciente = con.obtenerPacientePorCedula(txt_buscarP.getText());
-        if (paciente != null) {
-
-            this.txt_NomApe.setText(paciente.nombre + " " + paciente.apellido);
-            this.txt_edad.setText(Integer.toString(paciente.edad()));
-            this.pacR = new Paciente(paciente.nombre, paciente.apellido, paciente.cedula,
-                    paciente.fechaNaci, paciente.tipoSagre, paciente.genero, paciente.altura,
-                    paciente.peso, paciente.antededentes);
-
-        } else {
-            JOptionPane.showMessageDialog(null, "No existe un paciente registrado con este id");
-        }
-    }//GEN-LAST:event_btn_buscarPActionPerformed
-
     private void txt_edadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_edadActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_edadActionPerformed
@@ -395,20 +379,22 @@ public class FrmCrearRM extends javax.swing.JFrame {
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
         if (validarCampos()) {
-            RecetaMedica receta = new RecetaMedica(txt_id.getText(), pacR, txt_indicaciones.getText(), LocalDate.parse(txt_fecha.getText(), formatter), this.obtenerCantidadTotal());
-
-            if (con.guardarRecM(receta) == true) {
-                JOptionPane.showMessageDialog(null, "Receta Guardada");
-                if (formularioAnterior instanceof FrmMenuRM) {
-                    ((FrmMenuRM) formularioAnterior).setVisible(true);
-                } else if (formularioAnterior instanceof FrmBuscarRM) {
-                    ((FrmBuscarRM) formularioAnterior).setVisible(true);
-                    ((FrmBuscarRM) formularioAnterior).con.llenarTablaRecetas(((FrmBuscarRM) formularioAnterior).table_recetas);
+            Paciente paciente= con.obtenerPacientePorCedula(txt_idPaciente.getText());
+            RecetaMedica receta = new RecetaMedica(txt_id.getText(),paciente, txt_indicaciones.getText(), LocalDate.parse(txt_fecha.getText(), formatter), this.obtenerCantidadTotal());
+            
+            if (con.guardarRecM(receta) == true) { try {
+                //Aqui modificar
+                con.eliminarMedRM(idReceta);
+                con.guardarMedRM();
+                con.modificarRecetaMedica(idReceta, this.obtenerCantidadTotal(), this.txt_indicaciones.getText());
+                
+                } catch (SQLException ex) {
+                    Logger.getLogger(FrmModificarRM.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("Error aqui");
                 }
-                medicamentosList.clear();
-                this.dispose();
+                JOptionPane.showMessageDialog(null, "Receta Modificada");
                 // Cierra el frame actual
-
+                this.dispose();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de continuar.");
@@ -417,16 +403,18 @@ public class FrmCrearRM extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_guardarActionPerformed
 
     private void btn_regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regresarActionPerformed
-        if (formularioAnterior instanceof FrmMenuRM) {
-            ((FrmMenuRM) formularioAnterior).setVisible(true);
-        } else if (formularioAnterior instanceof FrmBuscarRM) {
-            ((FrmBuscarRM) formularioAnterior).setVisible(true);
-        }
+        FrmBuscarRM menBusRM = new FrmBuscarRM();
+
+        menBusRM.setVisible(true);
 
         // Cierra el formulario actual
         this.dispose();
 
     }//GEN-LAST:event_btn_regresarActionPerformed
+
+    private void table_medicamentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_medicamentosMouseClicked
+
+    }//GEN-LAST:event_table_medicamentosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -446,19 +434,19 @@ public class FrmCrearRM extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmCrearRM.class
+            java.util.logging.Logger.getLogger(FrmModificarRM.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmCrearRM.class
+            java.util.logging.Logger.getLogger(FrmModificarRM.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmCrearRM.class
+            java.util.logging.Logger.getLogger(FrmModificarRM.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmCrearRM.class
+            java.util.logging.Logger.getLogger(FrmModificarRM.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -469,7 +457,7 @@ public class FrmCrearRM extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmCrearRM().setVisible(true);
+                new FrmModificarRM().setVisible(true);
             }
         });
     }
@@ -511,7 +499,7 @@ public class FrmCrearRM extends javax.swing.JFrame {
     }
 
     private boolean validarCampos() {
-        String buscarP = txt_buscarP.getText();
+        String buscarP = txt_idPaciente.getText();
         String nomApe = txt_NomApe.getText();
         String edad = txt_edad.getText();
         String indicaciones = txt_indicaciones.getText();
@@ -537,7 +525,6 @@ public class FrmCrearRM extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_agregarMed;
     private javax.swing.JButton btn_buscarMed;
-    private javax.swing.JButton btn_buscarP;
     private javax.swing.JButton btn_eliminarMed;
     private javax.swing.JButton btn_guardar;
     private javax.swing.JButton btn_regresar;
@@ -555,17 +542,39 @@ public class FrmCrearRM extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable table_medicamentos;
+    public javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JTable table_medicamentos;
     private javax.swing.JLabel txt_N;
     private javax.swing.JTextField txt_NomApe;
     private javax.swing.JTextField txt_NomMed;
-    private javax.swing.JTextField txt_buscarP;
     private javax.swing.JTextField txt_cantidad;
     private javax.swing.JTextField txt_edad;
     private javax.swing.JTextField txt_fecha;
     private javax.swing.JLabel txt_id;
     private javax.swing.JTextField txt_idNameMed;
+    private javax.swing.JTextField txt_idPaciente;
     private javax.swing.JTextField txt_indicaciones;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarDatosReceta() {
+        RecetaMedica receta = con.obtenerRecetaId(idReceta);
+        txt_idPaciente.setText(receta.paciente.cedula);
+        txt_NomApe.setText(receta.paciente.nombre + " " + receta.paciente.apellido);
+        txt_edad.setText(Integer.toString(receta.paciente.edad()));
+        txt_id.setText(receta.id);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        this.txt_fecha.setText(receta.fecha.format(formatter));
+        txt_indicaciones.setText(receta.indicaciones);
+        DefaultTableModel tableModel = (DefaultTableModel) table_medicamentos.getModel();
+        tableModel.setRowCount(0); // Limpiar la tabla antes de agregar los datos
+
+        for (Medicamento medicamento : receta.listaMedicamentos) {
+            tableModel.addRow(new Object[]{medicamento.nombre, medicamento.cantidad});
+        }
+
+        // Asegurarse de que la vista de la tabla se actualice
+        tableModel.fireTableDataChanged();
+        
+
+    }
 }

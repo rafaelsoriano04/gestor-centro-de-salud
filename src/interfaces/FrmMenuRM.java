@@ -4,29 +4,17 @@
  */
 package interfaces;
 
-import clases.Usuario;
-
 /**
  *
  * @author usuario
  */
-public class FrmMenuFarmacia extends javax.swing.JFrame {
+public class FrmMenuRM extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmMenuRM
      */
-    private Usuario usuario;
-    public FrmMenuFarmacia(Usuario usuario) {
-        
+    public FrmMenuRM() {
         initComponents();
-        this.usuario=usuario;
-        this.setVisible(true);
-        this.setLocationRelativeTo(null);
-    }
-    public FrmMenuFarmacia() {
-        
-        initComponents();
-        
         this.setVisible(true);
         this.setLocationRelativeTo(null);
     }
@@ -41,49 +29,49 @@ public class FrmMenuFarmacia extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        btn_regresarMPrin = new javax.swing.JButton();
-        btn_medic = new javax.swing.JButton();
-        btn_recetaM = new javax.swing.JButton();
+        btn_regresar = new javax.swing.JButton();
+        btn_crearRM = new javax.swing.JButton();
+        btn_buscarRM = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btn_regresarMPrin.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btn_regresarMPrin.setText("REGRESAR");
-        btn_regresarMPrin.setBorderPainted(false);
-        btn_regresarMPrin.setContentAreaFilled(false);
-        btn_regresarMPrin.addActionListener(new java.awt.event.ActionListener() {
+        btn_regresar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btn_regresar.setText("REGRESAR");
+        btn_regresar.setBorderPainted(false);
+        btn_regresar.setContentAreaFilled(false);
+        btn_regresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_regresarMPrinActionPerformed(evt);
+                btn_regresarActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_regresarMPrin, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 550, 270, 70));
+        jPanel1.add(btn_regresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 560, 270, 70));
 
-        btn_medic.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btn_medic.setText("       MEDICAMENTO");
-        btn_medic.setBorderPainted(false);
-        btn_medic.setContentAreaFilled(false);
-        btn_medic.addActionListener(new java.awt.event.ActionListener() {
+        btn_crearRM.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btn_crearRM.setText("        CREAR RECETA");
+        btn_crearRM.setBorderPainted(false);
+        btn_crearRM.setContentAreaFilled(false);
+        btn_crearRM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_medicActionPerformed(evt);
+                btn_crearRMActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_medic, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 282, 270, 70));
+        jPanel1.add(btn_crearRM, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 282, 270, 70));
 
-        btn_recetaM.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btn_recetaM.setText("RECETA MÉDICA");
-        btn_recetaM.setBorderPainted(false);
-        btn_recetaM.setContentAreaFilled(false);
-        btn_recetaM.addActionListener(new java.awt.event.ActionListener() {
+        btn_buscarRM.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btn_buscarRM.setText("BUSCAR RECETA");
+        btn_buscarRM.setBorderPainted(false);
+        btn_buscarRM.setContentAreaFilled(false);
+        btn_buscarRM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_recetaMActionPerformed(evt);
+                btn_buscarRMActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_recetaM, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 390, 270, 70));
+        jPanel1.add(btn_buscarRM, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 390, 270, 70));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/pngMenFar.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/pngMenRecM.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -100,23 +88,23 @@ public class FrmMenuFarmacia extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_regresarMPrinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regresarMPrinActionPerformed
-        FrmMenP menP= new FrmMenP(this.usuario);
-        menP.setVisible(true);
+    private void btn_regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regresarActionPerformed
+        FrmMenuFarmacia menFar= new FrmMenuFarmacia();
+        menFar.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btn_regresarMPrinActionPerformed
+    }//GEN-LAST:event_btn_regresarActionPerformed
 
-    private void btn_recetaMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_recetaMActionPerformed
-        FrmMenuRM menRM= new FrmMenuRM();
-        menRM.setVisible(true);
+    private void btn_buscarRMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarRMActionPerformed
+        FrmBuscarRM menBuscarRM= new FrmBuscarRM ();
+        menBuscarRM.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btn_recetaMActionPerformed
+    }//GEN-LAST:event_btn_buscarRMActionPerformed
 
-    private void btn_medicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_medicActionPerformed
-        /*FrmMenuMedicamento menumedic= new FrmMenuMedicamento();
-        menumedic.setVisible(true);
-        this.dispose();*/
-    }//GEN-LAST:event_btn_medicActionPerformed
+    private void btn_crearRMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_crearRMActionPerformed
+        FrmCrearRM crearReceta = new FrmCrearRM(this);
+        crearReceta.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_crearRMActionPerformed
 
     /**
      * @param args the command line arguments
@@ -135,31 +123,29 @@ public class FrmMenuFarmacia extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmMenuFarmacia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmMenuRM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmMenuFarmacia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmMenuRM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmMenuFarmacia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmMenuRM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmMenuFarmacia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmMenuRM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmMenuFarmacia().setVisible(true);
+                new FrmMenuRM().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton btn_medic;
-    public javax.swing.JButton btn_recetaM;
-    public javax.swing.JButton btn_regresarMPrin;
+    public javax.swing.JButton btn_buscarRM;
+    public javax.swing.JButton btn_crearRM;
+    public javax.swing.JButton btn_regresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
