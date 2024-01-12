@@ -1,10 +1,12 @@
 package interfaces;
 
 import clases.Usuario;
+import javax.swing.JOptionPane;
 
 public class FrmCrearUsuario extends javax.swing.JFrame {
+
     private Usuario usuario;
-    
+
     /**
      * Creates new form FrmCrearUs
      */
@@ -13,7 +15,7 @@ public class FrmCrearUsuario extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.usuario = new Usuario();
     }
-    
+
     private int definirRol() {
         if (this.cbAdmin.isSelected()) {
             return 0;
@@ -27,7 +29,7 @@ public class FrmCrearUsuario extends javax.swing.JFrame {
             return 4;
         }
     }
-    
+
     private void definirUsuario() {
         this.usuario.usuario = this.txtUsuario.getText();
         this.usuario.ci = this.txtCi.getText();
@@ -66,7 +68,7 @@ public class FrmCrearUsuario extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         txtContra = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jPanel7.setBackground(new java.awt.Color(204, 204, 204));
         jPanel7.setDoubleBuffered(false);
@@ -212,15 +214,19 @@ public class FrmCrearUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_cbMedActionPerformed
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        if (!this.txtUsuario.getText().replaceAll(" ", "").equals("") 
-                && !this.txtCi.getText().replaceAll(" ", "").equals("") 
-                && !this.txtNombre.getText().replaceAll(" ", "").equals("") 
+        if (!this.txtUsuario.getText().replaceAll(" ", "").equals("")
+                && !this.txtCi.getText().replaceAll(" ", "").equals("")
+                && !this.txtNombre.getText().replaceAll(" ", "").equals("")
                 && !this.txtApellido.getText().replaceAll(" ", "").equals("")
                 && !this.txtContra.getText().replaceAll(" ", "").equals("")
                 && this.definirRol() != 4) {
-            this.definirUsuario();
-            new FrmRegistrarPreguntas(this.usuario).setVisible(true);
-            this.dispose();
+            if (utilidades.Controles.controlCi(this.txtCi.getText())) {
+                this.definirUsuario();
+                new FrmRegistrarPreguntas(this.usuario).setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "El número de cédula no es válido");
+            }
         }
     }//GEN-LAST:event_btnCrearActionPerformed
 

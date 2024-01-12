@@ -4,17 +4,22 @@
  */
 package interfaces;
 
+import clases.Usuario;
+
 /**
  *
  * @author aliso
  */
 public class FrmMenuMedicamento extends javax.swing.JFrame {
 
+    private Usuario usuario;
+
     /**
      * Creates new form FrmMenuMedicamento
      */
-    public FrmMenuMedicamento() {
+    public FrmMenuMedicamento(Usuario u) {
         initComponents();
+        this.usuario = u;
     }
 
     /**
@@ -75,19 +80,19 @@ public class FrmMenuMedicamento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregresarActionPerformed
-        FrmMenuFarmacia menufar= new FrmMenuFarmacia();
+        FrmMenuFarmacia menufar = new FrmMenuFarmacia(this.usuario);
         menufar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnregresarActionPerformed
 
     private void btnabuscarmedic1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnabuscarmedic1ActionPerformed
-        FrmBuscarMedicamento buscarmedi= new FrmBuscarMedicamento();
+        FrmBuscarMedicamento buscarmedi = new FrmBuscarMedicamento();
         buscarmedi.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnabuscarmedic1ActionPerformed
 
     private void btnagregarmedic1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarmedic1ActionPerformed
-        FrmCrearMedicamento crearmedic= new FrmCrearMedicamento();
+        FrmCrearMedicamento crearmedic = new FrmCrearMedicamento();
         crearmedic.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnagregarmedic1ActionPerformed
@@ -122,7 +127,7 @@ public class FrmMenuMedicamento extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmMenuMedicamento().setVisible(true);
+                new FrmMenuMedicamento(null).setVisible(true);
             }
         });
     }

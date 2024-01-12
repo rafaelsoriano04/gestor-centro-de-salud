@@ -35,7 +35,8 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setForeground(new java.awt.Color(0, 153, 153));
@@ -130,7 +131,7 @@ public class FrmLogin extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         if (new ControladorLogin().validarLogin(this.tfUsuario.getText(), this.tfContraseña.getText())) {
-            // Aqui debe ir el menu principal
+            this.dispose();
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 

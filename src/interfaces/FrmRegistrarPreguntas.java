@@ -69,7 +69,7 @@ public class FrmRegistrarPreguntas extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         txtR4 = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -252,7 +252,7 @@ public class FrmRegistrarPreguntas extends javax.swing.JFrame {
             new MetodosSQL().crearUsuario(this.usuario);
             JOptionPane.showMessageDialog(null, "Usuario creado exitosamente");
             this.dispose();
-            new FrmGestionUsuarios().setVisible(true);
+            new FrmGestionUsuarios(this.usuario).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Campos vacios");
         }
