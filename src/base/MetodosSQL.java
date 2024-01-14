@@ -1089,7 +1089,7 @@ public class MetodosSQL {
         }
         
     }
-     private void actualizarCantidadMedicamento( String nombreMedicamento, int nuevaCantidad) {
+    private void actualizarCantidadMedicamento( String nombreMedicamento, int nuevaCantidad) {
         Connection con = null;
         try {
             con = Conexion.getConnection();
@@ -1103,6 +1103,29 @@ public class MetodosSQL {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+     public int obtenerStockMedicamento(String nombreMedicamento) {
+        int stock = 0;
+        Connection con = null;
+        try {
+            con = Conexion.getConnection();
+            // Consulta SQL para actualizar la cantidad del medicamento
+            String sql = "SELECT cantidad FROM Medicamento WHERE nombre = ?";
+            try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+                pstmt.setString(1, nombreMedicamento);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    stock = rs.getInt("cantidad");
+                }
+            }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+
+        return stock;
     }
     
     

@@ -11,6 +11,8 @@ import clases.RecetaMedica;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -28,7 +30,7 @@ public class FrmCrearRM extends javax.swing.JFrame {
     MetodosSQL con = new MetodosSQL();
     public static ArrayList<Medicamento> medicamentosList = new ArrayList<>();
     Paciente pacR;
-
+    private Map<String, Integer> stockMedicamentos = new HashMap<>();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private JFrame formularioAnterior;
 
@@ -111,6 +113,12 @@ public class FrmCrearRM extends javax.swing.JFrame {
 
         jLabel1.setText("CANTIDAD");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 380, -1, -1));
+
+        txt_buscarP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_buscarPKeyTyped(evt);
+            }
+        });
         jPanel1.add(txt_buscarP, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 220, -1));
 
         btn_agregarMed.setText("AGREGAR");
@@ -133,6 +141,11 @@ public class FrmCrearRM extends javax.swing.JFrame {
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, -1, -1));
 
         txt_cantidad.setEditable(false);
+        txt_cantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_cantidadKeyTyped(evt);
+            }
+        });
         jPanel1.add(txt_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 400, 90, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -275,36 +288,45 @@ public class FrmCrearRM extends javax.swing.JFrame {
             }
 
             if (medicamento != null) {
-                // Búsqueda exitosa, agrega el medicamento a la tabla
                 int cantidad = Integer.parseInt(txt_cantidad.getText());
                 if (cantidad >= 0) {
-                    // Agrega el medicamento a la tabla
-                    DefaultTableModel model = (DefaultTableModel) table_medicamentos.getModel();
-                    boolean medicamentoExistente = false;
-                    for (int i = 0; i < model.getRowCount(); i++) {
-                        String nombreTabla = (String) model.getValueAt(i, 0);
-                        if (nombreTabla.equals(medicamento.nombre)) {
-                            // Ya existe el medicamento en la tabla, suma la cantidad
-                            int cantidadExistente = (int) model.getValueAt(i, 1);
-                            model.setValueAt(cantidadExistente + cantidad, i, 1);
-                            medicamentoExistente = true;
-                            break;
+                    // Obtener el stock inicial del medicamento
+                    int stockInicial = con.obtenerStockMedicamento(medicamento.nombre);
+                    int stockDisponible = stockMedicamentos.getOrDefault(medicamento.nombre, stockInicial);
+
+                    if (cantidad <= stockDisponible) {
+                        DefaultTableModel model = (DefaultTableModel) table_medicamentos.getModel();
+                        boolean medicamentoExistente = false;
+                        for (int i = 0; i < model.getRowCount(); i++) {
+                            String nombreTabla = (String) model.getValueAt(i, 0);
+                            if (nombreTabla.equals(medicamento.nombre)) {
+                                // Ya existe el medicamento, suma la cantidad
+                                int cantidadExistente = (int) model.getValueAt(i, 1);
+                                model.setValueAt(cantidadExistente + cantidad, i, 1);
+                                medicamentoExistente = true;
+                                break;
+                            }
                         }
-                    }
-                    if (!medicamentoExistente) {
-                        // No existe en la tabla, agrega una nueva fila
-                        Object[] rowData = {medicamento.nombre, cantidad};
-                        model.addRow(rowData);
-                    }
+                        if (!medicamentoExistente) {
+                            // No existe en la tabla, agrega una nueva fila
+                            Object[] rowData = {medicamento.nombre, cantidad};
+                            model.addRow(rowData);
+                        }
 
-                    // Limpia los campos
-                    txt_idNameMed.setText("");
-                    txt_NomMed.setText("");
-                    txt_cantidad.setText("");
-                    cbx_medicamento.removeAllItems();
+                        // Actualiza el stock en el mapa
+                        stockMedicamentos.put(medicamento.nombre, stockDisponible - cantidad);
 
-                    // Agrega el medicamento a la lista y actualiza la cantidad total
-                    agregarMedicamentoALista(medicamento, cantidad);
+                        // Limpia los campos
+                        txt_idNameMed.setText("");
+                        txt_NomMed.setText("");
+                        txt_cantidad.setText("");
+                        cbx_medicamento.removeAllItems();
+
+                        // Agrega el medicamento a la lista y actualiza la cantidad total
+                        agregarMedicamentoALista(medicamento, cantidad);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La cantidad ingresada supera el stock disponible.\n Stock Disponible: "+ stockDisponible);
+                    }
                 } else {
                     JOptionPane.showMessageDialog(null, "La cantidad debe ser un número positivo.");
                 }
@@ -315,7 +337,7 @@ public class FrmCrearRM extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Uno o más campos están vacíos.");
         }
 
-
+ 
     }//GEN-LAST:event_btn_agregarMedActionPerformed
 
     private void btn_buscarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarPActionPerformed
@@ -427,6 +449,26 @@ public class FrmCrearRM extends javax.swing.JFrame {
         this.dispose();
 
     }//GEN-LAST:event_btn_regresarActionPerformed
+
+    private void txt_buscarPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarPKeyTyped
+        if (evt.getSource() == this.txt_buscarP) {
+            char c = evt.getKeyChar();
+            // Permite dígitos
+            if (!Character.isDigit(c)) {
+                evt.consume(); // Consume el evento si el carácter no es un dígito 
+            }
+        }
+    }//GEN-LAST:event_txt_buscarPKeyTyped
+
+    private void txt_cantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cantidadKeyTyped
+       if (evt.getSource() == this.txt_cantidad) {
+            char c = evt.getKeyChar();
+            // Permite dígitos
+            if (!Character.isDigit(c)) {
+                evt.consume(); // Consume el evento si el carácter no es un dígito 
+            }
+        }
+    }//GEN-LAST:event_txt_cantidadKeyTyped
 
     /**
      * @param args the command line arguments
