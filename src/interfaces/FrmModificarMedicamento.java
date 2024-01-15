@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package interfaces;
 
 import base.Conexion;
@@ -13,18 +10,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author aliso
- */
-public class FrmCrearMedicamento extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrmCM
-     */
-    public FrmCrearMedicamento() {
-        initComponents();
-        this.setLocationRelativeTo(null);
+public class FrmModificarMedicamento extends javax.swing.JFrame {
+
+    private int id=0;
+    
+    public FrmModificarMedicamento(Medicamento me) {
+       initComponents();
+       this.setLocationRelativeTo(null);
+        
+    txtnombre.setText(me.nombre);
+    txtespecificaciones.setText(me.especificaciones);
+    txtregisan.setText(me.regisSani);
+    txtprecio.setText(String.valueOf(me.precio));
+    txtcantidad.setText(String.valueOf(me.cantidad));
+    
+    
+    txtid.setText(String.valueOf(me.id));
+    txtid.setEditable(false); 
+
+    this.id = me.id;
+        
     }
 
     
@@ -38,7 +44,7 @@ public class FrmCrearMedicamento extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        btnCrearMedicamento = new javax.swing.JButton();
+        btnregresar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         txtregisan = new javax.swing.JTextField();
         txtcantidad = new javax.swing.JTextField();
@@ -46,7 +52,7 @@ public class FrmCrearMedicamento extends javax.swing.JFrame {
         txtespecificaciones = new javax.swing.JTextField();
         txtid = new javax.swing.JTextField();
         txtprecio = new javax.swing.JTextField();
-        btnregresar = new javax.swing.JButton();
+        btnmodificar1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -76,14 +82,14 @@ public class FrmCrearMedicamento extends javax.swing.JFrame {
         jLabel7.setText("Nombre");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, 120, 40));
 
-        btnCrearMedicamento.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        btnCrearMedicamento.setText("CREAR MEDICAMENTO");
-        btnCrearMedicamento.addActionListener(new java.awt.event.ActionListener() {
+        btnregresar.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        btnregresar.setText("REGRESAR");
+        btnregresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCrearMedicamentoActionPerformed(evt);
+                btnregresarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCrearMedicamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 530, 220, 40));
+        getContentPane().add(btnregresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 530, 150, 40));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/medicamento.png"))); // NOI18N
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 20, 210, 200));
@@ -94,25 +100,30 @@ public class FrmCrearMedicamento extends javax.swing.JFrame {
         getContentPane().add(txtid, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 280, 40));
         getContentPane().add(txtprecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 330, 200, 40));
 
-        btnregresar.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        btnregresar.setText("REGRESAR");
-        btnregresar.addActionListener(new java.awt.event.ActionListener() {
+        btnmodificar1.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        btnmodificar1.setText("MODIFICAR");
+        btnmodificar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnregresarActionPerformed(evt);
+                btnmodificar1ActionPerformed(evt);
             }
         });
-        getContentPane().add(btnregresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 530, 130, 40));
+        getContentPane().add(btnmodificar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 530, 150, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/crearmedicamento.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 700));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/modificarmedic.png"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCrearMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearMedicamentoActionPerformed
-         // Validaciones de los campos
-    if (txtid.getText().trim().isEmpty() ||
+    private void btnregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregresarActionPerformed
+       FrmBuscarMedicamento buscar= new FrmBuscarMedicamento();
+       buscar.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_btnregresarActionPerformed
+
+    private void btnmodificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificar1ActionPerformed
+
+        if (txtid.getText().trim().isEmpty() ||
         txtnombre.getText().trim().isEmpty() ||
         txtespecificaciones.getText().trim().isEmpty() ||
         txtregisan.getText().trim().isEmpty() ||
@@ -128,11 +139,6 @@ public class FrmCrearMedicamento extends javax.swing.JFrame {
         id = Integer.parseInt(txtid.getText().trim());
     } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(this, "El ID debe ser un número entero válido.");
-        return;
-    }
-
-    if (idYaExiste(id)) {
-        JOptionPane.showMessageDialog(this, "El ID ya está en uso. Por favor, ingrese un ID diferente.");
         return;
     }
 
@@ -165,13 +171,11 @@ public class FrmCrearMedicamento extends javax.swing.JFrame {
         return;
     }
     
-    Medicamento medi = new Medicamento(Integer.parseInt(txtid.getText()), txtnombre.getText(), txtespecificaciones.getText(),
-        txtregisan.getText(), Double.parseDouble(txtprecio.getText()), Integer.parseInt(txtcantidad.getText()));
-        
-    if (new MetodosSQL().crearMedicamento(medi)) {
-        JOptionPane.showMessageDialog(null, "Medicamento agregado correctamente");
-        
-        // Borrar el contenido de los campos de texto
+    // Resto del código para la modificación del medicamento
+    Medicamento medi= new Medicamento(id , txtnombre.getText(), txtespecificaciones.getText(),
+            txtregisan.getText(),Double.parseDouble(txtprecio.getText()),Integer.parseInt(txtcantidad.getText()));
+    if (new MetodosSQL().modificarMedicamento(medi)) {
+        JOptionPane.showMessageDialog(null, "Medicamento modificado ");
         txtid.setText("");
         txtnombre.setText("");
         txtespecificaciones.setText("");
@@ -179,10 +183,11 @@ public class FrmCrearMedicamento extends javax.swing.JFrame {
         txtprecio.setText("");
         txtcantidad.setText("");
     } else {
-        JOptionPane.showMessageDialog(null, "Verifique sus datos");
-        }
-    }//GEN-LAST:event_btnCrearMedicamentoActionPerformed
-private boolean idYaExiste(int id) {
+        JOptionPane.showMessageDialog(null, "Verifique los datos");
+                    
+        }    }//GEN-LAST:event_btnmodificar1ActionPerformed
+
+    private boolean idYaExiste(int id) {
    
     Connection con = Conexion.getConnection();
     String sql = "SELECT COUNT(*) FROM Medicamento WHERE id = ?";
@@ -195,17 +200,9 @@ private boolean idYaExiste(int id) {
     } catch (SQLException e) {
         System.out.println(e);
     }
-    return false; // Por defecto, asume que el ID no existe
+    return false; // ID no existe
 }
-    private void btnregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregresarActionPerformed
-        FrmMenuMedicamento menumedi= new FrmMenuMedicamento();
-        menumedi.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnregresarActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
+     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -220,29 +217,27 @@ private boolean idYaExiste(int id) {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmCrearMedicamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmModificarMedicamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmCrearMedicamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmModificarMedicamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmCrearMedicamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmModificarMedicamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmCrearMedicamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmModificarMedicamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmCrearMedicamento().setVisible(true);
+                new FrmModificarMedicamento(null).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton btnCrearMedicamento;
+    public javax.swing.JButton btnmodificar1;
     public javax.swing.JButton btnregresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

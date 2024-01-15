@@ -113,9 +113,9 @@ public class FrmMenuFarmacia extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_recetaMActionPerformed
 
     private void btn_medicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_medicActionPerformed
-        /*FrmMenuMedicamento menumedic= new FrmMenuMedicamento();
+        FrmMenuMedicamento menumedic= new FrmMenuMedicamento();
         menumedic.setVisible(true);
-        this.dispose();*/
+        this.dispose();
     }//GEN-LAST:event_btn_medicActionPerformed
 
     /**

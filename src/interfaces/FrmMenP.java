@@ -125,7 +125,7 @@ public class FrmMenP extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_reportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reportesActionPerformed
-
+        new FrmMenuReportes(usuario).setVisible(true);
     }//GEN-LAST:event_btn_reportesActionPerformed
 
     private void btn_consultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consultaActionPerformed

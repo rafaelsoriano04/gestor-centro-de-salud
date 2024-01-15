@@ -1127,6 +1127,98 @@ public class MetodosSQL {
 
         return stock;
     }
+     //metodos para medicamento
+
+    public boolean crearMedicamento(Medicamento me) {
+        String sql = "INSERT INTO Medicamento (id, nombre, especificaciones, RegistroSanitario, precio, cantidad) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection con = Conexion.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, me.id);
+            ps.setString(2, me.nombre);
+            ps.setString(3, me.especificaciones);
+            ps.setString(4, me.regisSani);
+            ps.setDouble(5, me.precio);
+            ps.setInt(6, me.cantidad);
+
+            int affectedRows = ps.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+
+    public boolean modificarMedicamento(Medicamento me) {
+        Connection con = null;
+        try {
+            con = Conexion.getConnection();
+            String sql = "UPDATE Medicamento SET nombre = ?, especificaciones = ?, RegistroSanitario = ?, precio = ?, cantidad = ? "
+                    + "WHERE id = ?";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, me.nombre);
+            ps.setString(2, me.especificaciones);
+            ps.setString(3, me.regisSani);
+            ps.setDouble(4, me.precio);
+            ps.setInt(5, me.cantidad);
+            // El ID se establece al final, correspondiente a la cláusula WHERE
+            ps.setInt(6, me.id);
+            int affectedRows = ps.executeUpdate();
+            return affectedRows > 0;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+
+    }
+
+    public boolean eliminarMedicamento(int id) {
+        Connection con = null;
+        try {
+            con = Conexion.getConnection();
+            String sql = "DELETE FROM Medicamento WHERE id = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int affectedRows = ps.executeUpdate();
+            return affectedRows > 0;
+        } catch (Exception e) {
+            return false;
+        }
+
+    }
+
+    public Medicamento obtenerMedicamento(int id) {
+        Connection con = null;
+        Medicamento medicamento = null;
+        String sql;
+
+        sql = "SELECT * FROM Medicamento WHERE id = ?";
+
+        con = Conexion.getConnection();
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            if (sql.contains("?")) {
+                ps.setInt(1, id);
+            }
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                medicamento = new Medicamento(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("especificaciones"),
+                        rs.getString("RegistroSanitario"),
+                        rs.getDouble("precio"),
+                        rs.getInt("cantidad")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return medicamento;
+    }
     
     
     
