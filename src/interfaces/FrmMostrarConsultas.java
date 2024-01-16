@@ -17,6 +17,7 @@ public class FrmMostrarConsultas extends javax.swing.JFrame {
     private int paciente;
     public FrmMostrarConsultas(int doctor, Paciente pac) {
         initComponents();
+        this.setSize(836, 628);
         this.paciente = Integer.valueOf(pac.cedula);
         this.doctor = doctor;
         txtnom.setText(pac.nombre);

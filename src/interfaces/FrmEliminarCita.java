@@ -21,7 +21,7 @@ public class FrmEliminarCita extends javax.swing.JFrame {
         initComponents();
         this.paciente = paciente;
         this.setLocationRelativeTo(null);
-
+this.setSize(610, 550);
         llenarCitas();
 
     }

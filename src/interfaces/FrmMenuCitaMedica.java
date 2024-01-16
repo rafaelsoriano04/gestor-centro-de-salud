@@ -16,6 +16,7 @@ public class FrmMenuCitaMedica extends javax.swing.JFrame {
      */
     public FrmMenuCitaMedica() {
         initComponents();
+        this.setSize(400, 300);
         this.setLocationRelativeTo(null);
     }
 

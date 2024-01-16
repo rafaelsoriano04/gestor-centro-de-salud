@@ -15,6 +15,7 @@ public class FrmBuscarPaciente extends javax.swing.JFrame {
     public FrmBuscarPaciente(Paciente pac) {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setSize(850, 450);
         txtaltura.setText(pac.altura);
         txtantece.setText(pac.antededentes);
         txtape.setText(pac.apellido);

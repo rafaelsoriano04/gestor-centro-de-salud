@@ -17,6 +17,7 @@ public class FrmEliminarPaciente extends javax.swing.JFrame {
     private String cedula = "";
     public FrmEliminarPaciente(Paciente pac) {
         initComponents();
+        this.setSize(789, 439);
         this.setLocationRelativeTo(null);
         txtaltura.setText(pac.altura);
         txtantece.setText(pac.antededentes);

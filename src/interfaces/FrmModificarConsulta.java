@@ -16,6 +16,7 @@ public class FrmModificarConsulta extends javax.swing.JFrame {
 
     public FrmModificarConsulta(int doctor, Paciente pac) {
         initComponents();
+        this.setSize(836, 636);
         this.setLocationRelativeTo(null);
         this.paciente = Integer.valueOf(pac.cedula);
         this.doctor = doctor;

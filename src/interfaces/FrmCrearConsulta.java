@@ -23,6 +23,7 @@ public class FrmCrearConsulta extends javax.swing.JFrame {
     
     public FrmCrearConsulta(int doctor, Paciente pac) {
         initComponents();
+        this.setSize(836, 636);
         this.setLocationRelativeTo(null);
         txtnom.setText(pac.nombre);
         txtape.setText(pac.apellido);

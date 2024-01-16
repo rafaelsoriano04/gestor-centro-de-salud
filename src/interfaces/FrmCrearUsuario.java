@@ -101,6 +101,11 @@ public class FrmCrearUsuario extends javax.swing.JFrame {
         jPanel7.add(rol, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, -1, -1));
 
         txtCi.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        txtCi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCiActionPerformed(evt);
+            }
+        });
         jPanel7.add(txtCi, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 190, -1));
 
         jLabel5.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
@@ -245,6 +250,10 @@ public class FrmCrearUsuario extends javax.swing.JFrame {
             this.cbSecre.setSelected(false);
         }
     }//GEN-LAST:event_cbEnfActionPerformed
+
+    private void txtCiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCiActionPerformed
 
     /**
      * @param args the command line arguments

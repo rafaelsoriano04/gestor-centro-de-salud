@@ -17,6 +17,7 @@ public class FrmMenuPaciente extends javax.swing.JFrame {
     public FrmMenuPaciente() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setSize(400, 300);
         
     }
 

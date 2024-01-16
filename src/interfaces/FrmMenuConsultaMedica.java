@@ -15,6 +15,7 @@ public class FrmMenuConsultaMedica extends javax.swing.JFrame {
     private int doctor;
     public FrmMenuConsultaMedica(Usuario usuario) {
         initComponents();
+        this.setSize(400, 300);
         this.setLocationRelativeTo(null);
         this.doctor = Integer.valueOf(usuario.ci);
         this.setUndecorated(true);

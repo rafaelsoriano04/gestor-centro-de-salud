@@ -8,10 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author fredd
- */
+
 public class FrmBuscarCita extends javax.swing.JFrame {
 
     private String paciente;
@@ -19,6 +16,7 @@ public class FrmBuscarCita extends javax.swing.JFrame {
     public FrmBuscarCita(String paciente) {
         initComponents();
         this.paciente = paciente;
+        this.setSize(650, 550);
         llenarCitas();
         this.setLocationRelativeTo(null);
 

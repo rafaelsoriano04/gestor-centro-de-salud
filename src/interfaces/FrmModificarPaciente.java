@@ -20,6 +20,7 @@ public class FrmModificarPaciente extends javax.swing.JFrame {
     private String cedula = "";
     public FrmModificarPaciente(Paciente pac) {
         initComponents();
+        this.setSize(805, 439);
         this.setLocationRelativeTo(null);
         txtaltura.setText(pac.altura);
         txtantece.setText(pac.antededentes);

@@ -2,6 +2,7 @@
 package interfaces;
 
 import clases.Paciente;
+import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -18,6 +19,7 @@ public class FrmCrearPacientes extends javax.swing.JFrame {
      */
     public FrmCrearPacientes() {
         initComponents();
+        this.setSize(850, 450);
         this.setLocationRelativeTo(null);
     }
 
@@ -113,6 +115,12 @@ public class FrmCrearPacientes extends javax.swing.JFrame {
         jLabel10.setText("Tipo de Sangre:");
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(62, 241, -1, 30));
         getContentPane().add(txtnom, new org.netbeans.lib.awtextra.AbsoluteConstraints(324, 97, 160, -1));
+
+        txtcedu.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtceduKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtcedu, new org.netbeans.lib.awtextra.AbsoluteConstraints(324, 168, 160, -1));
         getContentPane().add(txtape, new org.netbeans.lib.awtextra.AbsoluteConstraints(324, 128, 160, -1));
         getContentPane().add(txtnaci, new org.netbeans.lib.awtextra.AbsoluteConstraints(324, 205, 160, -1));
@@ -204,9 +212,9 @@ public class FrmCrearPacientes extends javax.swing.JFrame {
     }//GEN-LAST:event_slipesoStateChanged
 
     private void btncrearpacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncrearpacienteActionPerformed
-        
+        try {
         if (this.fechValida(txtnaci.getText())) {
-            if (this.contieneSoloNumeros(txtcedu.getText())) {
+            if (utilidades.Controles.controlCi(txtcedu.getText())) {
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 Paciente pac = new Paciente(txtnom.getText(), txtape.getText(), txtcedu.getText(), LocalDate.parse(txtnaci.getText(), formatter),
@@ -226,11 +234,21 @@ public class FrmCrearPacientes extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Ingrese una fecha valida con el formato yyyy-MM-dd");
         }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Informacion Invalida, revise sus datos y vuelva a intentarlo");
+        }
     }//GEN-LAST:event_btncrearpacienteActionPerformed
 
     private void slialturaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_slialturaStateChanged
         txtaltura.setText(String.valueOf(slialtura.getValue()));
     }//GEN-LAST:event_slialturaStateChanged
+
+    private void txtceduKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtceduKeyTyped
+        char c = evt.getKeyChar();
+                if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+                    evt.consume(); // Ignora el evento de tecla si no es un dígito o retroceso
+                }
+    }//GEN-LAST:event_txtceduKeyTyped
 
     /**
      * @param args the command line arguments

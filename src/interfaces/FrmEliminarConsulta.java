@@ -18,6 +18,7 @@ public class FrmEliminarConsulta extends javax.swing.JFrame {
     
     public FrmEliminarConsulta(int doctor, Paciente pac) {
         initComponents();
+        this.setSize(837, 636);
         this.setLocationRelativeTo(null);
         this.paciente = Integer.valueOf(pac.cedula);
         this.doctor = doctor;
